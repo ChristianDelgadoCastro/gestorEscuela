@@ -21,7 +21,7 @@ public class Conectar {
     public Connection conexion(){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            cn=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/escuela","root","root");
+            cn=DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/escuelapropuesta","root","root");
             System.out.println("Conectado");
         } catch (Exception e) {
             System.err.println(e.getMessage());
