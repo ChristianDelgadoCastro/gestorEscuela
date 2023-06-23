@@ -31,11 +31,24 @@ public class Conectar {
 //}
     
     
+//    public Connection conexion() {
+//        try {
+//            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+//            System.out.println("Loaded SQL Server JDBC driver");
+//            cn = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=iciibaSFR;user=usersql;password=root2;encrypt=false");
+//            System.out.println("Conectado");
+//        } catch (Exception e) {
+//            System.err.println(e.getMessage());
+//        }
+//        return cn;
+//
+//    }
+    
     public Connection conexion() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             System.out.println("Loaded SQL Server JDBC driver");
-            cn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-K6Q75OJ\\SQLEXPRESS:1433;databaseName=escuelapropuesta;user=root;password=root");
+            cn = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=dbo;user=usersql;password=root2;encrypt=false");
             System.out.println("Conectado");
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -43,4 +56,7 @@ public class Conectar {
         return cn;
 
     }
+    
 }
+
+

@@ -34,26 +34,20 @@ import javax.swing.table.TableColumn;
  */
 public class AdministracionGrupos extends javax.swing.JFrame {
 
-    private String nombreGrupo;
-    private String numControlGrupo;
-    private int idGrupo;
-    private String numControlAsignatura;
+    private String campoEspecialidad1;
+    private String campoGrupo;
 
     /**
      * Creates new form AdministracionGrupos
      */
-    public AdministracionGrupos(String nombreGrupo, String numControlGrupo, int idGrupo, String numControlAsignatura) {
+    public AdministracionGrupos(String grupo, String especialidad) {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.nombreGrupo = nombreGrupo;
-        this.numControlGrupo = numControlGrupo;
-        this.idGrupo = idGrupo;
-        this.numControlAsignatura = numControlAsignatura;
+        this.campoEspecialidad1 = especialidad;
+        this.campoGrupo = grupo;
 
-        txtNumControl.setText(numControlGrupo);
-        txtNombreGrupo.setText(nombreGrupo);
-        txtIdGrupo.setText(String.valueOf(idGrupo));
-        txtNumControlAsignatura.setText(String.valueOf(numControlAsignatura));
+        txtGrupo.setText(grupo);
+        txtEspecialidad.setText(especialidad);
         cerrar();
         mostrarTabla();
     }
@@ -74,20 +68,12 @@ public class AdministracionGrupos extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaAlumnosGrupo = new javax.swing.JTable();
-        btnAgregarAlumnos = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtNumControl = new javax.swing.JLabel();
+        txtGrupo = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtNombreGrupo = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txtNumControlAsignatura = new javax.swing.JLabel();
-        txtIdGrupo = new javax.swing.JLabel();
-        btnEliminarAlumnos = new javax.swing.JButton();
-        btnActualizarCalificaciones = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtEspecialidad = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,14 +90,6 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tablaAlumnosGrupo);
 
-        btnAgregarAlumnos.setText("Agregar alumno al grupo");
-        btnAgregarAlumnos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAgregarAlumnos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarAlumnosActionPerformed(evt);
-            }
-        });
-
         btnVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back_icon.png"))); // NOI18N
         btnVolver.setText("Volver");
         btnVolver.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -124,21 +102,13 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jLabel1.setText("Numero de control grupo:");
+        jLabel1.setText("Especialidad");
 
-        txtNumControl.setText("jLabel2");
+        txtGrupo.setText("jLabel2");
 
         jLabel3.setText("Nombre del grupo:");
 
-        txtNombreGrupo.setText("jLabel4");
-
-        jLabel2.setText("Id del Grupo");
-
-        jLabel4.setText("Numero de control de asignatura:");
-
-        txtNumControlAsignatura.setText("jLabel5");
-
-        txtIdGrupo.setText("jLabel4");
+        txtEspecialidad.setText("jLabel4");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -146,64 +116,27 @@ public class AdministracionGrupos extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNumControl)
-                        .addGap(27, 27, 27))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtNombreGrupo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtIdGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNumControlAsignatura, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtEspecialidad, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                    .addComponent(txtGrupo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtNumControl)
-                    .addComponent(jLabel2)
-                    .addComponent(txtIdGrupo))
+                    .addComponent(txtGrupo)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtNombreGrupo)
-                    .addComponent(jLabel4)
-                    .addComponent(txtNumControlAsignatura))
-                .addContainerGap(14, Short.MAX_VALUE))
+                    .addComponent(txtEspecialidad)
+                    .addComponent(jLabel1))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
-
-        btnEliminarAlumnos.setText("Elliminar alumno(s)");
-        btnEliminarAlumnos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarAlumnosActionPerformed(evt);
-            }
-        });
-
-        btnActualizarCalificaciones.setText("Agregar o cambiar calificacion");
-        btnActualizarCalificaciones.setToolTipText("");
-        btnActualizarCalificaciones.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarCalificacionesActionPerformed(evt);
-            }
-        });
-
-        jTextField1.setText("En este módulo se permite agregar las calificaciones de manera automatica");
-        jTextField1.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -212,47 +145,33 @@ public class AdministracionGrupos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnAgregarAlumnos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnEliminarAlumnos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnActualizarCalificaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTextField1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAgregarAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(btnEliminarAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnActualizarCalificaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addComponent(btnVolver))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVolver))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     public class SoundPlayer {
+
         public static void playSystemNotificationSound() {
             Toolkit.getDefaultToolkit().beep();
-            
+
         }
     }
 
@@ -264,193 +183,69 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
-    private void btnAgregarAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAlumnosActionPerformed
-        ListaAlumnos listaAlumnos = new ListaAlumnos(txtNumControl.getText(), txtNumControlAsignatura.getText());
-        listaAlumnos.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_btnAgregarAlumnosActionPerformed
-
-    private String obtenerNumControlAlumno(String nombreAlumno, String apellidosAlumno, String numControlAsignatura, String numControlGrupo) {
-        String numControlAlumno = null;
-
-        try {
-            String sql = "SELECT numControlAlumno FROM alumnos_grupo WHERE nombreAlumno = ? AND apellidosAlumno = ? AND numControlAsignatura = ? AND numControlGrupo = ?";
-            PreparedStatement statement = cn.prepareStatement(sql);
-            statement.setString(1, nombreAlumno);
-            statement.setString(2, apellidosAlumno);
-            statement.setString(3, numControlAsignatura);
-            statement.setString(4, numControlGrupo);
-            ResultSet rs = statement.executeQuery();
-
-            if (rs.next()) {
-                numControlAlumno = rs.getString("numControlAlumno");
-            }
-
-            rs.close();
-            statement.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        return numControlAlumno;
-    }
-
-
-    private void btnEliminarAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAlumnosActionPerformed
-        int[] filasSeleccionadas = tablaAlumnosGrupo.getSelectedRows();
-
-        if (filasSeleccionadas.length > 0) {
-            StringBuilder mensajeConfirmacion = new StringBuilder();
-            mensajeConfirmacion.append("¿Estás seguro de eliminar los siguientes alumnos?\n");
-
-            // Obtener los datos de los alumnos seleccionados y construir el mensaje de confirmación
-            for (int fila : filasSeleccionadas) {
-                String numControlGrupo = tablaAlumnosGrupo.getValueAt(fila, 0).toString();
-                String nombreAlumno = tablaAlumnosGrupo.getValueAt(fila, 1).toString();
-                String apellidosAlumno = tablaAlumnosGrupo.getValueAt(fila, 2).toString();
-                String numControlAsignatura = tablaAlumnosGrupo.getValueAt(fila, 3).toString();
-                String numControlAlumno = obtenerNumControlAlumno(nombreAlumno, apellidosAlumno, numControlAsignatura, numControlGrupo);
-
-                mensajeConfirmacion.append("- Número de Control: ").append(numControlAlumno)
-                        .append(", Nombre: ").append(nombreAlumno).append(" ").append(apellidosAlumno)
-                        .append(", Número de Control Grupo: ").append(numControlGrupo).append("\n");
-            }
-            SoundPlayer.playSystemNotificationSound();
-            int opcion = JOptionPane.showConfirmDialog(this, mensajeConfirmacion.toString(), "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
-            if (opcion == JOptionPane.YES_OPTION) {
-                try {
-                    String sql = "DELETE FROM alumnos_grupo WHERE numControlAlumno = ? AND numControlGrupo = ?";
-                    PreparedStatement statement = cn.prepareStatement(sql);
-
-                    // Recorrer las filas seleccionadas
-                    for (int fila : filasSeleccionadas) {
-                        String numControlGrupo = tablaAlumnosGrupo.getValueAt(fila, 0).toString();
-                        String nombreAlumno = tablaAlumnosGrupo.getValueAt(fila, 1).toString();
-                        String apellidosAlumno = tablaAlumnosGrupo.getValueAt(fila, 2).toString();
-                        String numControlAsignatura = tablaAlumnosGrupo.getValueAt(fila, 3).toString();
-                        String numControlAlumno = obtenerNumControlAlumno(nombreAlumno, apellidosAlumno, numControlAsignatura, numControlGrupo);
-
-                        if (numControlAlumno != null) {
-                            // Establecer los parámetros numControlAlumno y numControlGrupo en la consulta
-                            statement.setString(1, numControlAlumno);
-                            statement.setString(2, numControlGrupo);
-                            statement.executeUpdate();
-                        }
-                    }
-
-                    statement.close();
-
-                    // Actualizar la vista de la tabla
-                    mostrarTabla();
-
-                    // Mostrar mensaje de éxito
-                    SoundPlayer.playSystemNotificationSound();
-                    JOptionPane.showMessageDialog(this, "Los alumnos seleccionados se han eliminado correctamente", "Eliminación exitosa", JOptionPane.INFORMATION_MESSAGE);
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    SoundPlayer.playSystemNotificationSound();
-                    JOptionPane.showMessageDialog(this, "Error al eliminar los alumnos", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        } else {
-            SoundPlayer.playSystemNotificationSound();
-            JOptionPane.showMessageDialog(this, "No se han seleccionado alumnos para eliminar", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_btnEliminarAlumnosActionPerformed
-
-    private String obtenerNumControlAlumnoTabla(int fila) {
-        String numControlGrupo = tablaAlumnosGrupo.getValueAt(fila, 0).toString();
-        String nombreAlumno = tablaAlumnosGrupo.getValueAt(fila, 1).toString();
-        String apellidosAlumno = tablaAlumnosGrupo.getValueAt(fila, 2).toString();
-        String numControlAsignatura = tablaAlumnosGrupo.getValueAt(fila, 3).toString();
-
-        String numControlAlumno = obtenerNumControlAlumno(nombreAlumno, apellidosAlumno, numControlAsignatura, numControlGrupo);
-
-        return numControlAlumno;
-    }
-
-    private String obtenerCalificacionAnterior(String numControlAlumno, String numControlGrupo) {
-        String calificacionAnterior = "";
-
-        try {
-            String sql = "SELECT calificaciones FROM alumnos_grupo WHERE numControlAlumno = ? AND numControlGrupo = ?";
-            PreparedStatement statement = cn.prepareStatement(sql);
-            statement.setString(1, numControlAlumno);
-            statement.setString(2, numControlGrupo);
-            ResultSet rs = statement.executeQuery();
-
-            if (rs.next()) {
-                calificacionAnterior = rs.getString("calificaciones");
-                if (calificacionAnterior == null) {
-                    calificacionAnterior = "sin asignar";
-                } else if (calificacionAnterior.isEmpty()) {
-                    calificacionAnterior = "sin asignar";
-                }
-            }
-
-            rs.close();
-            statement.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        return calificacionAnterior;
-    }
-
-
-    private void btnActualizarCalificacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarCalificacionesActionPerformed
-        int filas = tablaAlumnosGrupo.getRowCount();
-
-        try {
-            String sql = "UPDATE alumnos_grupo SET calificaciones = ? WHERE numControlAlumno = ? AND numControlGrupo = ?";
-            PreparedStatement statement = cn.prepareStatement(sql);
-
-            int columnaCalificacionesIndex = tablaAlumnosGrupo.getColumnModel().getColumnIndex("Calificaciones");
-
-            // Variables para almacenar los nombres de los alumnos y sus calificaciones actualizadas
-            StringBuilder mensajeCalificaciones = new StringBuilder();
-
-            // Recorrer todas las filas de la tabla
-            for (int fila = 0; fila < filas; fila++) {
-                String numControlGrupo = tablaAlumnosGrupo.getValueAt(fila, 0) != null ? tablaAlumnosGrupo.getValueAt(fila, 0).toString() : "";
-                String nombreAlumno = tablaAlumnosGrupo.getValueAt(fila, 1) != null ? tablaAlumnosGrupo.getValueAt(fila, 1).toString() : "";
-                String apellidosAlumno = tablaAlumnosGrupo.getValueAt(fila, 2) != null ? tablaAlumnosGrupo.getValueAt(fila, 2).toString() : "";
-                String numControlAsignatura = tablaAlumnosGrupo.getValueAt(fila, 3) != null ? tablaAlumnosGrupo.getValueAt(fila, 3).toString() : "";
-                String calificaciones = tablaAlumnosGrupo.getValueAt(fila, columnaCalificacionesIndex) != null ? tablaAlumnosGrupo.getValueAt(fila, columnaCalificacionesIndex).toString() : null;
-
-                String numControlAlumno = obtenerNumControlAlumno(nombreAlumno, apellidosAlumno, numControlAsignatura, numControlGrupo);
-
-                if (numControlAlumno != null) {
-                    // Obtener la calificación anterior del alumno
-                    String calificacionAnterior = obtenerCalificacionAnterior(numControlAlumno, numControlGrupo);
-
-                    // Establecer los parámetros numControlAlumno, numControlGrupo y calificaciones en la consulta
-                    statement.setString(1, calificaciones);
-                    statement.setString(2, numControlAlumno);
-                    statement.setString(3, numControlGrupo);
-                    statement.executeUpdate();
-
-                    // Agregar el nombre del alumno, la calificación anterior y la calificación actualizada al mensaje
-                    mensajeCalificaciones.append("- Alumno: ").append(nombreAlumno).append(" ").append(apellidosAlumno).append("\n");
-                    mensajeCalificaciones.append("  Calificación anterior: ").append(calificacionAnterior != null ? calificacionAnterior : "sin asignar").append("\n");
-                    mensajeCalificaciones.append("  Calificación actualizada: ").append(calificaciones != null ? calificaciones : "sin asignar").append("\n");
-                    mensajeCalificaciones.append("------------------------------------\n");
-                }
-            }
-
-            statement.close();
-
-            // Mostrar mensaje de éxito con las calificaciones actualizadas
-            String mensajeExito = "Las calificaciones se han actualizado correctamente:\n\n" + mensajeCalificaciones.toString();
-            SoundPlayer.playSystemNotificationSound();
-            JOptionPane.showMessageDialog(this, mensajeExito, "Actualización exitosa", JOptionPane.INFORMATION_MESSAGE);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            SoundPlayer.playSystemNotificationSound();
-            JOptionPane.showMessageDialog(this, "Error al actualizar las calificaciones", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btnActualizarCalificacionesActionPerformed
-
+//    private String obtenerNumControlAlumno(String nombreAlumno, String apellidosAlumno, String numControlAsignatura, String numControlGrupo) {
+//        String numControlAlumno = null;
+//
+//        try {
+//            String sql = "SELECT numControlAlumno FROM alumnos_grupo WHERE nombreAlumno = ? AND apellidosAlumno = ? AND numControlAsignatura = ? AND numControlGrupo = ?";
+//            PreparedStatement statement = cn.prepareStatement(sql);
+//            statement.setString(1, nombreAlumno);
+//            statement.setString(2, apellidosAlumno);
+//            statement.setString(3, numControlAsignatura);
+//            statement.setString(4, numControlGrupo);
+//            ResultSet rs = statement.executeQuery();
+//
+//            if (rs.next()) {
+//                numControlAlumno = rs.getString("numControlAlumno");
+//            }
+//
+//            rs.close();
+//            statement.close();
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//        }
+//
+//        return numControlAlumno;
+//    }
+//
+//    private String obtenerNumControlAlumnoTabla(int fila) {
+//        String numControlGrupo = tablaAlumnosGrupo.getValueAt(fila, 0).toString();
+//        String nombreAlumno = tablaAlumnosGrupo.getValueAt(fila, 1).toString();
+//        String apellidosAlumno = tablaAlumnosGrupo.getValueAt(fila, 2).toString();
+//        String numControlAsignatura = tablaAlumnosGrupo.getValueAt(fila, 3).toString();
+//
+//        String numControlAlumno = obtenerNumControlAlumno(nombreAlumno, apellidosAlumno, numControlAsignatura, numControlGrupo);
+//
+//        return numControlAlumno;
+//    }
+//
+//    private String obtenerCalificacionAnterior(String numControlAlumno, String numControlGrupo) {
+//        String calificacionAnterior = "";
+//
+//        try {
+//            String sql = "SELECT calificaciones FROM alumnos_grupo WHERE numControlAlumno = ? AND numControlGrupo = ?";
+//            PreparedStatement statement = cn.prepareStatement(sql);
+//            statement.setString(1, numControlAlumno);
+//            statement.setString(2, numControlGrupo);
+//            ResultSet rs = statement.executeQuery();
+//
+//            if (rs.next()) {
+//                calificacionAnterior = rs.getString("calificaciones");
+//                if (calificacionAnterior == null) {
+//                    calificacionAnterior = "sin asignar";
+//                } else if (calificacionAnterior.isEmpty()) {
+//                    calificacionAnterior = "sin asignar";
+//                }
+//            }
+//
+//            rs.close();
+//            statement.close();
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//        }
+//
+//        return calificacionAnterior;
+//    }
     /**
      * @param args the command line arguments
      */
@@ -499,43 +294,31 @@ public class AdministracionGrupos extends javax.swing.JFrame {
 
     void mostrarTabla() {
         // Crear un DefaultTableModel personalizado
-        DefaultTableModel modelo = new DefaultTableModel() {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                // Permitir la edición solo en la columna de Calificaciones
-                return column == 4; // Índice de la columna "Calificaciones"
-            }
-        };
+        DefaultTableModel modelo = new DefaultTableModel();
 
-        modelo.addColumn("NControl Grupo");
+        modelo.addColumn("nControl");
         modelo.addColumn("Nombre");
-        modelo.addColumn("Apellido");
-        modelo.addColumn("NControl Asignatura");
-        modelo.addColumn("Calificaciones");
 
         tablaAlumnosGrupo.setModel(modelo);
 
-        String sql = "SELECT numControlGrupo, nombreAlumno, apellidosAlumno, numControlAsignatura, calificaciones FROM alumnos_grupo WHERE numControlGrupo = ?";
+        String sql = "SELECT ncontrol, nombre FROM dbo.alumnos WHERE grupo = ? AND estatus = 'ac'";
 
         try {
             PreparedStatement statement = cn.prepareStatement(sql);
 
-            // Obtener el valor del numControlGrupo del JLabel txtNumControl
-            String numControlGrupo = txtNumControl.getText();
+            // Obtener el valor del grupo del JLabel txtGrupo
+            String grupo = txtGrupo.getText();
 
-            // Establecer el valor del parámetro numControlGrupo en la consulta
-            statement.setString(1, numControlGrupo);
+            // Establecer el valor del parámetro grupo en la consulta
+            statement.setString(1, grupo);
 
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                numControlGrupo = rs.getString("numControlGrupo");
-                String nombre = rs.getString("nombreAlumno");
-                String apellido = rs.getString("apellidosAlumno");
-                String numControlAsignatura = rs.getString("numControlAsignatura");
-                String calificaciones = rs.getString("calificaciones");
+                String nControl = rs.getString("ncontrol");
+                String nombre = rs.getString("nombre");
 
-                modelo.addRow(new Object[]{numControlGrupo, nombre, apellido, numControlAsignatura, calificaciones});
+                modelo.addRow(new Object[]{nControl, nombre});
             }
         } catch (SQLException e) {
             System.err.println(e);
@@ -545,17 +328,11 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         // Ajustar automáticamente el tamaño de las columnas según el contenido
         tablaAlumnosGrupo.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         tablaAlumnosGrupo.getColumnModel().getColumn(0).setPreferredWidth(100); // Ajustar el ancho de la primera columna si es necesario
-        tablaAlumnosGrupo.getColumnModel().getColumn(1).setPreferredWidth(150); // Ajustar el ancho de la columna de nombre si es necesario
-        tablaAlumnosGrupo.getColumnModel().getColumn(2).setPreferredWidth(150); // Ajustar el ancho de la columna de apellidos si es necesario
-        tablaAlumnosGrupo.getColumnModel().getColumn(3).setPreferredWidth(150); // Ajustar el ancho de la columna de numControlASignatrura si es necesario
-        tablaAlumnosGrupo.getColumnModel().getColumn(4).setPreferredWidth(120); // Ajustar el ancho de la columna de Calificaciones si es necesario
+        tablaAlumnosGrupo.getColumnModel().getColumn(1).setPreferredWidth(250); // Ajustar el ancho de la columna de nombre si es necesario
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         tablaAlumnosGrupo.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        tablaAlumnosGrupo.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-        tablaAlumnosGrupo.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
-
     }
 
     public void cerrar() {
@@ -592,21 +369,13 @@ public class AdministracionGrupos extends javax.swing.JFrame {
     Connection cn = con.conexion();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActualizarCalificaciones;
-    private javax.swing.JButton btnAgregarAlumnos;
-    private javax.swing.JButton btnEliminarAlumnos;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tablaAlumnosGrupo;
-    private javax.swing.JLabel txtIdGrupo;
-    private javax.swing.JLabel txtNombreGrupo;
-    private javax.swing.JLabel txtNumControl;
-    private javax.swing.JLabel txtNumControlAsignatura;
+    private javax.swing.JLabel txtEspecialidad;
+    private javax.swing.JLabel txtGrupo;
     // End of variables declaration//GEN-END:variables
 }

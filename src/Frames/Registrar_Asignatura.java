@@ -29,7 +29,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
     public Registrar_Asignatura() {
         initComponents();
 
-        TextPrompt nombre_curso = new TextPrompt("Escribe curso", txtNombre);
+        TextPrompt nombre_curso = new TextPrompt("Escribe asignatura", txtNombre);
 
         this.setLocationRelativeTo(null);
         mostrarTabla("");
@@ -53,7 +53,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
 
         tabla_registro_asignaturas.setModel(modelo);
 
-        String sql = "SELECT * FROM asignaturas";
+        String sql = "SELECT * FROM iciibaSFR.asignaturas";
 
         String datos[] = new String[2];
 
@@ -324,7 +324,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
             if (txtNombre.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "No puedes dejar campos vacios");
             } else {
-                PreparedStatement ps = cn.prepareStatement("INSERT INTO asignaturas (nombreAsignatura) VALUES (?)");
+                PreparedStatement ps = cn.prepareStatement("INSERT INTO iciibaSFR.asignaturas (nombreAsignatura) VALUES (?)");
 
                 ps.setString(1, txtNombre.getText());
 
@@ -345,7 +345,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
 
         try {
-            PreparedStatement ps = cn.prepareStatement("UPDATE asignaturas SET nombreAsignatura = '"
+            PreparedStatement ps = cn.prepareStatement("UPDATE iciibaSFR.asignaturas SET nombreAsignatura = '"
                     + txtNombre.getText() + "' WHERE numControlAsignatura = '" + txtIdAsignatura.getText() + "'");
 
             int respuesta = ps.executeUpdate();
@@ -377,7 +377,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
 
         try {
 
-            PreparedStatement ps = cn.prepareStatement("DELETE FROM asignaturas WHERE numControlAsignatura = '" + txtIdAsignatura.getText() + "'");
+            PreparedStatement ps = cn.prepareStatement("DELETE FROM iciibaSFR.asignaturas WHERE numControlAsignatura = '" + txtIdAsignatura.getText() + "'");
             int respuesta = ps.executeUpdate();
             if (respuesta > 0) {
                 JOptionPane.showMessageDialog(null, "Asignatura eliminado");
@@ -397,7 +397,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
     private boolean verificarAsignaturaExistente(int idAsignatura) throws SQLException {
         boolean asignaturaExiste = false;
 
-        String sql = "SELECT * FROM asignaturas WHERE numControlAsignatura = ?";
+        String sql = "SELECT * FROM iciibaSFR.asignaturas WHERE numControlAsignatura = ?";
         PreparedStatement statement = cn.prepareStatement(sql);
         statement.setInt(1, idAsignatura);
         ResultSet rs = statement.executeQuery();
@@ -413,7 +413,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
     private boolean asignaturaEnUso(int idAsignatura) throws SQLException {
         boolean enUso = false;
 
-        String sql = "SELECT * FROM grupo WHERE numControlAsignatura = ?";
+        String sql = "SELECT * FROM iciibaSFR.grupo WHERE numControlAsignatura = ?";
         PreparedStatement statement = cn.prepareStatement(sql);
         statement.setInt(1, idAsignatura);
         ResultSet rs = statement.executeQuery();
@@ -428,7 +428,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
     }
 
     private void eliminarAsignatura(int idAsignatura) throws SQLException {
-        String sql = "DELETE FROM asignaturas WHERE numControlAsignatura = ?";
+        String sql = "DELETE FROM iciibaSFR.asignaturas WHERE numControlAsignatura = ?";
         PreparedStatement statement = cn.prepareStatement(sql);
         statement.setInt(1, idAsignatura);
         statement.executeUpdate();
@@ -437,7 +437,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
     }
 
     private void eliminarRegistrosEnGrupo(int idAsignatura) throws SQLException {
-        String sql = "UPDATE grupo SET numControlAsignatura = NULL WHERE numControlAsignatura = ?";
+        String sql = "UPDATE iciibaSFR.grupo SET numControlAsignatura = NULL WHERE numControlAsignatura = ?";
         PreparedStatement statement = cn.prepareStatement(sql);
         statement.setInt(1, idAsignatura);
         statement.executeUpdate();

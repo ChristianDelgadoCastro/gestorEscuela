@@ -305,34 +305,36 @@ public class Login extends javax.swing.JFrame {
         if (!user.equals("") || !pass.equals("")) {
 
             try {
-                PreparedStatement ps = cn.prepareStatement("SELECT tipo_nivel FROM usuarios WHERE "
-                        + "username='" + user + "' AND password='" + pass + "'");
+                PreparedStatement ps = cn.prepareStatement("SELECT activo FROM dbo.empleados WHERE "
+                        + "clv_worker = ? AND password = ?");
+                ps.setString(1, user);
+                ps.setString(2, pass);
                 ResultSet rs = ps.executeQuery();
 
                 if (rs.next()) {
+                    int activo = rs.getInt("activo");
 
-                    String tipo_nivel = rs.getString("tipo_nivel");
-
-                    if (tipo_nivel.equalsIgnoreCase("Administrador")) {
-
+                    if (activo == 1) {
                         dispose();
                         new Principal().setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Usuario inactivo. Contacte al administrador.");
+                        txtUsuario.setText("");
+                        txtPass.setText("");
                     }
                 } else {
-
-                    JOptionPane.showMessageDialog(null, "Usuario y/o password incorrectos");
+                    JOptionPane.showMessageDialog(null, "Usuario y/o contraseña incorrectos");
                     txtUsuario.setText("");
                     txtPass.setText("");
                 }
             } catch (SQLException e) {
-
                 System.err.println(e);
-                JOptionPane.showMessageDialog(null, "Error al iniciar sesion, contacte al administrador");
+                JOptionPane.showMessageDialog(null, "Error al iniciar sesión, contacte al administrador");
             }
-
         } else {
             JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
         }
+
 
     }//GEN-LAST:event_btnIngresarActionPerformed
 
@@ -343,31 +345,32 @@ public class Login extends javax.swing.JFrame {
         if (!user.equals("") || !pass.equals("")) {
 
             try {
-                PreparedStatement ps = cn.prepareStatement("SELECT tipo_nivel FROM usuarios WHERE "
-                        + "username='" + user + "' AND password='" + pass + "'");
+                PreparedStatement ps = cn.prepareStatement("SELECT activo FROM dbo.empleados WHERE "
+                        + "clv_worker = ? AND password = ?");
+                ps.setString(1, user);
+                ps.setString(2, pass);
                 ResultSet rs = ps.executeQuery();
 
                 if (rs.next()) {
+                    int activo = rs.getInt("activo");
 
-                    String tipo_nivel = rs.getString("tipo_nivel");
-
-                    if (tipo_nivel.equalsIgnoreCase("Administrador")) {
-
+                    if (activo == 1) {
                         dispose();
                         new Principal().setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Usuario inactivo. Contacte al administrador.");
+                        txtUsuario.setText("");
+                        txtPass.setText("");
                     }
                 } else {
-
-                    JOptionPane.showMessageDialog(null, "Usuario y/o password incorrectos");
+                    JOptionPane.showMessageDialog(null, "Usuario y/o contraseña incorrectos");
                     txtUsuario.setText("");
                     txtPass.setText("");
                 }
             } catch (SQLException e) {
-
                 System.err.println(e);
-                JOptionPane.showMessageDialog(null, "Error al iniciar sesion, contacte al administrador");
+                JOptionPane.showMessageDialog(null, "Error al iniciar sesión, contacte al administrador");
             }
-
         } else {
             JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
         }
@@ -425,18 +428,18 @@ public class Login extends javax.swing.JFrame {
             txtPass.setText("");
             txtPass.setForeground(Color.black);
         }
-        if (txtUsuario.getText().isEmpty())  {
+        if (txtUsuario.getText().isEmpty()) {
             txtUsuario.setText("Ingrese su nombre de usuario");
             txtUsuario.setForeground(Color.gray);
         }
     }//GEN-LAST:event_txtPassMousePressed
 
     private void txtUsuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsuarioFocusLost
-        
+
     }//GEN-LAST:event_txtUsuarioFocusLost
 
     private void txtPassFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPassFocusLost
-            
+
     }//GEN-LAST:event_txtPassFocusLost
 
     /**
