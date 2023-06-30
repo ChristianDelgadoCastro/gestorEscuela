@@ -17,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -49,7 +50,10 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         txtGrupo.setText(grupo);
         txtEspecialidad.setText(especialidad);
         cerrar();
-        mostrarTabla();
+        mostrarTabla(grupo, especialidad);
+        cargarAsignaturas();
+        ListAsignaturas.setEnabled(false);
+
     }
 
     // Resto del código del formulario y otros métodos...
@@ -74,18 +78,26 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         txtGrupo = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtEspecialidad = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        ListAsignaturas = new javax.swing.JList<>();
+        btnAgregarAsignaturas = new javax.swing.JButton();
+        btnEliminarAsignaturas = new javax.swing.JButton();
+        btnHabilitarAsignaturas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        tablaAlumnosGrupo.setBackground(new java.awt.Color(255, 255, 255));
+        tablaAlumnosGrupo.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        tablaAlumnosGrupo.setForeground(new java.awt.Color(0, 0, 0));
         tablaAlumnosGrupo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
         jScrollPane1.setViewportView(tablaAlumnosGrupo);
@@ -138,19 +150,64 @@ public class AdministracionGrupos extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
+        ListAsignaturas.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(ListAsignaturas);
+
+        btnAgregarAsignaturas.setText("Agregar");
+        btnAgregarAsignaturas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarAsignaturasActionPerformed(evt);
+            }
+        });
+
+        btnEliminarAsignaturas.setText("Eliminar");
+        btnEliminarAsignaturas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarAsignaturasActionPerformed(evt);
+            }
+        });
+
+        btnHabilitarAsignaturas.setText("Habilitar");
+        btnHabilitarAsignaturas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHabilitarAsignaturasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(78, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnAgregarAsignaturas)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnEliminarAsignaturas))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(53, 53, 53)
+                                .addComponent(btnHabilitarAsignaturas)))
+                        .addGap(25, 25, 25))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,7 +217,17 @@ public class AdministracionGrupos extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVolver))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(btnHabilitarAsignaturas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAgregarAsignaturas)
+                            .addComponent(btnEliminarAsignaturas))))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
@@ -182,6 +249,202 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         registrar_grupos.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void btnAgregarAsignaturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAsignaturasActionPerformed
+        // Obtener el grupo y especialidad del JLabel txtGrupo y txtEspecialidad
+        String grupo = txtGrupo.getText();
+        String especialidad = txtEspecialidad.getText();
+
+        // Obtener las asignaturas seleccionadas de la JList
+        List<String> asignaturasSeleccionadas = ListAsignaturas.getSelectedValuesList();
+
+        // Obtener los nControlAsignatura correspondientes a las asignaturas seleccionadas
+        List<String> nControlAsignaturas = new ArrayList<>();
+        for (String asignatura : asignaturasSeleccionadas) {
+            String nControlAsignatura = obtenerNControlAsignatura(asignatura);
+            if (nControlAsignatura != null) {
+                nControlAsignaturas.add(nControlAsignatura);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al obtener el nControlAsignatura para la asignatura: " + asignatura);
+                return;
+            }
+        }
+
+        // Obtener los nControl de los alumnos que pertenecen al grupo
+        List<String> nControlAlumnos = new ArrayList<>();
+        String sql = "SELECT ncontrol FROM dbo.alumnos WHERE grupo = ? AND estatus = 'ac'";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, grupo);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                String nControl = rs.getString("ncontrol");
+                nControlAlumnos.add(nControl);
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+            JOptionPane.showMessageDialog(null, "Error al obtener los nControl de los alumnos. Contacta al administrador.");
+            return;
+        }
+
+        // Insertar los registros en la tabla calificaciones
+        int registrosAgregados = 0;
+        for (String nControl : nControlAlumnos) {
+            for (String nControlAsignatura : nControlAsignaturas) {
+                // Verificar si el registro ya existe en la tabla calificaciones
+                boolean registroExistente = verificarRegistroExistente(grupo, nControlAsignatura, nControl);
+
+                if (!registroExistente) {
+                    // Insertar los datos en la tabla calificaciones
+                    String insertSql = "INSERT INTO dbo.calificaciones (ncontrol, grupo, calificacion, nControlAsignatura) VALUES (?, ?, NULL, ?)";
+                    try {
+                        PreparedStatement insertPst = cn.prepareStatement(insertSql);
+                        insertPst.setString(1, nControl);
+                        insertPst.setString(2, grupo);
+                        insertPst.setString(3, nControlAsignatura);
+
+                        int resultado = insertPst.executeUpdate();
+                        if (resultado > 0) {
+                            registrosAgregados++;
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Error al agregar la asignatura al grupo. Contacta al administrador.");
+                        }
+                    } catch (SQLException e) {
+                        System.err.println(e);
+                        JOptionPane.showMessageDialog(null, "Error al agregar la asignatura al grupo. Contacta al administrador.");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "El registro con grupo: " + grupo + ", nControlAsignatura: " + nControlAsignatura + " y nControl: " + nControl + " ya existe.");
+                }
+            }
+        }
+
+        if (registrosAgregados > 0) {
+            JOptionPane.showMessageDialog(null, "Se han agregado " + registrosAgregados + " asignaturas al grupo exitosamente.");
+        }
+
+        // Actualizar la tabla de calificaciones con las asignaturas agregadas al grupo
+        mostrarTabla(grupo, especialidad);
+        habilitarDeshabilitar();
+    }//GEN-LAST:event_btnAgregarAsignaturasActionPerformed
+
+    private void btnEliminarAsignaturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAsignaturasActionPerformed
+        // Obtener el grupo y especialidad del JLabel txtGrupo y txtEspecialidad
+        String grupo = txtGrupo.getText();
+        String especialidad = txtEspecialidad.getText();
+
+        // Obtener las asignaturas seleccionadas de la JList
+        List<String> asignaturasSeleccionadas = ListAsignaturas.getSelectedValuesList();
+
+        // Eliminar cada asignatura seleccionada del grupo en la tabla calificaciones
+        int asignaturasEliminadas = 0;
+        for (String asignatura : asignaturasSeleccionadas) {
+            String nControlAsignatura = obtenerNControlAsignatura(asignatura);
+            if (nControlAsignatura != null) {
+                eliminarAsignaturaGrupo(grupo, nControlAsignatura);
+                asignaturasEliminadas++;
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al obtener el nControlAsignatura para la asignatura: " + asignatura);
+            }
+        }
+
+        if (asignaturasEliminadas > 0) {
+            JOptionPane.showMessageDialog(null, "Se han eliminado " + asignaturasEliminadas + " asignaturas del grupo exitosamente.");
+        }
+
+        // Actualizar la tabla de calificaciones después de eliminar las asignaturas
+        mostrarTabla(grupo, especialidad);
+        habilitarDeshabilitar();
+    }//GEN-LAST:event_btnEliminarAsignaturasActionPerformed
+
+    private void btnHabilitarAsignaturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHabilitarAsignaturasActionPerformed
+        habilitarDeshabilitar();
+    }//GEN-LAST:event_btnHabilitarAsignaturasActionPerformed
+
+    private void habilitarDeshabilitar(){
+        if (ListAsignaturas.isEnabled()) {
+            ListAsignaturas.setEnabled(false);
+            btnHabilitarAsignaturas.setText("Habilitar");
+        } else {
+            ListAsignaturas.setEnabled(true);
+            btnHabilitarAsignaturas.setText("Deshabilitar");
+        }
+    }
+    
+    private boolean verificarRegistroExistente(String grupo, String nControlAsignatura, String nControl) {
+        String sql = "SELECT COUNT(*) FROM dbo.calificaciones WHERE grupo = ? AND nControlAsignatura = ? AND ncontrol = ?";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, grupo);
+            pst.setString(2, nControlAsignatura);
+            pst.setString(3, nControl);
+
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return false;
+    }
+
+    private String obtenerPrimerNControl() {
+        String nControl = null;
+        String sql = "SELECT TOP 1 ncontrol FROM dbo.calificaciones";
+
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                nControl = rs.getString("ncontrol");
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+
+        return nControl;
+    }
+
+    private String obtenerNControlAsignatura(String asignatura) {
+        String nControlAsignatura = null;
+        String sql = "SELECT nControlAsignatura FROM dbo.asignaturas WHERE asignatura = ?";
+
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, asignatura);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                nControlAsignatura = rs.getString("nControlAsignatura");
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+
+        return nControlAsignatura;
+    }
+
+    private void eliminarAsignaturaGrupo(String grupo, String nControlAsignatura) {
+        String sql = "DELETE FROM dbo.calificaciones WHERE grupo = ? AND nControlAsignatura = ?";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, grupo);
+            pst.setString(2, nControlAsignatura);
+
+            int resultado = pst.executeUpdate();
+            if (resultado > 0) {
+                JOptionPane.showMessageDialog(null, "Asignatura eliminada del grupo exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontraron registros de la asignatura en el grupo.");
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+            JOptionPane.showMessageDialog(null, "Error al eliminar la asignatura del grupo. Contacta al administrador.");
+        }
+    }
 
 //    private String obtenerNumControlAlumno(String nombreAlumno, String apellidosAlumno, String numControlAsignatura, String numControlGrupo) {
 //        String numControlAlumno = null;
@@ -292,22 +555,28 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         }
     }
 
-    void mostrarTabla() {
+    void mostrarTabla(String grupo, String especialidad) {
         // Crear un DefaultTableModel personalizado
         DefaultTableModel modelo = new DefaultTableModel();
 
         modelo.addColumn("nControl");
         modelo.addColumn("Nombre");
+        modelo.addColumn("nControlAsignatura"); // Columna nControlAsignatura existente
+        modelo.addColumn("Asignatura"); // Nueva columna para mostrar la asignatura
+        modelo.addColumn("Calificación"); // Nueva columna para mostrar la calificación
 
         tablaAlumnosGrupo.setModel(modelo);
 
-        String sql = "SELECT ncontrol, nombre FROM dbo.alumnos WHERE grupo = ? AND estatus = 'ac'";
+        String sql = "SELECT c.ncontrol, a.nombre, c.nControlAsignatura, asignaturas.asignatura, c.calificacion FROM dbo.calificaciones c "
+                + "INNER JOIN dbo.alumnos a ON c.ncontrol = a.ncontrol "
+                + "INNER JOIN dbo.asignaturas asignaturas ON c.nControlAsignatura = asignaturas.nControlAsignatura "
+                + "WHERE c.grupo = ? AND a.estatus = 'ac'";
 
         try {
             PreparedStatement statement = cn.prepareStatement(sql);
 
             // Obtener el valor del grupo del JLabel txtGrupo
-            String grupo = txtGrupo.getText();
+            grupo = txtGrupo.getText();
 
             // Establecer el valor del parámetro grupo en la consulta
             statement.setString(1, grupo);
@@ -317,8 +586,11 @@ public class AdministracionGrupos extends javax.swing.JFrame {
             while (rs.next()) {
                 String nControl = rs.getString("ncontrol");
                 String nombre = rs.getString("nombre");
+                String nControlAsignatura = rs.getString("nControlAsignatura"); // Obtener el nControlAsignatura existente
+                String asignatura = rs.getString("asignatura");
+                String calificacion = rs.getString("calificacion");
 
-                modelo.addRow(new Object[]{nControl, nombre});
+                modelo.addRow(new Object[]{nControl, nombre, nControlAsignatura, asignatura, calificacion});
             }
         } catch (SQLException e) {
             System.err.println(e);
@@ -329,10 +601,37 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         tablaAlumnosGrupo.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         tablaAlumnosGrupo.getColumnModel().getColumn(0).setPreferredWidth(100); // Ajustar el ancho de la primera columna si es necesario
         tablaAlumnosGrupo.getColumnModel().getColumn(1).setPreferredWidth(250); // Ajustar el ancho de la columna de nombre si es necesario
+        tablaAlumnosGrupo.getColumnModel().getColumn(2).setPreferredWidth(200); // Ajustar el ancho de la columna de nControlAsignatura si es necesario
+        tablaAlumnosGrupo.getColumnModel().getColumn(3).setPreferredWidth(220); // Ajustar el ancho de la columna de asignatura si es necesario
+        tablaAlumnosGrupo.getColumnModel().getColumn(4).setPreferredWidth(150); // Ajustar el ancho de la columna de calificación si es necesario
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         tablaAlumnosGrupo.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+    }
+
+    public void cargarAsignaturas() {
+        // Obtener los datos de la tabla asignaturas
+        String sql = "SELECT asignatura FROM dbo.asignaturas";
+        try {
+            PreparedStatement statement = cn.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+
+            // Crear un modelo para la JList
+            DefaultListModel<String> modeloLista = new DefaultListModel<>();
+
+            // Agregar las asignaturas al modelo de la JList
+            while (rs.next()) {
+                String asignatura = rs.getString("asignatura");
+                modeloLista.addElement(asignatura);
+            }
+
+            // Asignar el modelo a la JList
+            ListAsignaturas.setModel(modeloLista);
+        } catch (SQLException e) {
+            System.err.println(e);
+            JOptionPane.showMessageDialog(null, "Error al cargar las asignaturas. Contacta al administrador.");
+        }
     }
 
     public void cerrar() {
@@ -369,11 +668,16 @@ public class AdministracionGrupos extends javax.swing.JFrame {
     Connection cn = con.conexion();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList<String> ListAsignaturas;
+    private javax.swing.JButton btnAgregarAsignaturas;
+    private javax.swing.JButton btnEliminarAsignaturas;
+    private javax.swing.JButton btnHabilitarAsignaturas;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tablaAlumnosGrupo;
     private javax.swing.JLabel txtEspecialidad;
     private javax.swing.JLabel txtGrupo;

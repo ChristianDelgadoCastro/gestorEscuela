@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
+import org.apache.tools.ant.taskdefs.Length;
 
 /**
  *
@@ -29,38 +30,35 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
     public Registrar_Asignatura() {
         initComponents();
 
-        TextPrompt nombre_curso = new TextPrompt("Escribe asignatura", txtNombre);
+        TextPrompt nombre_curso = new TextPrompt("Escribe asignatura", txtAsignatura);
 
         this.setLocationRelativeTo(null);
-        mostrarTabla("");
+        mostrarTabla();
         limpiar();
-        txtIdAsignatura.setEnabled(false);
         cerrar();
 
     }
 
     void limpiar() {
 
-        txtIdAsignatura.setText("");
-        txtNombre.setText("");
+        txtnControlAsignatura.setText("");
+        txtAsignatura.setText("");
 
     }
 
-    void mostrarTabla(String valor) {
+    void mostrarTabla() {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Numero de asignatura");
         modelo.addColumn("Nombre");
 
         tabla_registro_asignaturas.setModel(modelo);
 
-        String sql = "SELECT * FROM iciibaSFR.asignaturas";
+        String sql = "SELECT * FROM dbo.asignaturas";
 
         String datos[] = new String[2];
 
-        Statement st;
-
         try {
-            st = cn.createStatement();
+            Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
 
             while (rs.next()) {
@@ -73,10 +71,8 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
             tabla_registro_asignaturas.setModel(modelo);
 
             // Desactivar la edición de todas las celdas de la tabla
-            for (int column = 0; column < tabla_registro_asignaturas.getColumnCount(); column++) {
-                Class<?> columnClass = tabla_registro_asignaturas.getColumnClass(column);
-                tabla_registro_asignaturas.setDefaultEditor(columnClass, null);
-            }
+//            DefaultCellEditor editor = new DefaultCellEditor(new JTextField());
+//            tabla_registro_asignaturas.setDefaultEditor(Object.class, editor);
         } catch (SQLException e) {
             System.err.println(e);
             JOptionPane.showMessageDialog(null, "Error al cargar cursos, contacte al administrador");
@@ -128,8 +124,8 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
-        txtIdAsignatura = new javax.swing.JTextField();
+        txtAsignatura = new javax.swing.JTextField();
+        txtnControlAsignatura = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
@@ -149,23 +145,29 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Control de las asignaturas");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cursos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial Black", 0, 14))); // NOI18N
 
         jLabel2.setText("Número de control de asignatura");
 
-        jLabel3.setText("Nombre:");
+        jLabel3.setText("Nombre de la asignatura:");
 
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+        txtAsignatura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
+                txtAsignaturaActionPerformed(evt);
             }
         });
 
-        txtIdAsignatura.addActionListener(new java.awt.event.ActionListener() {
+        txtnControlAsignatura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdAsignaturaActionPerformed(evt);
+                txtnControlAsignaturaActionPerformed(evt);
+            }
+        });
+        txtnControlAsignatura.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtnControlAsignaturaKeyTyped(evt);
             }
         });
 
@@ -178,12 +180,12 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtIdAsignatura))
+                        .addComponent(txtnControlAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(23, 23, 23)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(txtAsignatura)))
+                .addGap(0, 14, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,11 +193,11 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtIdAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtnControlAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -255,27 +257,23 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(296, 296, 296)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnGuardar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnActualizar))
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnElimiarAsignatura, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnGuardar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnActualizar, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnElimiarAsignatura, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
+                .addContainerGap(14, Short.MAX_VALUE))
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,27 +286,27 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnGuardar)
-                            .addComponent(btnActualizar))
-                        .addGap(18, 18, 18)
+                            .addComponent(btnActualizar)
+                            .addComponent(btnGuardar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnVolver)
-                            .addComponent(btnElimiarAsignatura))
+                            .addComponent(btnElimiarAsignatura)
+                            .addComponent(btnVolver))
                         .addGap(34, 34, 34))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+    private void txtAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAsignaturaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreActionPerformed
+    }//GEN-LAST:event_txtAsignaturaActionPerformed
 
-    private void txtIdAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdAsignaturaActionPerformed
+    private void txtnControlAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnControlAsignaturaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdAsignaturaActionPerformed
+    }//GEN-LAST:event_txtnControlAsignaturaActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
 
@@ -319,178 +317,144 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        String asignatura = txtAsignatura.getText();
 
+        // Validar que el campo no esté vacío
+        if (asignatura.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
+            return;
+        }
+
+        String nControlAsignatura = txtnControlAsignatura.getText();
+
+        // Validar que el campo nControlAsignatura tenga exactamente 5 caracteres
+        if (nControlAsignatura.length() != 5) {
+            JOptionPane.showMessageDialog(null, "El campo nControlAsignatura debe tener 5 caracteres.");
+            return;
+        }
+
+        // Guardar los datos en la base de datos
+        String sql = "INSERT INTO dbo.asignaturas (nControlAsignatura, asignatura) VALUES (?, ?)";
         try {
-            if (txtNombre.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "No puedes dejar campos vacios");
-            } else {
-                PreparedStatement ps = cn.prepareStatement("INSERT INTO iciibaSFR.asignaturas (nombreAsignatura) VALUES (?)");
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, nControlAsignatura);
+            pst.setString(2, asignatura);
 
-                ps.setString(1, txtNombre.getText());
-
-                ps.executeUpdate();
-
-                JOptionPane.showMessageDialog(null, "Curso agregado con exito");
-                mostrarTabla("");
+            int resultado = pst.executeUpdate();
+            if (resultado > 0) {
+                JOptionPane.showMessageDialog(null, "Asignatura guardada exitosamente.");
                 limpiar();
+                mostrarTabla();
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al guardar la asignatura. Contacta al administrador.");
             }
         } catch (SQLException e) {
             System.err.println(e);
-            JOptionPane.showMessageDialog(null, "Problema al guardar curso... contacte al administrador");
+            JOptionPane.showMessageDialog(null, "Error al guardar la asignatura. Contacta al administrador.");
         }
-
-
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        int filaSeleccionada = tabla_registro_asignaturas.getSelectedRow();
 
+        // Verificar si se seleccionó una fila
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione una asignatura antes de continuar.");
+            return;
+        }
+
+        // Obtener los valores actuales de la asignatura seleccionada
+        String nControlAsignaturaActual = tabla_registro_asignaturas.getValueAt(filaSeleccionada, 0).toString();
+        String asignaturaActual = tabla_registro_asignaturas.getValueAt(filaSeleccionada, 1).toString();
+
+        // Obtener los nuevos valores de asignatura desde los campos de texto
+        String nuevaAsignatura = txtAsignatura.getText();
+        String nuevoNControlAsignatura = txtnControlAsignatura.getText();
+
+        // Validar que los campos no estén vacíos
+        if (nuevaAsignatura.isEmpty() || nuevoNControlAsignatura.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
+            return;
+        }
+
+        // Realizar la actualización de la asignatura en la base de datos
+        String sql = "UPDATE dbo.asignaturas SET nControlAsignatura = ?, asignatura = ? WHERE nControlAsignatura = ?";
         try {
-            PreparedStatement ps = cn.prepareStatement("UPDATE iciibaSFR.asignaturas SET nombreAsignatura = '"
-                    + txtNombre.getText() + "' WHERE numControlAsignatura = '" + txtIdAsignatura.getText() + "'");
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, nuevoNControlAsignatura);
+            pst.setString(2, nuevaAsignatura);
+            pst.setString(3, nControlAsignaturaActual);
 
-            int respuesta = ps.executeUpdate();
-
-            if (respuesta > 0) {
-                JOptionPane.showMessageDialog(null, "Curso actualizado");
+            int resultado = pst.executeUpdate();
+            if (resultado > 0) {
+                JOptionPane.showMessageDialog(null, "Asignatura actualizada exitosamente.");
+                mostrarTabla();
                 limpiar();
-                mostrarTabla("");
             } else {
-                JOptionPane.showMessageDialog(null, "No ha seleccionado fila");
+                JOptionPane.showMessageDialog(null, "Error al actualizar la asignatura. Contacta al administrador.");
             }
         } catch (SQLException e) {
             System.err.println(e);
-            JOptionPane.showMessageDialog(null, "Error al actualizar curso... Contacte al administrador");
+            JOptionPane.showMessageDialog(null, "Error al actualizar la asignatura. Contacta al administrador.");
         }
-
-
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void tabla_registro_asignaturasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_registro_asignaturasMouseClicked
 
         int fila = this.tabla_registro_asignaturas.getSelectedRow();
 
-        this.txtIdAsignatura.setText(this.tabla_registro_asignaturas.getValueAt(fila, 0).toString());
-        this.txtNombre.setText(this.tabla_registro_asignaturas.getValueAt(fila, 1).toString());
+        this.txtnControlAsignatura.setText(this.tabla_registro_asignaturas.getValueAt(fila, 0).toString());
+        this.txtAsignatura.setText(this.tabla_registro_asignaturas.getValueAt(fila, 1).toString());
     }//GEN-LAST:event_tabla_registro_asignaturasMouseClicked
 
     private void popEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popEliminarActionPerformed
 
-        try {
-
-            PreparedStatement ps = cn.prepareStatement("DELETE FROM iciibaSFR.asignaturas WHERE numControlAsignatura = '" + txtIdAsignatura.getText() + "'");
-            int respuesta = ps.executeUpdate();
-            if (respuesta > 0) {
-                JOptionPane.showMessageDialog(null, "Asignatura eliminado");
-                limpiar();
-                mostrarTabla("");
-            } else {
-                JOptionPane.showMessageDialog(null, "No ha seleccionado fila");
-            }
-
-        } catch (SQLException e) {
-            System.err.println(e);
-            JOptionPane.showMessageDialog(null, "Error al eliminar, contacte al administador");
-        }
-
     }//GEN-LAST:event_popEliminarActionPerformed
-
-    private boolean verificarAsignaturaExistente(int idAsignatura) throws SQLException {
-        boolean asignaturaExiste = false;
-
-        String sql = "SELECT * FROM iciibaSFR.asignaturas WHERE numControlAsignatura = ?";
-        PreparedStatement statement = cn.prepareStatement(sql);
-        statement.setInt(1, idAsignatura);
-        ResultSet rs = statement.executeQuery();
-
-        if (rs.next()) {
-            asignaturaExiste = true;
-        }
-
-        statement.close();
-        return asignaturaExiste;
-    }
-
-    private boolean asignaturaEnUso(int idAsignatura) throws SQLException {
-        boolean enUso = false;
-
-        String sql = "SELECT * FROM iciibaSFR.grupo WHERE numControlAsignatura = ?";
-        PreparedStatement statement = cn.prepareStatement(sql);
-        statement.setInt(1, idAsignatura);
-        ResultSet rs = statement.executeQuery();
-
-        if (rs.next()) {
-            enUso = true;
-        }
-
-        statement.close();
-
-        return enUso;
-    }
-
-    private void eliminarAsignatura(int idAsignatura) throws SQLException {
-        String sql = "DELETE FROM iciibaSFR.asignaturas WHERE numControlAsignatura = ?";
-        PreparedStatement statement = cn.prepareStatement(sql);
-        statement.setInt(1, idAsignatura);
-        statement.executeUpdate();
-
-        statement.close();
-    }
-
-    private void eliminarRegistrosEnGrupo(int idAsignatura) throws SQLException {
-        String sql = "UPDATE iciibaSFR.grupo SET numControlAsignatura = NULL WHERE numControlAsignatura = ?";
-        PreparedStatement statement = cn.prepareStatement(sql);
-        statement.setInt(1, idAsignatura);
-        statement.executeUpdate();
-
-        statement.close();
-    }
 
 
     private void btnElimiarAsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElimiarAsignaturaActionPerformed
-        try {
-            // Verificar si se ha seleccionado una fila en la tabla
-            int filaSeleccionada = tabla_registro_asignaturas.getSelectedRow();
-            if (filaSeleccionada == -1) {
-                JOptionPane.showMessageDialog(null, "No ha seleccionado ninguna asignatura");
-                return;
-            }
+        int filaSeleccionada = tabla_registro_asignaturas.getSelectedRow();
 
-            int confirmacion = JOptionPane.showOptionDialog(
-                    null,
-                    "¿Estás seguro de eliminar la asignatura con nombre " + txtNombre.getText() + "?",
-                    "Confirmación de eliminación",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    new Object[]{"Sí", "No"},
-                    null
-            );
-            if (confirmacion == JOptionPane.YES_OPTION) {
-                int idAsignatura = Integer.parseInt(txtIdAsignatura.getText());
+        // Verificar si se seleccionó una fila
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione una asignatura antes de continuar.");
+            return;
+        }
 
-                // Verificar si la asignatura está siendo utilizada en algún grupo
-                if (asignaturaEnUso(idAsignatura)) {
-                    JOptionPane.showMessageDialog(null, "No se puede eliminar la asignatura porque está siendo utilizada "
-                            + "en un grupo. \n Asegúrese de que los grupos registrados no tengan el número de control de "
-                            + "asignatura que desea eliminar. \n Puede eliminar todo el grupo o simplemente asignarle al grupo otra asignatura temporalmente");
-                    return;
+        // Obtener el número de control de la asignatura seleccionada
+        String nControlAsignatura = tabla_registro_asignaturas.getValueAt(filaSeleccionada, 0).toString();
+
+        // Confirmar la eliminación con un mensaje de confirmación
+        int opcion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres eliminar esta asignatura?",
+                "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        if (opcion == JOptionPane.YES_OPTION) {
+            // Realizar la eliminación de la asignatura en la base de datos
+            String sql = "DELETE FROM dbo.asignaturas WHERE nControlAsignatura = ?";
+            try {
+                PreparedStatement pst = cn.prepareStatement(sql);
+                pst.setString(1, nControlAsignatura);
+
+                int resultado = pst.executeUpdate();
+                if (resultado > 0) {
+                    JOptionPane.showMessageDialog(null, "Asignatura eliminada exitosamente.");
+                    mostrarTabla();
+                    limpiar();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al eliminar la asignatura. Contacta al administrador.");
                 }
-
-                // Eliminar los registros de la asignatura en la tabla "grupo"
-                eliminarRegistrosEnGrupo(idAsignatura);
-
-                // Eliminar la asignatura de la tabla "asignaturas"
-                eliminarAsignatura(idAsignatura);
-
-                JOptionPane.showMessageDialog(null, "Asignatura eliminada");
-                limpiar();
-                mostrarTabla("");
+            } catch (SQLException e) {
+                System.err.println(e);
+                JOptionPane.showMessageDialog(null, "Error al eliminar la asignatura. Contacta al administrador.");
             }
-        } catch (SQLException e) {
-            System.err.println(e);
-            JOptionPane.showMessageDialog(null, "Error al eliminar, contacte al administrador");
         }
     }//GEN-LAST:event_btnElimiarAsignaturaActionPerformed
+
+    private void txtnControlAsignaturaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnControlAsignaturaKeyTyped
+        if(txtnControlAsignatura.getText().length() >= 5)
+        {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtnControlAsignaturaKeyTyped
 
     /**
      * @param args the command line arguments
@@ -541,8 +505,8 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
     private javax.swing.JPopupMenu popBorrar;
     private javax.swing.JMenuItem popEliminar;
     private javax.swing.JTable tabla_registro_asignaturas;
-    private javax.swing.JTextField txtIdAsignatura;
-    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtAsignatura;
+    private javax.swing.JTextField txtnControlAsignatura;
     // End of variables declaration//GEN-END:variables
 
     Conectar con = new Conectar();
