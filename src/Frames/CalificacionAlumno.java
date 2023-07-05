@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.lang.String;
 
 /**
  *
@@ -24,12 +25,14 @@ public class CalificacionAlumno extends javax.swing.JFrame {
     public CalificacionAlumno() {
         initComponents();
         this.setLocationRelativeTo(null);
-
     }
 
     // Declarar variables para almacenar los valores de nControl y calificacion
     private String nControl;
-    private Ver_Alumnos ventanaAnterior;
+    private String nControlAsignatura;
+    private String nombre;
+    private String asignatura;
+    private String calificacion;
 
 // Métodos para establecer los valores de nControl y calificacion
     public void setNControl(String nControl) {
@@ -55,63 +58,23 @@ public class CalificacionAlumno extends javax.swing.JFrame {
         }
     }
 
-    // Obtener y mostrar la calificación actual
-    private void obtenerCalificacionActual() {
-        String nControl = txtnControl.getText();
-        String calificacion = "";
-
-        // Realizar la consulta en la tabla de calificaciones para obtener la calificación
-        String sql = "SELECT calificacion FROM dbo.calificaciones WHERE ncontrol = ?";
-        try {
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, nControl);
-            ResultSet rs = pst.executeQuery();
-
-            if (rs.next()) {
-                calificacion = rs.getString("calificacion");
-                txtCalificacion.setText(calificacion);
-            }
-        } catch (SQLException e) {
-            System.err.println(e);
-            JOptionPane.showMessageDialog(null, "Error al obtener la calificación del alumno. Contacta al administrador.");
-        }
-
-        // Mostrar 0 si la calificación es nula
-        if (calificacion.equals(null)) {
-            calificacion = "0";
-        }
+    public void setNControlAsignatura(String nControlAsignatura) {
+        txtnControlAsignatura.setText(nControlAsignatura);
+        this.nControlAsignatura = nControlAsignatura;
     }
 
-// Cambiar la calificación
-    private void cambiarCalificacion() {
-        String nControl = txtnControl.getText();
-        String nuevaCalificacion = txtNuevaCalificacion.getText();
-
-        String sql = "UPDATE calificaciones SET calificacion = '" + nuevaCalificacion + "' WHERE nControl = '" + nControl + "'";
-
-        try {
-            Statement st = cn.createStatement();
-            int rowsAffected = st.executeUpdate(sql);
-
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Calificación cambiada exitosamente.");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se pudo cambiar la calificación.");
-            }
-        } catch (SQLException e) {
-            System.err.println(e);
-            JOptionPane.showMessageDialog(null, "Error al cambiar la calificación. Contacta al administrador.");
-        }
+    public void setNombre(String nombre) {
+        txtNombre.setText(nombre);
+        this.nombre = nombre;
     }
 
-    // Validar la calificación ingresada
-    private boolean validarCalificacion(String calificacion) {
-        try {
-            int valor = Integer.parseInt(calificacion);
-            return valor >= 1 && valor <= 10;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+    public void setAsignatura(String asignatura) {
+        txtNombreAsignatura.setText(asignatura);
+        this.asignatura = asignatura;
+    }
+
+    public void setCalificacion(String calificacion) {
+        txtCalificacion.setText(calificacion);
     }
 
     /**
@@ -124,39 +87,29 @@ public class CalificacionAlumno extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        txtnControl = new javax.swing.JLabel();
         txtCalificacion = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
         txtNuevaCalificacion = new javax.swing.JTextField();
         btnCambiarCalificacion = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        txtnControl = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtNombreAsignatura = new javax.swing.JLabel();
+        txtnControlAsignatura = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("nControl");
-
-        txtnControl.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        txtnControl.setForeground(new java.awt.Color(0, 0, 0));
-        txtnControl.setText("n.");
-
         txtCalificacion.setFont(new java.awt.Font("Roboto Black", 1, 48)); // NOI18N
         txtCalificacion.setForeground(new java.awt.Color(0, 0, 0));
+        txtCalificacion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtCalificacion.setText("-");
-
-        jLabel2.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Nombre:");
-
-        txtNombre.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        txtNombre.setForeground(new java.awt.Color(0, 0, 0));
-        txtNombre.setText("nombre");
 
         btnVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back_icon.png"))); // NOI18N
         btnVolver.setText("Volver");
@@ -179,73 +132,139 @@ public class CalificacionAlumno extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Calificación:");
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Número de control de alumno:");
+
+        txtnControl.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txtnControl.setForeground(new java.awt.Color(0, 0, 0));
+        txtnControl.setText("nControl");
+
+        jLabel2.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Nombre:");
+
+        txtNombre.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txtNombre.setForeground(new java.awt.Color(0, 0, 0));
+        txtNombre.setText("nombre del alumno");
+
+        jLabel4.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Número de control de asignatura:");
+
+        jLabel5.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Nombre de la asignatura:");
+
+        txtNombreAsignatura.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txtNombreAsignatura.setForeground(new java.awt.Color(0, 0, 0));
+        txtNombreAsignatura.setText("Asignatura");
+
+        txtnControlAsignatura.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txtnControlAsignatura.setForeground(new java.awt.Color(0, 0, 0));
+        txtnControlAsignatura.setText("ncontrol asignatura");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtNombreAsignatura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtnControl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtnControlAsignatura, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtnControl))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtNombre))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtnControlAsignatura))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtNombreAsignatura))
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(txtCalificacion)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(41, 41, 41)
-                                .addComponent(txtNuevaCalificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnCambiarCalificacion)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtnControl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGap(72, 72, 72)
-                                .addComponent(btnVolver)))
-                        .addContainerGap())))
+                        .addGap(37, 37, 37)
+                        .addComponent(jLabel3)
+                        .addGap(114, 114, 114)
+                        .addComponent(txtNuevaCalificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCambiarCalificacion))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(txtCalificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnVolver)
+                .addGap(159, 159, 159))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtnControl))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtNombre)
-                    .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(13, 13, 13)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtNuevaCalificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCambiarCalificacion))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCalificacion)
-                .addGap(12, 12, 12))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCalificacion)
+                    .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -258,13 +277,40 @@ public class CalificacionAlumno extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnCambiarCalificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarCalificacionActionPerformed
+        String nControl = txtnControl.getText();
+        String nControlAsignatura = txtnControlAsignatura.getText();
         String nuevaCalificacion = txtNuevaCalificacion.getText();
 
-        if (validarCalificacion(nuevaCalificacion)) {
-            cambiarCalificacion();
-            obtenerCalificacionActual();
-        } else {
-            JOptionPane.showMessageDialog(null, "La calificación debe ser un número entre 1 y 10.", "Error", JOptionPane.ERROR_MESSAGE);
+        // Verificar que la nueva calificación sea válida (entre 1 y 10)
+        try {
+            double calificacion = Double.parseDouble(nuevaCalificacion);
+            if (calificacion < 1 || calificacion > 10) {
+                JOptionPane.showMessageDialog(null, "La calificación debe estar entre 1 y 10.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "La calificación debe ser un número válido.");
+            return;
+        }
+
+        // Actualizar la calificación en la base de datos
+        String sql = "UPDATE dbo.calificaciones SET calificacion = '" + nuevaCalificacion + "' WHERE ncontrol = '" + nControl + "' AND nControlAsignatura = '" + nControlAsignatura + "'";
+
+        try {
+            Statement statement = cn.createStatement();
+            int rowsUpdated = statement.executeUpdate(sql);
+
+            if (rowsUpdated > 0) {
+                System.out.println("La calificación se actualizó correctamente.");
+                JOptionPane.showMessageDialog(null, "La calificación se actualizó correctamente.");
+                txtCalificacion.setText(nuevaCalificacion);
+            } else {
+                System.out.println("No se pudo actualizar la calificación.");
+                JOptionPane.showMessageDialog(null, "No se pudo actualizar la calificación.");
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+            JOptionPane.showMessageDialog(null, "Error al actualizar la calificación. Contacta al administrador.");
         }
     }//GEN-LAST:event_btnCambiarCalificacionActionPerformed
 
@@ -312,10 +358,15 @@ public class CalificacionAlumno extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     public javax.swing.JLabel txtCalificacion;
     public javax.swing.JLabel txtNombre;
+    public javax.swing.JLabel txtNombreAsignatura;
     private javax.swing.JTextField txtNuevaCalificacion;
     public javax.swing.JLabel txtnControl;
+    public javax.swing.JLabel txtnControlAsignatura;
     // End of variables declaration//GEN-END:variables
 }

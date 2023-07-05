@@ -5,10 +5,12 @@
 package Frames;
 
 import Clases.Conectar;
-import java.awt.FlowLayout;
+import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import java.sql.Statement;
@@ -16,18 +18,29 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableColumn;
+import javax.swing.table.TableRowSorter;
+import javax.swing.text.Document;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+//.*;
 
 /**
  *
@@ -41,7 +54,10 @@ public class AdministracionGrupos extends javax.swing.JFrame {
     /**
      * Creates new form AdministracionGrupos
      */
+    int xMouse, yMouse;
+
     public AdministracionGrupos(String grupo, String especialidad) {
+        //TextPrompt buscar = new TextPrompt("Buscar nctontrol", txtBuscar);
         initComponents();
         this.setLocationRelativeTo(null);
         this.campoEspecialidad1 = especialidad;
@@ -54,6 +70,26 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         cargarAsignaturas();
         ListAsignaturas.setEnabled(false);
 
+        // Obtén el Document del campo de texto txtBuscar
+        Document buscarDocument = txtBuscar.getDocument();
+
+// Agrega un DocumentListener al Document del campo de texto
+        buscarDocument.addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                aplicarFiltro();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                aplicarFiltro();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                aplicarFiltro();
+            }
+        });
     }
 
     // Resto del código del formulario y otros métodos...
@@ -70,21 +106,36 @@ public class AdministracionGrupos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaAlumnosGrupo = new javax.swing.JTable();
-        btnVolver = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        btnCambiarCalificacion = new javax.swing.JButton();
+        txtBuscar = new javax.swing.JTextField();
+        btnGenerarBoletasTodos = new javax.swing.JButton();
+        btnGenerarBoletaAlumno = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        txtGrupo = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtEspecialidad = new javax.swing.JLabel();
+        txtGrupo = new javax.swing.JLabel();
+        btnHabilitarAsignaturas = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         ListAsignaturas = new javax.swing.JList<>();
         btnAgregarAsignaturas = new javax.swing.JButton();
         btnEliminarAsignaturas = new javax.swing.JButton();
-        btnHabilitarAsignaturas = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel4 = new javax.swing.JLabel();
+        header = new javax.swing.JPanel();
+        backBtn = new javax.swing.JPanel();
+        backTxt = new javax.swing.JLabel();
+        exitBtn = new javax.swing.JPanel();
+        exitTxt = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
+        setUndecorated(true);
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tablaAlumnosGrupo.setBackground(new java.awt.Color(255, 255, 255));
         tablaAlumnosGrupo.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
@@ -100,135 +151,243 @@ public class AdministracionGrupos extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
+        tablaAlumnosGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tablaAlumnosGrupo.setGridColor(new java.awt.Color(0, 0, 0));
         jScrollPane1.setViewportView(tablaAlumnosGrupo);
 
-        btnVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/back_icon.png"))); // NOI18N
-        btnVolver.setText("Volver");
-        btnVolver.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+        jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 117, 619, 500));
+
+        btnCambiarCalificacion.setBackground(new java.awt.Color(255, 255, 51));
+        btnCambiarCalificacion.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        btnCambiarCalificacion.setForeground(new java.awt.Color(0, 0, 0));
+        btnCambiarCalificacion.setText("Cambiar calificaciones");
+        btnCambiarCalificacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCambiarCalificacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolverActionPerformed(evt);
+                btnCambiarCalificacionActionPerformed(evt);
             }
         });
+        jPanel4.add(btnCambiarCalificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 80, 220, -1));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txtBuscar.setBackground(new java.awt.Color(255, 255, 255));
+        txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
+        txtBuscar.setToolTipText("Filtrar por nControl");
+        txtBuscar.setBorder(null);
+        jPanel4.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 40, 140, 30));
 
-        jLabel1.setText("Especialidad");
+        btnGenerarBoletasTodos.setBackground(new java.awt.Color(153, 255, 255));
+        btnGenerarBoletasTodos.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        btnGenerarBoletasTodos.setForeground(new java.awt.Color(0, 0, 0));
+        btnGenerarBoletasTodos.setText("Generar boleta grupal");
+        btnGenerarBoletasTodos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGenerarBoletasTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarBoletasTodosActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnGenerarBoletasTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, -1, -1));
 
-        txtGrupo.setText("jLabel2");
+        btnGenerarBoletaAlumno.setBackground(new java.awt.Color(153, 255, 153));
+        btnGenerarBoletaAlumno.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        btnGenerarBoletaAlumno.setForeground(new java.awt.Color(0, 0, 0));
+        btnGenerarBoletaAlumno.setText("Generar boleta única");
+        btnGenerarBoletaAlumno.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGenerarBoletaAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarBoletaAlumnoActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnGenerarBoletaAlumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
-        jLabel3.setText("Nombre del grupo:");
+        jLabel1.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Especialidad:");
+        jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 50, -1, -1));
 
+        jLabel3.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("Buscar:");
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 50, -1, -1));
+
+        txtEspecialidad.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txtEspecialidad.setForeground(new java.awt.Color(0, 0, 0));
         txtEspecialidad.setText("jLabel4");
+        jPanel4.add(txtEspecialidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, 160, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtEspecialidad, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                    .addComponent(txtGrupo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtGrupo)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtEspecialidad)
-                    .addComponent(jLabel1))
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
+        txtGrupo.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        txtGrupo.setForeground(new java.awt.Color(0, 0, 0));
+        txtGrupo.setText("jLabel2");
+        jPanel4.add(txtGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, -1, -1));
 
-        ListAsignaturas.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(ListAsignaturas);
-
-        btnAgregarAsignaturas.setText("Agregar");
-        btnAgregarAsignaturas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarAsignaturasActionPerformed(evt);
-            }
-        });
-
-        btnEliminarAsignaturas.setText("Eliminar");
-        btnEliminarAsignaturas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarAsignaturasActionPerformed(evt);
-            }
-        });
-
+        btnHabilitarAsignaturas.setBackground(new java.awt.Color(102, 255, 0));
+        btnHabilitarAsignaturas.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        btnHabilitarAsignaturas.setForeground(new java.awt.Color(0, 0, 0));
         btnHabilitarAsignaturas.setText("Habilitar");
+        btnHabilitarAsignaturas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnHabilitarAsignaturas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHabilitarAsignaturasActionPerformed(evt);
             }
         });
+        jPanel4.add(btnHabilitarAsignaturas, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 120, 150, -1));
+
+        ListAsignaturas.setBackground(new java.awt.Color(255, 255, 255));
+        ListAsignaturas.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        ListAsignaturas.setForeground(new java.awt.Color(0, 0, 0));
+        ListAsignaturas.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        ListAsignaturas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jScrollPane2.setViewportView(ListAsignaturas);
+
+        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 160, 155, 200));
+
+        btnAgregarAsignaturas.setBackground(new java.awt.Color(51, 255, 0));
+        btnAgregarAsignaturas.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        btnAgregarAsignaturas.setForeground(new java.awt.Color(0, 0, 0));
+        btnAgregarAsignaturas.setText("Agregar asignatura");
+        btnAgregarAsignaturas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregarAsignaturas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarAsignaturasActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnAgregarAsignaturas, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 370, 155, -1));
+
+        btnEliminarAsignaturas.setBackground(new java.awt.Color(255, 0, 0));
+        btnEliminarAsignaturas.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        btnEliminarAsignaturas.setForeground(new java.awt.Color(0, 0, 0));
+        btnEliminarAsignaturas.setText("Eliminar asignatura");
+        btnEliminarAsignaturas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminarAsignaturas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarAsignaturasActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnEliminarAsignaturas, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 400, 156, -1));
+
+        jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel4.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 70, 140, 10));
+
+        jLabel4.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Grupo:");
+        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
+
+        header.setBackground(new java.awt.Color(255, 255, 255));
+        header.setForeground(new java.awt.Color(255, 255, 255));
+        header.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                headerMouseDragged(evt);
+            }
+        });
+        header.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                headerMousePressed(evt);
+            }
+        });
+
+        backBtn.setBackground(new java.awt.Color(255, 255, 255));
+
+        backTxt.setBackground(new java.awt.Color(255, 255, 255));
+        backTxt.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        backTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        backTxt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/backbtn.png"))); // NOI18N
+        backTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        backTxt.setPreferredSize(new java.awt.Dimension(40, 40));
+        backTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backTxtMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                backTxtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                backTxtMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout backBtnLayout = new javax.swing.GroupLayout(backBtn);
+        backBtn.setLayout(backBtnLayout);
+        backBtnLayout.setHorizontalGroup(
+            backBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(backTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        backBtnLayout.setVerticalGroup(
+            backBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backBtnLayout.createSequentialGroup()
+                .addComponent(backTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        exitBtn.setBackground(new java.awt.Color(255, 255, 255));
+
+        exitTxt.setBackground(new java.awt.Color(255, 255, 255));
+        exitTxt.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        exitTxt.setText("X");
+        exitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        exitTxt.setPreferredSize(new java.awt.Dimension(40, 40));
+        exitTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitTxtMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                exitTxtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                exitTxtMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout exitBtnLayout = new javax.swing.GroupLayout(exitBtn);
+        exitBtn.setLayout(exitBtnLayout);
+        exitBtnLayout.setHorizontalGroup(
+            exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exitBtnLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(exitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        exitBtnLayout.setVerticalGroup(
+            exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exitBtnLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
+        header.setLayout(headerLayout);
+        headerLayout.setHorizontalGroup(
+            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headerLayout.createSequentialGroup()
+                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 770, Short.MAX_VALUE)
+                .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        headerLayout.setVerticalGroup(
+            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headerLayout.createSequentialGroup()
+                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel4.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnAgregarAsignaturas)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnEliminarAsignaturas))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(53, 53, 53)
-                                .addComponent(btnHabilitarAsignaturas)))
-                        .addGap(25, 25, 25))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37))))
+            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 845, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVolver))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(btnHabilitarAsignaturas)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAgregarAsignaturas)
-                            .addComponent(btnEliminarAsignaturas))))
-                .addContainerGap(25, Short.MAX_VALUE))
+            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 642, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -242,13 +401,6 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         }
     }
 
-
-    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-
-        Registrar_Grupos registrar_grupos = new Registrar_Grupos();
-        registrar_grupos.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnAgregarAsignaturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAsignaturasActionPerformed
         // Obtener el grupo y especialidad del JLabel txtGrupo y txtEspecialidad
@@ -358,20 +510,741 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         habilitarDeshabilitar();
     }//GEN-LAST:event_btnEliminarAsignaturasActionPerformed
 
+    void mostrarTabla(String grupo, String especialidad) {
+        // Crear un DefaultTableModel personalizado
+        DefaultTableModel modelo = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Permitir la edición solo en la columna de calificaciones
+                return column == 4;
+            }
+        };
+
+        modelo.addColumn("nControl");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("nControlAsignatura");
+        modelo.addColumn("Asignatura");
+        modelo.addColumn("Calificación");
+
+        tablaAlumnosGrupo.setModel(modelo);
+
+        String sql = "SELECT c.ncontrol, a.nombre, c.nControlAsignatura, asignaturas.asignatura, c.calificacion FROM dbo.calificaciones c "
+                + "INNER JOIN dbo.alumnos a ON c.ncontrol = a.ncontrol "
+                + "INNER JOIN dbo.asignaturas asignaturas ON c.nControlAsignatura = asignaturas.nControlAsignatura "
+                + "WHERE c.grupo = ? AND a.estatus = 'ac' ORDER BY c.ncontrol";
+
+        try {
+            PreparedStatement statement = cn.prepareStatement(sql);
+
+            // Obtener el valor del grupo del JLabel txtGrupo
+            grupo = txtGrupo.getText();
+
+            // Establecer el valor del parámetro grupo en la consulta
+            statement.setString(1, grupo);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                String nControl = rs.getString("ncontrol");
+                String nombre = rs.getString("nombre");
+                String nControlAsignatura = rs.getString("nControlAsignatura");
+                String asignatura = rs.getString("asignatura");
+                String calificacion = rs.getString("calificacion");
+
+                modelo.addRow(new Object[]{nControl, nombre, nControlAsignatura, asignatura, calificacion});
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+            JOptionPane.showMessageDialog(null, "Error al cargar datos, contacte al administrador");
+        }
+
+        // Ajustar automáticamente el tamaño de las columnas según el contenido
+        tablaAlumnosGrupo.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tablaAlumnosGrupo.getColumnModel().getColumn(0).setPreferredWidth(100);
+        tablaAlumnosGrupo.getColumnModel().getColumn(1).setPreferredWidth(250);
+        tablaAlumnosGrupo.getColumnModel().getColumn(2).setPreferredWidth(200);
+        tablaAlumnosGrupo.getColumnModel().getColumn(3).setPreferredWidth(220);
+        tablaAlumnosGrupo.getColumnModel().getColumn(4).setPreferredWidth(150);
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        tablaAlumnosGrupo.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+    }
+
+    // Método para aplicar el filtro
+    public void aplicarFiltro() {
+        String filtro = txtBuscar.getText().trim().toLowerCase();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) tablaAlumnosGrupo.getModel());
+        tablaAlumnosGrupo.setRowSorter(sorter);
+        sorter.setRowFilter(RowFilter.regexFilter(filtro));
+    }
+
     private void btnHabilitarAsignaturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHabilitarAsignaturasActionPerformed
         habilitarDeshabilitar();
     }//GEN-LAST:event_btnHabilitarAsignaturasActionPerformed
 
-    private void habilitarDeshabilitar(){
+    private void btnGenerarBoletaAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarBoletaAlumnoActionPerformed
+        // Obtener el alumno seleccionado
+        int filaSeleccionada = tablaAlumnosGrupo.getSelectedRow();
+
+        if (filaSeleccionada != -1) {
+            // Obtener los datos del alumno seleccionado
+            String nombreAlumno = tablaAlumnosGrupo.getValueAt(filaSeleccionada, 1).toString();
+
+            // Generar el nombre del archivo de la boleta
+            String nombreArchivo = nombreAlumno + ".pdf";
+
+            // Construir la ruta completa para la carpeta del grupo y la boleta del alumno
+            String nombreGrupo = txtGrupo.getText().trim(); // Obtener el nombre del grupo seleccionado
+            String nombreUsuario = System.getProperty("user.name");
+            String rutaDocumentos = "C:/Users/" + nombreUsuario + "/Documents";
+            String rutaCarpetaBoletas = rutaDocumentos + "/IciibaBoletas/" + nombreGrupo;
+            String rutaBoletaAlumno = rutaCarpetaBoletas + "/" + nombreArchivo;
+
+            // Verificar si la carpeta del grupo existe, si no, crearla
+            File carpetaGrupo = new File(rutaCarpetaBoletas);
+            if (!carpetaGrupo.exists()) {
+                carpetaGrupo.mkdirs();
+            }
+
+            // Generar la boleta de calificaciones del alumno
+            try ( PDDocument documento = new PDDocument()) {
+                PDRectangle pageSize = PDRectangle.LETTER; //Asignamos el tamaño de la hoja
+                PDPage pagina = new PDPage(pageSize);
+                documento.addPage(pagina);
+
+                // Obtener el contenido de la página
+                PDPageContentStream contenido = new PDPageContentStream(documento, pagina);
+//ENCABEZADO
+                // Cargar la imagen del logo
+                PDImageXObject imagenLogo = PDImageXObject.createFromFile("Imagenes/logoiciibapdf.png", documento);
+
+                // Definir la posición y tamaño de la imagen del logo
+                float posicionX = 50;
+                float posicionY = 680;
+                float anchoLogo = 86;
+                float altoLogo = 112;
+
+                // Insertar la imagen del logo en la página
+                contenido.drawImage(imagenLogo, posicionX, posicionY, anchoLogo, altoLogo);
+
+                // Definir la posición y estilo del texto
+                float textPosX = 200; // Posición X del texto
+                float textPosY = 750; // Posición Y del texto
+                float fontSize = 18; // Tamaño de fuente del texto
+
+                // Escribir el primer renglón del texto
+                contenido.setFont(PDType1Font.HELVETICA_BOLD, fontSize);
+                contenido.beginText();
+                contenido.newLineAtOffset(textPosX, textPosY);
+                contenido.showText("Instituto de Ciencias de la Información");
+                contenido.endText();
+
+                // Escribir el segundo renglón del texto
+                contenido.setFont(PDType1Font.HELVETICA_BOLD, fontSize);
+                contenido.beginText();
+                contenido.newLineAtOffset(300, textPosY - fontSize); // Mover un poco hacia abajo
+                contenido.showText("e Ingles del Bajío");
+                contenido.endText();
+
+                // Definir la posición y tamaño del texto "REPORTE DE EVALUACIÓN"
+                float posicionTexto2X = 250; // Ajusta la posición X 
+                float posicionTexto2Y = 700; // Ajusta la posición Y 
+                float tamanoTexto2 = 16; // Ajusta el tamaño de la fuente 
+
+                // Escribir el texto "REPORTE DE EVALUACIÓN" en mayúsculas sostenidas
+                contenido.beginText();
+                contenido.setFont(PDType1Font.HELVETICA_BOLD, tamanoTexto2);
+                contenido.newLineAtOffset(posicionTexto2X, posicionTexto2Y);
+                contenido.showText("REPORTE DE EVALUACIÓN");
+                contenido.endText();
+
+                // Obtener la fecha actual
+                Date fechaActual = new Date();
+                SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+                String fecha = formatoFecha.format(fechaActual);
+
+// Definir la posición y tamaño de la sección de fecha
+                float fechaPosX = 450; // Ajusta la posición X
+                float fechaPosY = 670; // Ajusta la posición Y
+                float tamanoFecha = 12; // Ajusta el tamaño de la fuente
+
+// Escribir la fecha
+                contenido.beginText();
+                contenido.setFont(PDType1Font.HELVETICA, tamanoFecha);
+                contenido.newLineAtOffset(fechaPosX, fechaPosY);
+                contenido.showText("Fecha: " + fecha);
+                contenido.endText();
+
+//FIN DE ENCABEZADO
+//INICIO DE DATOS DEL ALUMNO
+                //INICIO DE RECTANGULO CON BORDER REDONDOS
+// Definir las dimensiones del cuadro
+                float cuadroPosX = 50; // Posición X del cuadro
+                float cuadroPosY = 550; // Posición Y del cuadro
+                float cuadroWidth = 500; // Ancho del cuadro
+                float cuadroHeight = 100; // Alto del cuadro
+                //float borderRadius = 10; // Radio de los bordes redondeados
+                // Dibujar el cuadro con bordes redondeados
+                float borderRadius = 10; // Radio de los bordes redondeados
+                float x = cuadroPosX;
+                float y = cuadroPosY;
+                float width = cuadroWidth;
+                float height = cuadroHeight;
+
+                contenido.setStrokingColor(Color.BLACK); // Color de borde
+                contenido.setLineWidth(1); // Ancho de borde
+
+                // Dibujar línea superior
+                contenido.moveTo(x + borderRadius, y + height);
+                contenido.curveTo(x + borderRadius, y + height, x, y + height, x, y + height - borderRadius);
+                contenido.lineTo(x, y + borderRadius);
+                contenido.curveTo(x, y + borderRadius, x, y, x + borderRadius, y);
+
+                // Dibujar línea derecha
+                contenido.lineTo(x + width - borderRadius, y);
+                contenido.curveTo(x + width - borderRadius, y, x + width, y, x + width, y + borderRadius);
+                contenido.lineTo(x + width, y + height - borderRadius);
+
+                // Dibujar línea inferior
+                contenido.curveTo(x + width, y + height - borderRadius, x + width, y + height, x + width - borderRadius, y + height);
+                contenido.lineTo(x + borderRadius, y + height);
+
+                // Dibujar línea izquierda
+                contenido.lineTo(x + borderRadius, y);
+
+                contenido.closePath();
+                contenido.stroke();
+                //FIN DE RECTANGULO CON BORDER REDONDOS
+                // Definir la posición y estilo del título "Datos del alumno"
+                float tituloPosX = 55 + 10; // Posición X del título dentro del cuadro
+                float tituloPosY = 540 + 100 - 10; // Posición Y del título dentro del cuadro
+                float tituloFontSize = 16; // Tamaño de fuente del título
+
+                // Escribir el título "Datos del alumno"
+                contenido.setFont(PDType1Font.HELVETICA_BOLD, tituloFontSize);
+                contenido.beginText();
+                contenido.newLineAtOffset(tituloPosX, tituloPosY);
+                contenido.showText("Datos del alumno:");
+                contenido.endText();
+
+                // Definir la posición y estilo de los datos del alumno
+                float datosPosX = 150; // Posición X de los datos
+                float datosPosY = tituloPosY - tituloFontSize - 10; // Posición Y de los datos
+                float datosFontSize = 12; // Tamaño de fuente de los datos
+
+                // Escribir el nombre del alumno
+                contenido.setFont(PDType1Font.HELVETICA_BOLD, datosFontSize); // Establecer fuente negrita
+                contenido.beginText();
+                contenido.newLineAtOffset(datosPosX, datosPosY);
+                contenido.showText("Nombre:");
+                contenido.setFont(PDType1Font.HELVETICA, datosFontSize); // Establecer fuente normal
+                contenido.showText(" " + nombreAlumno);
+                contenido.endText();
+
+                // Escribir el grupo
+                String grupo = txtGrupo.getText(); // Aquí debes obtener el grupo del alumno
+                contenido.setFont(PDType1Font.HELVETICA_BOLD, datosFontSize); // Establecer fuente negrita
+                contenido.beginText();
+                contenido.newLineAtOffset(datosPosX, datosPosY - datosFontSize - 5);
+                contenido.showText("Grupo:");
+                contenido.setFont(PDType1Font.HELVETICA, datosFontSize); // Establecer fuente normal
+                contenido.showText(" " + grupo);
+                contenido.endText();
+
+                String nControlAlumno = tablaAlumnosGrupo.getValueAt(filaSeleccionada, 0).toString();
+                float datosPosX2 = 250; // Nueva posición X para el número de control
+                contenido.setFont(PDType1Font.HELVETICA_BOLD, datosFontSize); // Establecer fuente negrita
+                contenido.beginText();
+                contenido.newLineAtOffset(datosPosX2, datosPosY - datosFontSize - 5);
+                contenido.showText("Numero de control:");
+                contenido.setFont(PDType1Font.HELVETICA, datosFontSize); // Establecer fuente normal
+                contenido.showText(" " + nControlAlumno);
+                contenido.endText();
+                // Escribir la especialidad del grupo
+                String especialidad = txtEspecialidad.getText(); // Aquí debes obtener la especialidad del grupo
+                contenido.setFont(PDType1Font.HELVETICA_BOLD, datosFontSize); // Establecer fuente negrita
+                contenido.beginText();
+                contenido.newLineAtOffset(datosPosX, datosPosY - (datosFontSize * 2) - 10);
+                contenido.showText("Especialidad del grupo:");
+                contenido.setFont(PDType1Font.HELVETICA, datosFontSize); // Establecer fuente normal
+                contenido.showText(" " + especialidad);
+                contenido.endText();
+
+//FIN DE DATOS DEL ALUMNO
+//INICIO DE TABLA DE ASIGNATURAS Y CALIFICACIONES
+                // Definir la posición y tamaño de la sección de asignaturas y calificaciones
+                float sectionPosX = 50;  // Posición X de la sección
+                float sectionPosY = 500; // Posición Y de la sección
+                float sectionWidth = 300; // Ancho de la sección
+                String nControl = tablaAlumnosGrupo.getValueAt(filaSeleccionada, 0).toString();
+
+                // Obtener los datos de las asignaturas y calificaciones desde la base de datos
+                List<String> asignaturas = new ArrayList<>();
+                List<String> calificaciones = new ArrayList<>();
+
+                for (int i = 0; i < tablaAlumnosGrupo.getRowCount(); i++) {
+                    String nControlFila = tablaAlumnosGrupo.getValueAt(i, 0).toString();
+                    if (nControlFila.equals(nControl)) {
+                        String asignatura = tablaAlumnosGrupo.getValueAt(i, 3).toString();
+                        String calificacion = tablaAlumnosGrupo.getValueAt(i, 4) != null ? tablaAlumnosGrupo.getValueAt(i, 4).toString() : "";
+                        asignaturas.add(asignatura);
+                        calificaciones.add(calificacion);
+                    }
+                }
+
+                // Definir la posición inicial de la sección
+                float currentY = sectionPosY;
+
+                // Establecer el color del texto de la sección
+                contenido.setStrokingColor(Color.BLACK);
+
+                // Verificar si hay calificaciones faltantes
+                boolean calificacionesFaltantes = calificaciones.contains("");
+
+                // Escribir las asignaturas y calificaciones en el PDF
+                if (!calificacionesFaltantes) {
+                    // Escribir los encabezados de la tabla
+                    contenido.beginText();
+                    contenido.setFont(PDType1Font.HELVETICA_BOLD, 12);
+                    contenido.newLineAtOffset(sectionPosX, currentY);
+                    contenido.showText("Asignatura");
+                    contenido.newLineAtOffset(sectionWidth * 0.5f, 0);
+                    contenido.showText("Calificación");
+                    contenido.endText();
+
+                    currentY -= 20; // Espacio adicional después de los encabezados
+
+                    // Escribir los datos de las asignaturas y calificaciones
+                    for (int i = 0; i < asignaturas.size(); i++) {
+                        String asignatura = asignaturas.get(i);
+                        String calificacion = calificaciones.get(i);
+
+                        // Calcular las coordenadas de la línea actual
+                        float xSection = sectionPosX;
+                        float ySection = currentY;
+
+                        // Escribir la asignatura
+                        contenido.beginText();
+                        contenido.setFont(PDType1Font.HELVETICA, 12);
+                        contenido.newLineAtOffset(xSection, ySection);
+                        contenido.showText(asignatura);
+                        contenido.endText();
+
+                        // Escribir la calificación
+                        contenido.beginText();
+                        contenido.setFont(PDType1Font.HELVETICA, 12);
+                        contenido.newLineAtOffset(sectionWidth * 0.7f, ySection);
+                        contenido.showText(calificacion);
+                        contenido.endText();
+
+                        // Calcular las coordenadas de la siguiente línea
+                        currentY -= 20;
+                    }
+                } else {
+                    // Mostrar una alerta o mensaje al usuario
+                    JOptionPane.showMessageDialog(null, "No se puede generar la boleta. Asigne una calificación al alumno seleccionado.", "Calificaciones faltantes", JOptionPane.WARNING_MESSAGE);
+                }
+
+                // Actualizar la posición Y actual
+                currentY -= 20; // Espacio adicional después de la sección de
+//FIN DE TABLA DE ASIGNATURAS Y CALIFICACIONES
+
+                // Cerrar el contenido de la página y guardar el documento
+                contenido.close();
+                // Guardar el documento como archivo PDF
+                documento.save(rutaBoletaAlumno);
+//                documento.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error al generar la boleta de calificaciones del alumno");
+            }
+
+            JOptionPane.showMessageDialog(null, "Boleta de calificaciones generada: " + rutaBoletaAlumno);
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un alumno");
+        }
+    }//GEN-LAST:event_btnGenerarBoletaAlumnoActionPerformed
+
+    private void btnGenerarBoletasTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarBoletasTodosActionPerformed
+        // Verificar si hay alumnos seleccionados en la tabla
+        if (tablaAlumnosGrupo.getRowCount() > 0) {
+            // Construir la ruta completa para la carpeta del grupo
+            String nombreGrupo = txtGrupo.getText().trim(); // Obtener el nombre del grupo seleccionado
+            String nombreUsuario = System.getProperty("user.name");
+            String rutaDocumentos = "C:/Users/" + nombreUsuario + "/Documents";
+            String rutaCarpetaBoletas = rutaDocumentos + "/IciibaBoletas/" + nombreGrupo;
+
+            // Verificar si la carpeta del grupo existe, si no, crearla
+            File carpetaGrupo = new File(rutaCarpetaBoletas);
+            if (!carpetaGrupo.exists()) {
+                carpetaGrupo.mkdirs();
+            }
+            // Declarar la variable filaSeleccionada antes del bucle
+            int filaSeleccionada;
+            // Generar la boleta de calificaciones para cada alumno
+            for (filaSeleccionada = 0; filaSeleccionada < tablaAlumnosGrupo.getRowCount(); filaSeleccionada++) {
+                // Obtener los datos del alumno actual
+                String nombreAlumno = tablaAlumnosGrupo.getValueAt(filaSeleccionada, 1).toString();
+                String nombreArchivo = nombreAlumno + ".pdf";
+                String rutaBoletaAlumno = rutaCarpetaBoletas + "/" + nombreArchivo;
+
+                // Generar la boleta de calificaciones del alumno
+                try ( PDDocument documento = new PDDocument()) {
+                    PDRectangle pageSize = PDRectangle.LETTER; //Asignamos el tamaño de la hoja
+                    PDPage pagina = new PDPage(pageSize);
+                    documento.addPage(pagina);
+
+                    // Obtener el contenido de la página
+                    PDPageContentStream contenido = new PDPageContentStream(documento, pagina);
+//ENCABEZADO
+                    // Cargar la imagen del logo
+                    PDImageXObject imagenLogo = PDImageXObject.createFromFile("Imagenes/logoiciibapdf.png", documento);
+
+                    // Definir la posición y tamaño de la imagen del logo
+                    float posicionX = 50;
+                    float posicionY = 680;
+                    float anchoLogo = 86;
+                    float altoLogo = 112;
+
+                    // Insertar la imagen del logo en la página
+                    contenido.drawImage(imagenLogo, posicionX, posicionY, anchoLogo, altoLogo);
+
+                    // Definir la posición y estilo del texto
+                    float textPosX = 200; // Posición X del texto
+                    float textPosY = 750; // Posición Y del texto
+                    float fontSize = 18; // Tamaño de fuente del texto
+
+                    // Escribir el primer renglón del texto
+                    contenido.setFont(PDType1Font.HELVETICA_BOLD, fontSize);
+                    contenido.beginText();
+                    contenido.newLineAtOffset(textPosX, textPosY);
+                    contenido.showText("Instituto de Ciencias de la Información");
+                    contenido.endText();
+
+                    // Escribir el segundo renglón del texto
+                    contenido.setFont(PDType1Font.HELVETICA_BOLD, fontSize);
+                    contenido.beginText();
+                    contenido.newLineAtOffset(300, textPosY - fontSize); // Mover un poco hacia abajo
+                    contenido.showText("e Ingles del Bajío");
+                    contenido.endText();
+
+                    // Definir la posición y tamaño del texto "REPORTE DE EVALUACIÓN"
+                    float posicionTexto2X = 250; // Ajusta la posición X 
+                    float posicionTexto2Y = 700; // Ajusta la posición Y 
+                    float tamanoTexto2 = 16; // Ajusta el tamaño de la fuente 
+
+                    // Escribir el texto "REPORTE DE EVALUACIÓN" en mayúsculas sostenidas
+                    contenido.beginText();
+                    contenido.setFont(PDType1Font.HELVETICA_BOLD, tamanoTexto2);
+                    contenido.newLineAtOffset(posicionTexto2X, posicionTexto2Y);
+                    contenido.showText("REPORTE DE EVALUACIÓN");
+                    contenido.endText();
+
+                    // Obtener la fecha actual
+                    Date fechaActual = new Date();
+                    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+                    String fecha = formatoFecha.format(fechaActual);
+
+// Definir la posición y tamaño de la sección de fecha
+                    float fechaPosX = 450; // Ajusta la posición X
+                    float fechaPosY = 670; // Ajusta la posición Y
+                    float tamanoFecha = 12; // Ajusta el tamaño de la fuente
+
+// Escribir la fecha
+                    contenido.beginText();
+                    contenido.setFont(PDType1Font.HELVETICA, tamanoFecha);
+                    contenido.newLineAtOffset(fechaPosX, fechaPosY);
+                    contenido.showText("Fecha: " + fecha);
+                    contenido.endText();
+
+//FIN DE ENCABEZADO
+//INICIO DE DATOS DEL ALUMNO
+                    //INICIO DE RECTANGULO CON BORDER REDONDOS
+// Definir las dimensiones del cuadro
+                    float cuadroPosX = 50; // Posición X del cuadro
+                    float cuadroPosY = 550; // Posición Y del cuadro
+                    float cuadroWidth = 500; // Ancho del cuadro
+                    float cuadroHeight = 100; // Alto del cuadro
+                    //float borderRadius = 10; // Radio de los bordes redondeados
+                    // Dibujar el cuadro con bordes redondeados
+                    float borderRadius = 10; // Radio de los bordes redondeados
+                    float x = cuadroPosX;
+                    float y = cuadroPosY;
+                    float width = cuadroWidth;
+                    float height = cuadroHeight;
+
+                    contenido.setStrokingColor(Color.BLACK); // Color de borde
+                    contenido.setLineWidth(1); // Ancho de borde
+
+                    // Dibujar línea superior
+                    contenido.moveTo(x + borderRadius, y + height);
+                    contenido.curveTo(x + borderRadius, y + height, x, y + height, x, y + height - borderRadius);
+                    contenido.lineTo(x, y + borderRadius);
+                    contenido.curveTo(x, y + borderRadius, x, y, x + borderRadius, y);
+
+                    // Dibujar línea derecha
+                    contenido.lineTo(x + width - borderRadius, y);
+                    contenido.curveTo(x + width - borderRadius, y, x + width, y, x + width, y + borderRadius);
+                    contenido.lineTo(x + width, y + height - borderRadius);
+
+                    // Dibujar línea inferior
+                    contenido.curveTo(x + width, y + height - borderRadius, x + width, y + height, x + width - borderRadius, y + height);
+                    contenido.lineTo(x + borderRadius, y + height);
+
+                    // Dibujar línea izquierda
+                    contenido.lineTo(x + borderRadius, y);
+
+                    contenido.closePath();
+                    contenido.stroke();
+                    //FIN DE RECTANGULO CON BORDER REDONDOS
+                    // Definir la posición y estilo del título "Datos del alumno"
+                    float tituloPosX = 55 + 10; // Posición X del título dentro del cuadro
+                    float tituloPosY = 540 + 100 - 10; // Posición Y del título dentro del cuadro
+                    float tituloFontSize = 16; // Tamaño de fuente del título
+
+                    // Escribir el título "Datos del alumno"
+                    contenido.setFont(PDType1Font.HELVETICA_BOLD, tituloFontSize);
+                    contenido.beginText();
+                    contenido.newLineAtOffset(tituloPosX, tituloPosY);
+                    contenido.showText("Datos del alumno:");
+                    contenido.endText();
+
+                    // Definir la posición y estilo de los datos del alumno
+                    float datosPosX = 150; // Posición X de los datos
+                    float datosPosY = tituloPosY - tituloFontSize - 10; // Posición Y de los datos
+                    float datosFontSize = 12; // Tamaño de fuente de los datos
+
+                    // Escribir el nombre del alumno
+                    contenido.setFont(PDType1Font.HELVETICA_BOLD, datosFontSize); // Establecer fuente negrita
+                    contenido.beginText();
+                    contenido.newLineAtOffset(datosPosX, datosPosY);
+                    contenido.showText("Nombre:");
+                    contenido.setFont(PDType1Font.HELVETICA, datosFontSize); // Establecer fuente normal
+                    contenido.showText(" " + nombreAlumno);
+                    contenido.endText();
+
+                    // Escribir el grupo
+                    String grupo = txtGrupo.getText(); // Aquí debes obtener el grupo del alumno
+                    contenido.setFont(PDType1Font.HELVETICA_BOLD, datosFontSize); // Establecer fuente negrita
+                    contenido.beginText();
+                    contenido.newLineAtOffset(datosPosX, datosPosY - datosFontSize - 5);
+                    contenido.showText("Grupo:");
+                    contenido.setFont(PDType1Font.HELVETICA, datosFontSize); // Establecer fuente normal
+                    contenido.showText(" " + grupo);
+                    contenido.endText();
+
+                    String nControlAlumno = tablaAlumnosGrupo.getValueAt(filaSeleccionada, 0).toString();
+                    float datosPosX2 = 250; // Nueva posición X para el número de control
+                    contenido.setFont(PDType1Font.HELVETICA_BOLD, datosFontSize); // Establecer fuente negrita
+                    contenido.beginText();
+                    contenido.newLineAtOffset(datosPosX2, datosPosY - datosFontSize - 5);
+                    contenido.showText("Numero de control:");
+                    contenido.setFont(PDType1Font.HELVETICA, datosFontSize); // Establecer fuente normal
+                    contenido.showText(" " + nControlAlumno);
+                    contenido.endText();
+                    // Escribir la especialidad del grupo
+                    String especialidad = txtEspecialidad.getText(); // Aquí debes obtener la especialidad del grupo
+                    contenido.setFont(PDType1Font.HELVETICA_BOLD, datosFontSize); // Establecer fuente negrita
+                    contenido.beginText();
+                    contenido.newLineAtOffset(datosPosX, datosPosY - (datosFontSize * 2) - 10);
+                    contenido.showText("Especialidad del grupo:");
+                    contenido.setFont(PDType1Font.HELVETICA, datosFontSize); // Establecer fuente normal
+                    contenido.showText(" " + especialidad);
+                    contenido.endText();
+
+//FIN DE DATOS DEL ALUMNO
+//INICIO DE TABLA DE ASIGNATURAS Y CALIFICACIONES
+                    // Definir la posición y tamaño de la sección de asignaturas y calificaciones
+                    float sectionPosX = 50;  // Posición X de la sección
+                    float sectionPosY = 500; // Posición Y de la sección
+                    float sectionWidth = 300; // Ancho de la sección
+                    String nControl = tablaAlumnosGrupo.getValueAt(filaSeleccionada, 0).toString();
+
+                    // Obtener los datos de las asignaturas y calificaciones desde la base de datos
+                    List<String> asignaturas = new ArrayList<>();
+                    List<String> calificaciones = new ArrayList<>();
+
+                    for (int i = 0; i < tablaAlumnosGrupo.getRowCount(); i++) {
+                        String nControlFila = tablaAlumnosGrupo.getValueAt(i, 0).toString();
+                        if (nControlFila.equals(nControl)) {
+                            String asignatura = tablaAlumnosGrupo.getValueAt(i, 3).toString();
+                            String calificacion = tablaAlumnosGrupo.getValueAt(i, 4) != null ? tablaAlumnosGrupo.getValueAt(i, 4).toString() : "";
+                            asignaturas.add(asignatura);
+                            calificaciones.add(calificacion);
+                        }
+                    }
+
+                    // Definir la posición inicial de la sección
+                    float currentY = sectionPosY;
+
+                    // Establecer el color del texto de la sección
+                    contenido.setStrokingColor(Color.BLACK);
+
+                    // Verificar si hay calificaciones faltantes
+                    boolean calificacionesFaltantes = calificaciones.contains("");
+
+                    // Escribir las asignaturas y calificaciones en el PDF
+                    if (!calificacionesFaltantes) {
+                        // Escribir los encabezados de la tabla
+                        contenido.beginText();
+                        contenido.setFont(PDType1Font.HELVETICA_BOLD, 12);
+                        contenido.newLineAtOffset(sectionPosX, currentY);
+                        contenido.showText("Asignatura");
+                        contenido.newLineAtOffset(sectionWidth * 0.5f, 0);
+                        contenido.showText("Calificación");
+                        contenido.endText();
+
+                        currentY -= 20; // Espacio adicional después de los encabezados
+
+                        // Escribir los datos de las asignaturas y calificaciones
+                        for (int i = 0; i < asignaturas.size(); i++) {
+                            String asignatura = asignaturas.get(i);
+                            String calificacion = calificaciones.get(i);
+
+                            // Calcular las coordenadas de la línea actual
+                            float xSection = sectionPosX;
+                            float ySection = currentY;
+
+                            // Escribir la asignatura
+                            contenido.beginText();
+                            contenido.setFont(PDType1Font.HELVETICA, 12);
+                            contenido.newLineAtOffset(xSection, ySection);
+                            contenido.showText(asignatura);
+                            contenido.endText();
+
+                            // Escribir la calificación
+                            contenido.beginText();
+                            contenido.setFont(PDType1Font.HELVETICA, 12);
+                            contenido.newLineAtOffset(sectionWidth * 0.7f, ySection);
+                            contenido.showText(calificacion);
+                            contenido.endText();
+
+                            // Calcular las coordenadas de la siguiente línea
+                            currentY -= 20;
+                        }
+                    } else {
+                        // Mostrar una alerta o mensaje al usuario
+                        JOptionPane.showMessageDialog(null, "No se puede generar la boleta. Asigne una calificación al alumno seleccionado.", "Calificaciones faltantes", JOptionPane.WARNING_MESSAGE);
+                    }
+
+                    // Actualizar la posición Y actual
+                    currentY -= 20; // Espacio adicional después de la sección de
+//FIN DE TABLA DE ASIGNATURAS Y CALIFICACIONES
+
+                    // Cerrar el contenido de la página y guardar el documento
+                    contenido.close();
+                    // Guardar el documento como archivo PDF
+                    documento.save(rutaBoletaAlumno);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Error al generar la boleta de calificaciones para el alumno: " + nombreAlumno);
+                }
+            }
+
+            JOptionPane.showMessageDialog(null, "Se generaron las boletas de calificaciones para todos los alumnos");
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay alumnos en la lista");
+        }
+    }//GEN-LAST:event_btnGenerarBoletasTodosActionPerformed
+
+    private void btnCambiarCalificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarCalificacionActionPerformed
+        int rowCount = tablaAlumnosGrupo.getRowCount();
+        boolean cambiosRealizados = false; // Variable para verificar si se realizaron cambios en las calificaciones
+
+        // Iterar sobre todas las filas de la tabla
+        for (int i = 0; i < rowCount; i++) {
+            String nControl = tablaAlumnosGrupo.getValueAt(i, 0).toString(); // Obtener el nControl de la fila
+            Object calificacionObj = tablaAlumnosGrupo.getValueAt(i, 4); // Obtener la calificación modificada de la fila como Object
+
+            // Verificar si el valor de calificacionObj es null o vacío
+            String calificacion = null;
+            if (calificacionObj != null) {
+                calificacion = calificacionObj.toString().trim();
+                if (calificacion.isEmpty()) {
+                    calificacion = null; // Establecer calificacion como null si está vacío
+                }
+            }
+
+            // Realizar la actualización en la base de datos solo si hay cambios
+            if (calificacion != null) {
+                cambiosRealizados = true;
+                String sql = "UPDATE dbo.calificaciones SET calificacion = ? WHERE ncontrol = ?";
+
+                try {
+                    PreparedStatement statement = cn.prepareStatement(sql);
+                    statement.setString(1, calificacion);
+                    statement.setString(2, nControl);
+                    statement.executeUpdate();
+                } catch (SQLException ex) {
+                    System.err.println(ex);
+                    JOptionPane.showMessageDialog(null, "Error al actualizar las calificaciones, contacte al administrador");
+                }
+            }
+        }
+
+        if (cambiosRealizados) {
+            JOptionPane.showMessageDialog(null, "Calificaciones actualizadas correctamente");
+            mostrarTabla(campoGrupo, campoEspecialidad1);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se han realizado cambios en las calificaciones");
+        }
+    }//GEN-LAST:event_btnCambiarCalificacionActionPerformed
+
+    private void backTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backTxtMouseClicked
+        Registrar_Grupos registrar_grupos = new Registrar_Grupos();
+        registrar_grupos.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_backTxtMouseClicked
+
+    private void backTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backTxtMouseEntered
+        backBtn.setBackground(Color.CYAN);
+        backBtn.setForeground(Color.white);
+    }//GEN-LAST:event_backTxtMouseEntered
+
+    private void backTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backTxtMouseExited
+        backBtn.setBackground(Color.white);
+        backBtn.setForeground(Color.black);
+    }//GEN-LAST:event_backTxtMouseExited
+
+    private void exitTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_exitTxtMouseClicked
+
+    private void exitTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseEntered
+        exitBtn.setBackground(Color.red);
+        exitTxt.setForeground(Color.white);
+    }//GEN-LAST:event_exitTxtMouseEntered
+
+    private void exitTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseExited
+        exitBtn.setBackground(Color.white);
+        exitTxt.setForeground(Color.black);
+    }//GEN-LAST:event_exitTxtMouseExited
+
+    private void headerMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_headerMouseDragged
+
+    private void headerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_headerMousePressed
+
+    private void habilitarDeshabilitar() {
         if (ListAsignaturas.isEnabled()) {
             ListAsignaturas.setEnabled(false);
             btnHabilitarAsignaturas.setText("Habilitar");
+            btnHabilitarAsignaturas.setBackground(new Color(102, 255, 0));
         } else {
             ListAsignaturas.setEnabled(true);
             btnHabilitarAsignaturas.setText("Deshabilitar");
+            btnHabilitarAsignaturas.setBackground(new Color(255, 0, 0));
         }
     }
-    
+
     private boolean verificarRegistroExistente(String grupo, String nControlAsignatura, String nControl) {
         String sql = "SELECT COUNT(*) FROM dbo.calificaciones WHERE grupo = ? AND nControlAsignatura = ? AND ncontrol = ?";
         try {
@@ -446,69 +1319,6 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         }
     }
 
-//    private String obtenerNumControlAlumno(String nombreAlumno, String apellidosAlumno, String numControlAsignatura, String numControlGrupo) {
-//        String numControlAlumno = null;
-//
-//        try {
-//            String sql = "SELECT numControlAlumno FROM alumnos_grupo WHERE nombreAlumno = ? AND apellidosAlumno = ? AND numControlAsignatura = ? AND numControlGrupo = ?";
-//            PreparedStatement statement = cn.prepareStatement(sql);
-//            statement.setString(1, nombreAlumno);
-//            statement.setString(2, apellidosAlumno);
-//            statement.setString(3, numControlAsignatura);
-//            statement.setString(4, numControlGrupo);
-//            ResultSet rs = statement.executeQuery();
-//
-//            if (rs.next()) {
-//                numControlAlumno = rs.getString("numControlAlumno");
-//            }
-//
-//            rs.close();
-//            statement.close();
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
-//
-//        return numControlAlumno;
-//    }
-//
-//    private String obtenerNumControlAlumnoTabla(int fila) {
-//        String numControlGrupo = tablaAlumnosGrupo.getValueAt(fila, 0).toString();
-//        String nombreAlumno = tablaAlumnosGrupo.getValueAt(fila, 1).toString();
-//        String apellidosAlumno = tablaAlumnosGrupo.getValueAt(fila, 2).toString();
-//        String numControlAsignatura = tablaAlumnosGrupo.getValueAt(fila, 3).toString();
-//
-//        String numControlAlumno = obtenerNumControlAlumno(nombreAlumno, apellidosAlumno, numControlAsignatura, numControlGrupo);
-//
-//        return numControlAlumno;
-//    }
-//
-//    private String obtenerCalificacionAnterior(String numControlAlumno, String numControlGrupo) {
-//        String calificacionAnterior = "";
-//
-//        try {
-//            String sql = "SELECT calificaciones FROM alumnos_grupo WHERE numControlAlumno = ? AND numControlGrupo = ?";
-//            PreparedStatement statement = cn.prepareStatement(sql);
-//            statement.setString(1, numControlAlumno);
-//            statement.setString(2, numControlGrupo);
-//            ResultSet rs = statement.executeQuery();
-//
-//            if (rs.next()) {
-//                calificacionAnterior = rs.getString("calificaciones");
-//                if (calificacionAnterior == null) {
-//                    calificacionAnterior = "sin asignar";
-//                } else if (calificacionAnterior.isEmpty()) {
-//                    calificacionAnterior = "sin asignar";
-//                }
-//            }
-//
-//            rs.close();
-//            statement.close();
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
-//
-//        return calificacionAnterior;
-//    }
     /**
      * @param args the command line arguments
      */
@@ -553,61 +1363,6 @@ public class AdministracionGrupos extends javax.swing.JFrame {
                 e.printStackTrace();
             }
         }
-    }
-
-    void mostrarTabla(String grupo, String especialidad) {
-        // Crear un DefaultTableModel personalizado
-        DefaultTableModel modelo = new DefaultTableModel();
-
-        modelo.addColumn("nControl");
-        modelo.addColumn("Nombre");
-        modelo.addColumn("nControlAsignatura"); // Columna nControlAsignatura existente
-        modelo.addColumn("Asignatura"); // Nueva columna para mostrar la asignatura
-        modelo.addColumn("Calificación"); // Nueva columna para mostrar la calificación
-
-        tablaAlumnosGrupo.setModel(modelo);
-
-        String sql = "SELECT c.ncontrol, a.nombre, c.nControlAsignatura, asignaturas.asignatura, c.calificacion FROM dbo.calificaciones c "
-                + "INNER JOIN dbo.alumnos a ON c.ncontrol = a.ncontrol "
-                + "INNER JOIN dbo.asignaturas asignaturas ON c.nControlAsignatura = asignaturas.nControlAsignatura "
-                + "WHERE c.grupo = ? AND a.estatus = 'ac'";
-
-        try {
-            PreparedStatement statement = cn.prepareStatement(sql);
-
-            // Obtener el valor del grupo del JLabel txtGrupo
-            grupo = txtGrupo.getText();
-
-            // Establecer el valor del parámetro grupo en la consulta
-            statement.setString(1, grupo);
-
-            ResultSet rs = statement.executeQuery();
-
-            while (rs.next()) {
-                String nControl = rs.getString("ncontrol");
-                String nombre = rs.getString("nombre");
-                String nControlAsignatura = rs.getString("nControlAsignatura"); // Obtener el nControlAsignatura existente
-                String asignatura = rs.getString("asignatura");
-                String calificacion = rs.getString("calificacion");
-
-                modelo.addRow(new Object[]{nControl, nombre, nControlAsignatura, asignatura, calificacion});
-            }
-        } catch (SQLException e) {
-            System.err.println(e);
-            JOptionPane.showMessageDialog(null, "Error al cargar datos, contacte al administrador");
-        }
-
-        // Ajustar automáticamente el tamaño de las columnas según el contenido
-        tablaAlumnosGrupo.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        tablaAlumnosGrupo.getColumnModel().getColumn(0).setPreferredWidth(100); // Ajustar el ancho de la primera columna si es necesario
-        tablaAlumnosGrupo.getColumnModel().getColumn(1).setPreferredWidth(250); // Ajustar el ancho de la columna de nombre si es necesario
-        tablaAlumnosGrupo.getColumnModel().getColumn(2).setPreferredWidth(200); // Ajustar el ancho de la columna de nControlAsignatura si es necesario
-        tablaAlumnosGrupo.getColumnModel().getColumn(3).setPreferredWidth(220); // Ajustar el ancho de la columna de asignatura si es necesario
-        tablaAlumnosGrupo.getColumnModel().getColumn(4).setPreferredWidth(150); // Ajustar el ancho de la columna de calificación si es necesario
-
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        tablaAlumnosGrupo.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
     }
 
     public void cargarAsignaturas() {
@@ -669,16 +1424,26 @@ public class AdministracionGrupos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> ListAsignaturas;
+    private javax.swing.JPanel backBtn;
+    private javax.swing.JLabel backTxt;
     private javax.swing.JButton btnAgregarAsignaturas;
+    private javax.swing.JButton btnCambiarCalificacion;
     private javax.swing.JButton btnEliminarAsignaturas;
+    private javax.swing.JButton btnGenerarBoletaAlumno;
+    private javax.swing.JButton btnGenerarBoletasTodos;
     private javax.swing.JButton btnHabilitarAsignaturas;
-    private javax.swing.JButton btnVolver;
+    private javax.swing.JPanel exitBtn;
+    private javax.swing.JLabel exitTxt;
+    private javax.swing.JPanel header;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable tablaAlumnosGrupo;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JLabel txtEspecialidad;
     private javax.swing.JLabel txtGrupo;
     // End of variables declaration//GEN-END:variables

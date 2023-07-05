@@ -5,6 +5,7 @@
 package Frames;
 
 import Clases.Conectar;
+import java.awt.Component;
 import javax.swing.table.DefaultTableModel;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
@@ -15,10 +16,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.DocumentEvent;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.Document;
 
@@ -37,6 +41,7 @@ public class Ver_Alumnos extends javax.swing.JFrame {
         String filtro = "";
 
         mostrarTabla();
+        Actualizar();
         this.setLocationRelativeTo(null);
 
         // Obtén el Document del campo de texto txtFiltro
@@ -80,6 +85,8 @@ public class Ver_Alumnos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        tablaAlumnosFiltro.setBackground(new java.awt.Color(255, 255, 255));
+        tablaAlumnosFiltro.setForeground(new java.awt.Color(0, 0, 0));
         tablaAlumnosFiltro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -91,6 +98,7 @@ public class Ver_Alumnos extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaAlumnosFiltro.setShowHorizontalLines(true);
         jScrollPane1.setViewportView(tablaAlumnosFiltro);
 
         btnBuscar.setText("Buscar");
@@ -115,7 +123,7 @@ public class Ver_Alumnos extends javax.swing.JFrame {
             }
         });
 
-        btnActualizar.setText("Actualizar");
+        btnActualizar.setText("Actualizar Tabla");
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizarActionPerformed(evt);
@@ -127,38 +135,41 @@ public class Ver_Alumnos extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(86, 86, 86)
-                        .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59)
-                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(62, 62, 62)
+                        .addComponent(btnActualizarCalificacion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnActualizar)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnActualizarCalificacion)))))
-                .addContainerGap(24, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 811, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVolver))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnActualizarCalificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)))
                 .addComponent(btnActualizar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnActualizarCalificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
 
@@ -166,31 +177,77 @@ public class Ver_Alumnos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     void mostrarTabla() {
-        DefaultTableModel modelo = new DefaultTableModel();
+        DefaultTableModel modelo = new DefaultTableModel() {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 5) { // Índice de la columna "Calificación"
+                    return Integer.class; // Cambia a la clase adecuada para los valores de calificación
+                }
+                return super.getColumnClass(columnIndex);
+            }
+        };
 
         modelo.addColumn("nControl");
-        modelo.addColumn("grupo");
-        modelo.addColumn("calificación");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Grupo");
+        modelo.addColumn("Asignatura");
+        modelo.addColumn("nControlAsignatura");
+        modelo.addColumn("Calificación");
 
         tablaAlumnosFiltro.setModel(modelo);
 
-        String sql = "SELECT ncontrol, grupo, calificacion FROM dbo.calificaciones";
+        String sql = "SELECT c.ncontrol, a.nombre, c.grupo, asignaturas.asignatura, c.nControlAsignatura, c.calificacion FROM dbo.calificaciones c "
+                + "INNER JOIN dbo.alumnos a ON c.ncontrol = a.ncontrol "
+                + "INNER JOIN dbo.asignaturas asignaturas ON c.nControlAsignatura = asignaturas.nControlAsignatura "
+                + "WHERE a.estatus = 'ac' ORDER BY c.ncontrol";
 
         try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
 
             while (rs.next()) {
-                String nControl = rs.getString("nControl");
+                String nControl = rs.getString("ncontrol");
+                String nombre = rs.getString("nombre");
                 String grupo = rs.getString("grupo");
-                String calificacion = rs.getString("calificacion");
+                String asignatura = rs.getString("asignatura");
+                String nControlAsignatura = rs.getString("nControlAsignatura");
+                int calificacion = rs.getInt("calificacion");
 
-                modelo.addRow(new Object[]{nControl, grupo, calificacion});
+                modelo.addRow(new Object[]{nControl, nombre, grupo, asignatura, nControlAsignatura, calificacion});
             }
         } catch (SQLException e) {
             System.err.println(e);
-            JOptionPane.showMessageDialog(null, "Error al cargar los alumnos. Contacta al administrador.");
+            JOptionPane.showMessageDialog(null, "Error al cargar datos, contacte al administrador");
         }
+
+        // Ajustar automáticamente el tamaño de las columnas según el contenido
+        tablaAlumnosFiltro.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tablaAlumnosFiltro.getColumnModel().getColumn(0).setPreferredWidth(50); // nControl
+        tablaAlumnosFiltro.getColumnModel().getColumn(1).setPreferredWidth(230); // Nombre
+        tablaAlumnosFiltro.getColumnModel().getColumn(2).setPreferredWidth(100); // Grupo
+        tablaAlumnosFiltro.getColumnModel().getColumn(3).setPreferredWidth(150); // Asignatura
+        tablaAlumnosFiltro.getColumnModel().getColumn(4).setPreferredWidth(120); // nControlAsignatura
+        tablaAlumnosFiltro.getColumnModel().getColumn(5).setPreferredWidth(50); // Calificación
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (column == 5) { // Índice de la columna "Calificación"
+                    setHorizontalAlignment(JLabel.CENTER);
+                } else {
+                    setHorizontalAlignment(JLabel.LEFT);
+                }
+                return component;
+            }
+        };
+
+        tablaAlumnosFiltro.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        tablaAlumnosFiltro.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tablaAlumnosFiltro.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tablaAlumnosFiltro.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        tablaAlumnosFiltro.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+        tablaAlumnosFiltro.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
     }
 
     public void aplicarFiltro() {
@@ -199,55 +256,6 @@ public class Ver_Alumnos extends javax.swing.JFrame {
         tablaAlumnosFiltro.setRowSorter(sorter);
         sorter.setRowFilter(RowFilter.regexFilter(filtro));
     }
-
-//    private void actualizarCalificaciones() {
-//        int filas = tablaAlumnosFiltro.getRowCount();
-//        List<String> cambios = new ArrayList<>();
-//
-//        for (int i = 0; i < filas; i++) {
-//            Object numControlGrupoObj = tablaAlumnosFiltro.getValueAt(i, 0);
-//            Object numControlAlumnoObj = tablaAlumnosFiltro.getValueAt(i, 1);
-//            Object nombreAlumnoObj = tablaAlumnosFiltro.getValueAt(i, 2);
-//            Object calificacionAnteriorObj = tablaAlumnosFiltro.getValueAt(i, 5);
-//            Object nuevaCalificacionObj = tablaAlumnosFiltro.getValueAt(i, 5);
-//
-//            if (numControlGrupoObj == null || numControlAlumnoObj == null || nombreAlumnoObj == null || calificacionAnteriorObj == null || nuevaCalificacionObj == null) {
-//                continue; // Saltar la iteración si alguno de los campos es nulo
-//            }
-//
-//            String numControlGrupo = numControlGrupoObj.toString();
-//            String numControlAlumno = numControlAlumnoObj.toString();
-//            String nombreAlumno = nombreAlumnoObj.toString();
-//            String calificacionAnterior = calificacionAnteriorObj.toString();
-//            String nuevaCalificacion = nuevaCalificacionObj.toString();
-//
-//            // Actualizar la calificación en la base de datos
-//            try {
-//                PreparedStatement ps = cn.prepareStatement("UPDATE iciibaSFR.alumnos_grupo SET calificaciones = ? WHERE numControlGrupo = ? AND numControlAlumno = ?");
-//                ps.setString(1, nuevaCalificacion);
-//                ps.setString(2, numControlGrupo);
-//                ps.setString(3, numControlAlumno);
-//                ps.executeUpdate();
-//
-//                // Registrar los cambios realizados
-//                cambios.add("- Alumno: " + nombreAlumno + " del grupo " + numControlGrupo + ", calificación anterior " + calificacionAnterior + " - nueva calificación: " + nuevaCalificacion);
-//            } catch (SQLException e) {
-//                System.err.println(e);
-//                JOptionPane.showMessageDialog(null, "Error al actualizar calificaciones, contacte al administrador");
-//            }
-//        }
-//
-//        // Mostrar la alerta con los cambios realizados
-//        if (!cambios.isEmpty()) {
-//            StringBuilder mensaje = new StringBuilder();
-//            mensaje.append("Se han actualizado las siguientes calificaciones:\n");
-//            for (String cambio : cambios) {
-//                mensaje.append("• ").append(cambio).append("\n");
-//            }
-//
-//            JOptionPane.showMessageDialog(null, mensaje.toString(), "Actualización de calificaciones", JOptionPane.INFORMATION_MESSAGE);
-//        }
-//    }
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // String filtro = txtFiltro.getText().trim();
@@ -260,15 +268,22 @@ public class Ver_Alumnos extends javax.swing.JFrame {
 
         if (selectedRow != -1) {
             String nControl = tablaAlumnosFiltro.getValueAt(selectedRow, 0).toString();
-
+            String nControlAsignatura = tablaAlumnosFiltro.getValueAt(selectedRow, 4).toString();
+            String nombre = tablaAlumnosFiltro.getValueAt(selectedRow, 1).toString();
+            String asignatura = tablaAlumnosFiltro.getValueAt(selectedRow, 3).toString();
+            String calificacion = tablaAlumnosFiltro.getValueAt(selectedRow, 5).toString();
+            
             CalificacionAlumno ventanaCalificacion = new CalificacionAlumno();
             ventanaCalificacion.setNControl(nControl);
+            ventanaCalificacion.setNControlAsignatura(nControlAsignatura);
+            ventanaCalificacion.setNombre(nombre);
+            ventanaCalificacion.setAsignatura(asignatura);
+            ventanaCalificacion.setCalificacion(calificacion);
             ventanaCalificacion.setVisible(true);
             dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione una fila antes de continuar.");
         }
-
     }//GEN-LAST:event_btnActualizarCalificacionActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -304,6 +319,34 @@ public class Ver_Alumnos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error al actualizar la tabla de calificaciones, contacte al administrador");
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void Actualizar() {
+        // Obtener los datos de la tabla "alumnos"
+        String sql = "SELECT ncontrol, grupo FROM alumnos";
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            Set<String> ncontrols = new HashSet<>();  // Utilizamos un conjunto para evitar duplicados
+
+            while (rs.next()) {
+                String ncontrol = rs.getString("ncontrol");
+                String grupo = rs.getString("grupo");
+
+                // Verificar si el ncontrol ya existe en la tabla "calificaciones"
+                if (!existeNControlEnCalificaciones(ncontrol)) {
+                    // Insertar los datos en la tabla "calificaciones"
+                    insertarCalificacion(ncontrol, grupo);
+                }
+            }
+
+            // Actualizar la tabla de calificaciones después de insertar los nuevos datos
+            mostrarTabla();
+        } catch (SQLException e) {
+            System.err.println(e);
+            JOptionPane.showMessageDialog(null, "Error al actualizar la tabla de calificaciones, contacte al administrador");
+        }
+    }
 
     // Función para verificar si un ncontrol ya existe en la tabla "calificaciones"
     private boolean existeNControlEnCalificaciones(String ncontrol) {

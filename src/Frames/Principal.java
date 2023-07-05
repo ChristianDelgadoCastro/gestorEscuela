@@ -35,7 +35,7 @@ public class Principal extends javax.swing.JFrame {
      * Creates new form Principal
      */
     int xMouse, yMouse;
-    
+
     private String[] imagenes = {
         "carrusel1.png",
         "carrusel2.png",
@@ -166,6 +166,8 @@ public class Principal extends javax.swing.JFrame {
         lblAlumnosbtn = new javax.swing.JLabel();
         panelTablasBtn = new javax.swing.JPanel();
         lblTablasBtn = new javax.swing.JLabel();
+        panelCerrarSesion = new javax.swing.JPanel();
+        lblCerrarSesion = new javax.swing.JLabel();
         header = new javax.swing.JPanel();
         exitBtn = new javax.swing.JPanel();
         exitTxt = new javax.swing.JLabel();
@@ -332,6 +334,38 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(lblTablasBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        panelCerrarSesion.setBackground(new java.awt.Color(123, 22, 22));
+
+        lblCerrarSesion.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
+        lblCerrarSesion.setForeground(new java.awt.Color(255, 255, 255));
+        lblCerrarSesion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCerrarSesion.setText("Cerrar Sesion");
+        lblCerrarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCerrarSesionMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblCerrarSesionMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblCerrarSesionMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelCerrarSesionLayout = new javax.swing.GroupLayout(panelCerrarSesion);
+        panelCerrarSesion.setLayout(panelCerrarSesionLayout);
+        panelCerrarSesionLayout.setHorizontalGroup(
+            panelCerrarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCerrarSesionLayout.createSequentialGroup()
+                .addComponent(lblCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        panelCerrarSesionLayout.setVerticalGroup(
+            panelCerrarSesionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -345,6 +379,9 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(37, 37, 37))
                     .addComponent(panelTablasBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addComponent(panelCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,7 +394,9 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(panelAlumnosBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelTablasBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
+                .addComponent(panelCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -385,7 +424,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 580));
@@ -542,33 +581,33 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_lblAlumnosbtnMouseClicked
 
     private void lblAsignaturaBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAsignaturaBtnMouseEntered
-        panelAsignaturasBtn.setBackground(new Color(170,22,22));
-        lblAsignaturaBtn.setBackground(new Color(170,22,22));
+        panelAsignaturasBtn.setBackground(new Color(170, 22, 22));
+        lblAsignaturaBtn.setBackground(new Color(170, 22, 22));
     }//GEN-LAST:event_lblAsignaturaBtnMouseEntered
 
     private void lblAsignaturaBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAsignaturaBtnMouseExited
-        panelAsignaturasBtn.setBackground(new Color(123,22,22));
-        lblAsignaturaBtn.setBackground(new Color(123,22,22));
+        panelAsignaturasBtn.setBackground(new Color(123, 22, 22));
+        lblAsignaturaBtn.setBackground(new Color(123, 22, 22));
     }//GEN-LAST:event_lblAsignaturaBtnMouseExited
 
     private void lblGruposBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGruposBtnMouseEntered
-        panelGruposBtn.setBackground(new Color(170,22,22));
-        lblGruposBtn.setBackground(new Color(170,22,22));
+        panelGruposBtn.setBackground(new Color(170, 22, 22));
+        lblGruposBtn.setBackground(new Color(170, 22, 22));
     }//GEN-LAST:event_lblGruposBtnMouseEntered
 
     private void lblGruposBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGruposBtnMouseExited
-       panelGruposBtn.setBackground(new Color(123,22,22));
-        lblGruposBtn.setBackground(new Color(123,22,22));
+        panelGruposBtn.setBackground(new Color(123, 22, 22));
+        lblGruposBtn.setBackground(new Color(123, 22, 22));
     }//GEN-LAST:event_lblGruposBtnMouseExited
 
     private void lblAlumnosbtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAlumnosbtnMouseEntered
-        panelAlumnosBtn.setBackground(new Color(170,22,22));
-        lblAlumnosbtn.setBackground(new Color(170,22,22));
+        panelAlumnosBtn.setBackground(new Color(170, 22, 22));
+        lblAlumnosbtn.setBackground(new Color(170, 22, 22));
     }//GEN-LAST:event_lblAlumnosbtnMouseEntered
 
     private void lblAlumnosbtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAlumnosbtnMouseExited
-        panelAlumnosBtn.setBackground(new Color(123,22,22));
-        lblAlumnosbtn.setBackground(new Color(123,22,22));
+        panelAlumnosBtn.setBackground(new Color(123, 22, 22));
+        lblAlumnosbtn.setBackground(new Color(123, 22, 22));
     }//GEN-LAST:event_lblAlumnosbtnMouseExited
 
     private void lblTablasBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTablasBtnMouseClicked
@@ -578,13 +617,13 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_lblTablasBtnMouseClicked
 
     private void lblTablasBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTablasBtnMouseEntered
-        panelTablasBtn.setBackground(new Color(170,22,22));
-        lblAlumnosbtn.setBackground(new Color(170,22,22));
+        panelTablasBtn.setBackground(new Color(170, 22, 22));
+        lblAlumnosbtn.setBackground(new Color(170, 22, 22));
     }//GEN-LAST:event_lblTablasBtnMouseEntered
 
     private void lblTablasBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTablasBtnMouseExited
-       panelTablasBtn.setBackground(new Color(123,22,22));
-        lblAlumnosbtn.setBackground(new Color(123,22,22));
+        panelTablasBtn.setBackground(new Color(123, 22, 22));
+        lblAlumnosbtn.setBackground(new Color(123, 22, 22));
     }//GEN-LAST:event_lblTablasBtnMouseExited
 
     private void exitTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseClicked
@@ -612,6 +651,22 @@ public class Principal extends javax.swing.JFrame {
         xMouse = evt.getX();
         yMouse = evt.getY();
     }//GEN-LAST:event_headerMousePressed
+
+    private void lblCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarSesionMouseClicked
+        Login login = new Login();
+        login.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_lblCerrarSesionMouseClicked
+
+    private void lblCerrarSesionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarSesionMouseEntered
+        panelCerrarSesion.setBackground(new Color(170, 22, 22));
+        lblCerrarSesion.setBackground(new Color(170, 22, 22));
+    }//GEN-LAST:event_lblCerrarSesionMouseEntered
+
+    private void lblCerrarSesionMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarSesionMouseExited
+        panelCerrarSesion.setBackground(new Color(123, 22, 22));
+        lblCerrarSesion.setBackground(new Color(123, 22, 22));
+    }//GEN-LAST:event_lblCerrarSesionMouseExited
 
     /**
      * @param args the command line arguments
@@ -664,6 +719,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel labelImagen;
     private javax.swing.JLabel lblAlumnosbtn;
     private javax.swing.JLabel lblAsignaturaBtn;
+    private javax.swing.JLabel lblCerrarSesion;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblGruposBtn;
     private javax.swing.JLabel lblHora;
@@ -672,6 +728,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel panelAlumnosBtn;
     private javax.swing.JPanel panelAsignaturasBtn;
     private javax.swing.JPanel panelCarrusel;
+    private javax.swing.JPanel panelCerrarSesion;
     private javax.swing.JPanel panelGruposBtn;
     private javax.swing.JPanel panelTablasBtn;
     // End of variables declaration//GEN-END:variables
