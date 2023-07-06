@@ -317,6 +317,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
 
         exitTxt.setBackground(new java.awt.Color(255, 255, 255));
         exitTxt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        exitTxt.setForeground(new java.awt.Color(0, 0, 0));
         exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         exitTxt.setText("X");
         exitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -337,9 +338,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         exitBtn.setLayout(exitBtnLayout);
         exitBtnLayout.setHorizontalGroup(
             exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exitBtnLayout.createSequentialGroup()
-                .addComponent(exitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(exitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         );
         exitBtnLayout.setVerticalGroup(
             exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,6 +351,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         minimizeBtn4.setPreferredSize(new java.awt.Dimension(40, 30));
 
         minimizeTxt4.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        minimizeTxt4.setForeground(new java.awt.Color(0, 0, 0));
         minimizeTxt4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         minimizeTxt4.setText("—");
         minimizeTxt4.addMouseListener(new java.awt.event.MouseAdapter() {

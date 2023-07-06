@@ -446,7 +446,8 @@ public class Principal extends javax.swing.JFrame {
         exitBtn.setBackground(new java.awt.Color(255, 255, 255));
 
         exitTxt.setBackground(new java.awt.Color(255, 255, 255));
-        exitTxt.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        exitTxt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        exitTxt.setForeground(new java.awt.Color(0, 0, 0));
         exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         exitTxt.setText("X");
         exitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -473,14 +474,13 @@ public class Principal extends javax.swing.JFrame {
         );
         exitBtnLayout.setVerticalGroup(
             exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exitBtnLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(exitTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
         );
 
         minimizeBtn.setBackground(new java.awt.Color(255, 255, 255));
 
         minimizeTxt.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        minimizeTxt.setForeground(new java.awt.Color(0, 0, 0));
         minimizeTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         minimizeTxt.setText("—");
         minimizeTxt.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -499,21 +499,15 @@ public class Principal extends javax.swing.JFrame {
         minimizeBtn.setLayout(minimizeBtnLayout);
         minimizeBtnLayout.setHorizontalGroup(
             minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 49, Short.MAX_VALUE)
+            .addGap(0, 39, Short.MAX_VALUE)
             .addGroup(minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(minimizeBtnLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(minimizeTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addComponent(minimizeTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
         );
         minimizeBtnLayout.setVerticalGroup(
             minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
             .addGroup(minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(minimizeBtnLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(minimizeTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addComponent(minimizeTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
@@ -521,7 +515,7 @@ public class Principal extends javax.swing.JFrame {
         headerLayout.setHorizontalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
-                .addContainerGap(849, Short.MAX_VALUE)
+                .addContainerGap(859, Short.MAX_VALUE)
                 .addComponent(minimizeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

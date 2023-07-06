@@ -4,7 +4,7 @@
     <config>
         <server>localhost</server>
         <port>1433</port>
-        <database>iciibaSFR</database>
+        <database>dbo</database>
         <username>usersql</username>
         <password>root2</password>
     </config>

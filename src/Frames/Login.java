@@ -7,10 +7,12 @@ package Frames;
 
 import Clases.Conectar;
 import java.awt.Color;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,8 +33,17 @@ public class Login extends javax.swing.JFrame {
 
         this.setLocationRelativeTo(null);
 
+        String absolutePath = "resources/iconoApp.PNG";
+        // Agrega el código para establecer el ícono aquí
+        File iconFile = new File(absolutePath);
+        if (iconFile.exists()) {
+            ImageIcon iconBarra = new ImageIcon(iconFile.getAbsolutePath());
+            this.setIconImage(iconBarra.getImage());
+        }
+
 //        TextPrompt usuario = new TextPrompt("Ingresar su nombre de usuario", txtUsuario);
         TextPrompt password = new TextPrompt("********", txtPass);
+
     }
 
     /**
@@ -174,6 +185,7 @@ public class Login extends javax.swing.JFrame {
         minimizeBtn.setBackground(new java.awt.Color(255, 255, 255));
 
         minimizeTxt.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        minimizeTxt.setForeground(new java.awt.Color(0, 0, 0));
         minimizeTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         minimizeTxt.setText("—");
         minimizeTxt.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -203,6 +215,7 @@ public class Login extends javax.swing.JFrame {
 
         exitTxt.setBackground(new java.awt.Color(255, 255, 255));
         exitTxt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        exitTxt.setForeground(new java.awt.Color(0, 0, 0));
         exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         exitTxt.setText("X");
         exitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

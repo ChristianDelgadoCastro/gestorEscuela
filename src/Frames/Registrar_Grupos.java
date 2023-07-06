@@ -304,6 +304,7 @@ public class Registrar_Grupos extends javax.swing.JFrame {
 
         exitTxt.setBackground(new java.awt.Color(255, 255, 255));
         exitTxt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        exitTxt.setForeground(new java.awt.Color(0, 0, 0));
         exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         exitTxt.setText("X");
         exitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -328,14 +329,15 @@ public class Registrar_Grupos extends javax.swing.JFrame {
         );
         exitBtnLayout.setVerticalGroup(
             exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exitBtnLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(exitBtnLayout.createSequentialGroup()
+                .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         minimizeBtn2.setBackground(new java.awt.Color(255, 255, 255));
 
         minimizeTxt2.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        minimizeTxt2.setForeground(new java.awt.Color(0, 0, 0));
         minimizeTxt2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         minimizeTxt2.setText("—");
         minimizeTxt2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -354,20 +356,13 @@ public class Registrar_Grupos extends javax.swing.JFrame {
         minimizeBtn2.setLayout(minimizeBtn2Layout);
         minimizeBtn2Layout.setHorizontalGroup(
             minimizeBtn2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 49, Short.MAX_VALUE)
-            .addGroup(minimizeBtn2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(minimizeBtn2Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(minimizeTxt2, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addComponent(minimizeTxt2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
         );
         minimizeBtn2Layout.setVerticalGroup(
             minimizeBtn2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 34, Short.MAX_VALUE)
-            .addGroup(minimizeBtn2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(minimizeBtn2Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(minimizeTxt2, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)))
+            .addGroup(minimizeBtn2Layout.createSequentialGroup()
+                .addComponent(minimizeTxt2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
@@ -376,7 +371,7 @@ public class Registrar_Grupos extends javax.swing.JFrame {
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
                 .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 655, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 667, Short.MAX_VALUE)
                 .addComponent(minimizeBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

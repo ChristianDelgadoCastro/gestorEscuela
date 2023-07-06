@@ -163,6 +163,7 @@ public class Ver_Alumnos extends javax.swing.JFrame {
 
         exitTxt.setBackground(new java.awt.Color(255, 255, 255));
         exitTxt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        exitTxt.setForeground(new java.awt.Color(0, 0, 0));
         exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         exitTxt.setText("X");
         exitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -183,18 +184,25 @@ public class Ver_Alumnos extends javax.swing.JFrame {
         exitBtn.setLayout(exitBtnLayout);
         exitBtnLayout.setHorizontalGroup(
             exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(exitTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+            .addGap(0, 40, Short.MAX_VALUE)
+            .addGroup(exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exitBtnLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         exitBtnLayout.setVerticalGroup(
             exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exitBtnLayout.createSequentialGroup()
-                .addGap(0, 5, Short.MAX_VALUE)
-                .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(0, 38, Short.MAX_VALUE)
+            .addGroup(exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(exitBtnLayout.createSequentialGroup()
+                    .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         minimizeBtn.setBackground(new java.awt.Color(255, 255, 255));
 
         minimizeTxt.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        minimizeTxt.setForeground(new java.awt.Color(0, 0, 0));
         minimizeTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         minimizeTxt.setText("—");
         minimizeTxt.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -213,20 +221,20 @@ public class Ver_Alumnos extends javax.swing.JFrame {
         minimizeBtn.setLayout(minimizeBtnLayout);
         minimizeBtnLayout.setHorizontalGroup(
             minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 43, Short.MAX_VALUE)
+            .addGap(0, 39, Short.MAX_VALUE)
             .addGroup(minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(minimizeBtnLayout.createSequentialGroup()
-                    .addGap(3, 3, 3)
+                    .addGap(1, 1, 1)
                     .addComponent(minimizeTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                    .addGap(3, 3, 3)))
+                    .addGap(1, 1, 1)))
         );
         minimizeBtnLayout.setVerticalGroup(
             minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 34, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
             .addGroup(minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(minimizeBtnLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(minimizeTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, minimizeBtnLayout.createSequentialGroup()
+                    .addComponent(minimizeTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
@@ -235,20 +243,22 @@ public class Ver_Alumnos extends javax.swing.JFrame {
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
                 .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 801, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 805, Short.MAX_VALUE)
                 .addComponent(minimizeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
-                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(minimizeBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(minimizeBtn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(headerLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
 
         jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 30));
@@ -423,10 +433,10 @@ public class Ver_Alumnos extends javax.swing.JFrame {
 
         if (selectedRow != -1) {
             String nControl = tablaAlumnosFiltro.getValueAt(selectedRow, 0).toString();
-            String nControlAsignatura = tablaAlumnosFiltro.getValueAt(selectedRow, 4).toString();
+            String nControlAsignatura = tablaAlumnosFiltro.getValueAt(selectedRow, 5).toString();
             String nombre = tablaAlumnosFiltro.getValueAt(selectedRow, 1).toString();
-            String asignatura = tablaAlumnosFiltro.getValueAt(selectedRow, 3).toString();
-            String calificacion = tablaAlumnosFiltro.getValueAt(selectedRow, 5).toString();
+            String asignatura = tablaAlumnosFiltro.getValueAt(selectedRow, 4).toString();
+            String calificacion = tablaAlumnosFiltro.getValueAt(selectedRow, 6).toString();
 
             CalificacionAlumno ventanaCalificacion = new CalificacionAlumno();
             ventanaCalificacion.setNControl(nControl);

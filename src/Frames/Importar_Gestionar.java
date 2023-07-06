@@ -40,6 +40,7 @@ import org.apache.commons.compress.utils.IOUtils;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 
 /**
@@ -140,6 +141,7 @@ public class Importar_Gestionar extends javax.swing.JFrame {
 
         exitTxt.setBackground(new java.awt.Color(255, 255, 255));
         exitTxt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        exitTxt.setForeground(new java.awt.Color(0, 0, 0));
         exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         exitTxt.setText("X");
         exitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -175,6 +177,7 @@ public class Importar_Gestionar extends javax.swing.JFrame {
         minimizeBtn.setBackground(new java.awt.Color(255, 255, 255));
 
         minimizeTxt.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        minimizeTxt.setForeground(new java.awt.Color(0, 0, 0));
         minimizeTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         minimizeTxt.setText("—");
         minimizeTxt.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -193,13 +196,19 @@ public class Importar_Gestionar extends javax.swing.JFrame {
         minimizeBtn.setLayout(minimizeBtnLayout);
         minimizeBtnLayout.setHorizontalGroup(
             minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(minimizeTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addGap(0, 35, Short.MAX_VALUE)
+            .addGroup(minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, minimizeBtnLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(minimizeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         minimizeBtnLayout.setVerticalGroup(
             minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(minimizeBtnLayout.createSequentialGroup()
-                .addComponent(minimizeTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 36, Short.MAX_VALUE)
+            .addGroup(minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(minimizeBtnLayout.createSequentialGroup()
+                    .addComponent(minimizeTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
@@ -208,7 +217,7 @@ public class Importar_Gestionar extends javax.swing.JFrame {
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
                 .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 631, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 636, Short.MAX_VALUE)
                 .addComponent(minimizeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -216,12 +225,13 @@ public class Importar_Gestionar extends javax.swing.JFrame {
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
-                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(minimizeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(minimizeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 760, 30));
@@ -481,23 +491,21 @@ public class Importar_Gestionar extends javax.swing.JFrame {
                         }
                     }
                 }
+                CellRangeAddress region = new CellRangeAddress(2, 5, 6, 12);
+                sheet.addMergedRegion(region);
 
-                // Agregar la imagen a las columnas 6 a 12
-                InputStream inputStream = new FileInputStream("Imagenes/notaExcel.png");
-                byte[] imageBytes = IOUtils.toByteArray(inputStream);
-                int pictureIndex = workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
-                inputStream.close();
+                Row noteRow = sheet.createRow(2);
+                Cell noteCell = noteRow.createCell(6);
+                noteCell.setCellValue("Nota: no agregar nombre a las columnas y solo reemplazar los datos que vienen de ejemplo, "
+                        + "tampoco cambiar el tipo de datos, todos deben llevar el formato \"General\". El orden debe de ser el siguiente: "
+                        + "Numero de control | Grupo | Numero de control de asignatura | Calificacion |");
 
-                CreationHelper creationHelper = workbook.getCreationHelper();
-                Drawing<?> drawing = sheet.createDrawingPatriarch();
-                ClientAnchor anchor = creationHelper.createClientAnchor();
-                anchor.setCol1(5); // Columna inicial (0-indexed) - Columna 6
-                anchor.setCol2(11); // Columna final (0-indexed) - Columna 12
-                anchor.setRow1(rowCount); // Fila inicial (0-indexed) - Última fila insertada
-                anchor.setRow2(rowCount + 2); // Fila final (0-indexed) - Última fila insertada + 2
-
-                Picture picture = drawing.createPicture(anchor, pictureIndex);
-                picture.resize(); // Ajustar el tamaño de la imagen según las dimensiones de la celda
+                CellStyle noteCellStyle = workbook.createCellStyle();
+                Font noteFont = workbook.createFont();
+                noteFont.setBold(true);
+                noteCellStyle.setFont(noteFont);
+                noteCellStyle.setWrapText(true);
+                noteCell.setCellStyle(noteCellStyle);
 
                 // Guardar el archivo Excel
                 try ( FileOutputStream fos = new FileOutputStream(file)) {

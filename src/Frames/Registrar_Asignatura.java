@@ -185,7 +185,8 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         exitBtn.setBackground(new java.awt.Color(255, 255, 255));
 
         exitTxt.setBackground(new java.awt.Color(255, 255, 255));
-        exitTxt.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        exitTxt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        exitTxt.setForeground(new java.awt.Color(0, 0, 0));
         exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         exitTxt.setText("X");
         exitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -206,10 +207,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         exitBtn.setLayout(exitBtnLayout);
         exitBtnLayout.setHorizontalGroup(
             exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exitBtnLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(exitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(exitTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         );
         exitBtnLayout.setVerticalGroup(
             exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,6 +219,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         minimizeBtn.setBackground(new java.awt.Color(255, 255, 255));
 
         minimizeTxt.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        minimizeTxt.setForeground(new java.awt.Color(0, 0, 0));
         minimizeTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         minimizeTxt.setText("—");
         minimizeTxt.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -653,9 +652,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPanel minimizeBtn;
-    private javax.swing.JPanel minimizeBtn2;
     private javax.swing.JLabel minimizeTxt;
-    private javax.swing.JLabel minimizeTxt2;
     private javax.swing.JPopupMenu popBorrar;
     private javax.swing.JMenuItem popEliminar;
     private javax.swing.JTable tabla_registro_asignaturas;
