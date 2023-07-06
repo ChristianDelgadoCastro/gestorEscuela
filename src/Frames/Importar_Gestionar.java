@@ -4,14 +4,24 @@
  */
 package Frames;
 
+import Clases.Conectar;
 import java.awt.Component;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -26,6 +36,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
+import org.apache.commons.compress.utils.IOUtils;
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
 
@@ -38,263 +51,11 @@ public class Importar_Gestionar extends javax.swing.JFrame {
     /**
      * Creates new form Importar_Gestionar
      */
-    private JTable tabla;
+    int xMouse, yMouse;
 
     public Importar_Gestionar() {
         initComponents();
         this.setLocationRelativeTo(null);
-
-        // Crear un contenedor para los componentes
-        JPanel contentPane = new JPanel();
-        setContentPane(contentPane);
-
-        // Establecer el administrador de diseño
-        contentPane.setLayout(new FlowLayout());
-
-        // Crear y agregar el botón
-        JButton btnImport = new JButton("Importar datos");
-        contentPane.add(btnImport);
-
-        //Creamos un boton para volver a la pantalla principal
-        JButton btnVolver = new JButton("Volver");
-        btnVolver.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Principal principal = new Principal();
-                principal.setVisible(true);
-                dispose();
-            }
-        });
-        contentPane.add(btnVolver);
-        //*--------------------------------------------------
-
-        //Creamos un boton para guardar los cambios de la tabla al excel
-        JButton guardarBoton = new JButton("Guardar");
-        guardarBoton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-
-                // Agregar un filtro de extensión para los archivos de Excel
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de Excel (*.xlsx)", "xlsx");
-                fileChooser.setFileFilter(filter);
-
-                int seleccion = fileChooser.showSaveDialog(null);
-                if (seleccion == JFileChooser.APPROVE_OPTION) {
-                    // Obtener la ruta del archivo seleccionado
-                    String rutaArchivo = fileChooser.getSelectedFile().getAbsolutePath();
-
-                    // Agregar la extensión ".xlsx" si no se proporciona
-                    if (!rutaArchivo.endsWith(".xlsx")) {
-                        rutaArchivo += ".xlsx";
-                    }
-
-                    File archivo = new File(rutaArchivo);
-
-                    // Verificar si el archivo ya existe
-                    if (archivo.exists()) {
-                        // Mostrar un cuadro de diálogo de confirmación
-                        int opcion = JOptionPane.showConfirmDialog(null,
-                                "Ya existe un archivo con el mismo nombre. ¿Desea reemplazarlo?",
-                                "Confirmación",
-                                JOptionPane.YES_NO_OPTION);
-
-                        if (opcion == JOptionPane.YES_OPTION) {
-                            // Si el usuario elige reemplazar el archivo existente, eliminarlo primero
-                            archivo.delete();
-                        } else {
-                            // Si el usuario elige no reemplazar, mostrar nuevamente el cuadro de diálogo para seleccionar una ubicación y nombre de archivo diferente
-                            JFileChooser nuevoFileChooser = new JFileChooser();
-                            nuevoFileChooser.setFileFilter(filter);
-                            int nuevoSeleccion = nuevoFileChooser.showSaveDialog(null);
-                            if (nuevoSeleccion == JFileChooser.APPROVE_OPTION) {
-                                rutaArchivo = nuevoFileChooser.getSelectedFile().getAbsolutePath();
-
-                                if (!rutaArchivo.endsWith(".xlsx")) {
-                                    rutaArchivo += ".xlsx";
-                                }
-
-                                archivo = new File(rutaArchivo);
-                            } else {
-                                // Si el usuario cancela la selección, salir del método sin guardar
-                                return;
-                            }
-                        }
-                    }
-
-                    try {
-                        // Crear el archivo de Excel
-                        FileOutputStream file = new FileOutputStream(rutaArchivo);
-
-                        // Crear el libro de trabajo de Excel
-                        Workbook workbook = new XSSFWorkbook();
-
-                        // Crear una hoja en el libro
-                        Sheet sheet = workbook.createSheet("Hoja 1");
-
-                        // Obtener los datos de la tabla y guardarlos en el archivo de Excel
-                        for (int row = 0; row < tabla.getRowCount(); row++) {
-                            Row fila = sheet.createRow(row);
-                            for (int column = 0; column < tabla.getColumnCount(); column++) {
-                                Object valorCelda = tabla.getValueAt(row, column);
-                                Cell celda = fila.createCell(column);
-                                celda.setCellValue(valorCelda.toString());
-                            }
-                        }
-
-                        // Escribir el libro en el archivo
-                        workbook.write(file);
-
-                        // Cerrar el archivo
-                        file.close();
-
-                        JOptionPane.showMessageDialog(null, "Archivo guardado exitosamente en: " + rutaArchivo);
-
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            }
-        });
-
-        // Agregar el botón "Guardar" a la ventana
-        contentPane.add(guardarBoton);
-
-        ///---------------------------------
-        ///Agregamos un boton bata añadir mas filas
-        JButton botonAgregarFila = new JButton("Agregar Fila");
-
-        // Agrega el botón a tu JFrame o JPanel
-        contentPane.add(botonAgregarFila);
-
-        botonAgregarFila.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Obtén el modelo de la tabla
-                DefaultTableModel model = (DefaultTableModel) tabla.getModel();
-
-                // Crea un arreglo de objetos vacío para representar una nueva fila
-                Object[] filaNueva = new Object[model.getColumnCount()];
-
-                // Agrega la nueva fila al modelo de la tabla
-                model.addRow(filaNueva);
-            }
-        });
-
-        //----------------------------
-        //Boton para eliminar una fila
-        JButton botonEliminarFila = new JButton("Eliminar Fila");
-
-        // Agrega el botón a tu JFrame o JPanel
-        contentPane.add(botonEliminarFila);
-
-        botonEliminarFila.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Obtén el índice de la fila seleccionada
-                int filaSeleccionada = tabla.getSelectedRow();
-
-                if (filaSeleccionada != -1) {
-                    // Obtén el modelo de la tabla
-                    DefaultTableModel model = (DefaultTableModel) tabla.getModel();
-
-                    // Elimina la fila seleccionada del modelo de la tabla
-                    model.removeRow(filaSeleccionada);
-                }
-            }
-        });
-
-        //------------------------------------------------------
-        // Manejador de eventos para el botón
-        btnImport.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                importarDatosDesdeExcel();
-            }
-
-            private void importarDatosDesdeExcel() {
-                // Crear un cuadro de diálogo para seleccionar el archivo de Excel
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setDialogTitle("Seleccionar archivo de Excel");
-                fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos de Excel", "xlsx"));
-
-                int seleccion = fileChooser.showOpenDialog(Importar_Gestionar.this);
-                if (seleccion == JFileChooser.APPROVE_OPTION) {
-                    try {
-                        // Obtener el archivo seleccionado
-                        String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-
-                        // Abrir el archivo de Excel
-                        Workbook workbook = new XSSFWorkbook(filePath);
-
-                        // Obtener la primera hoja del archivo
-                        Sheet sheet = workbook.getSheetAt(0);
-
-                        // Limpiar la tabla existente (si es necesario)
-                        // tableModel.setRowCount(0);
-                        // Leer los datos de cada fila y columna del archivo de Excel y almacenarlos en una estructura de datos
-                        List<String[]> datos = new ArrayList<>();
-                        for (Row row : sheet) {
-                            List<String> fila = new ArrayList<>();
-                            for (Cell cell : row) {
-                                fila.add(cell.toString());
-                            }
-                            datos.add(fila.toArray(new String[0]));
-                        }
-
-                        // Crear el modelo de tabla y establecer los datos
-                        DefaultTableModel tableModel = new DefaultTableModel(
-                                datos.toArray(new String[0][0]), // Datos
-                                new String[]{"Nombre", "Apellido", "Curso", "Carrera"} // Nombres de columnas
-                        );
-
-                        // Crear la tabla con el modelo
-                        tabla = new JTable(tableModel);
-
-                        // Ajustar el modo de ajuste automático de las columnas
-                        tabla.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-
-                        // Ajustar automáticamente el ancho de las columnas
-                        tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-                        for (int column = 0; column < tabla.getColumnCount(); column++) {
-                            TableColumn tableColumn = tabla.getColumnModel().getColumn(column);
-                            int preferredWidth = tableColumn.getMinWidth();
-                            int maxWidth = tableColumn.getMaxWidth();
-
-                            for (int row = 0; row < tabla.getRowCount(); row++) {
-                                TableCellRenderer cellRenderer = tabla.getCellRenderer(row, column);
-                                Component c = tabla.prepareRenderer(cellRenderer, row, column);
-                                int width = c.getPreferredSize().width + tabla.getIntercellSpacing().width;
-                                preferredWidth = Math.max(preferredWidth, width);
-
-                                // Si la columna excede el ancho máximo, ajustarlo al ancho máximo
-                                if (preferredWidth >= maxWidth) {
-                                    preferredWidth = maxWidth;
-                                    break;
-                                }
-                            }
-
-                            tableColumn.setPreferredWidth(preferredWidth);
-                        }
-
-                        // Crear el JScrollPane para la tabla
-                        JScrollPane scrollPane = new JScrollPane(tabla);
-
-                        // Agregar el JScrollPane a la ventana
-                        add(scrollPane);
-
-                        // Llamar a revalidate para actualizar el layout
-                        revalidate();
-
-                        workbook.close();
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(Importar_Gestionar.this, "Error al importar datos desde el archivo de Excel: " + e.getMessage(),
-                                "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }
-        });
-
     }
 
     /**
@@ -306,21 +67,459 @@ public class Importar_Gestionar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        header = new javax.swing.JPanel();
+        backBtn = new javax.swing.JPanel();
+        backTxt = new javax.swing.JLabel();
+        exitBtn = new javax.swing.JPanel();
+        exitTxt = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        btnImportar = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaContenidoExcel = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        btnCrearEjemplo = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
+        setUndecorated(true);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        header.setBackground(new java.awt.Color(255, 255, 255));
+        header.setForeground(new java.awt.Color(255, 255, 255));
+        header.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                headerMouseDragged(evt);
+            }
+        });
+        header.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                headerMousePressed(evt);
+            }
+        });
+
+        backBtn.setBackground(new java.awt.Color(255, 255, 255));
+
+        backTxt.setBackground(new java.awt.Color(255, 255, 255));
+        backTxt.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        backTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        backTxt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/backbtn.png"))); // NOI18N
+        backTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        backTxt.setPreferredSize(new java.awt.Dimension(40, 40));
+        backTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backTxtMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                backTxtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                backTxtMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout backBtnLayout = new javax.swing.GroupLayout(backBtn);
+        backBtn.setLayout(backBtnLayout);
+        backBtnLayout.setHorizontalGroup(
+            backBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(backTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        backBtnLayout.setVerticalGroup(
+            backBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(backBtnLayout.createSequentialGroup()
+                .addComponent(backTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        exitBtn.setBackground(new java.awt.Color(255, 255, 255));
+
+        exitTxt.setBackground(new java.awt.Color(255, 255, 255));
+        exitTxt.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        exitTxt.setText("X");
+        exitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        exitTxt.setPreferredSize(new java.awt.Dimension(40, 40));
+        exitTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitTxtMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                exitTxtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                exitTxtMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout exitBtnLayout = new javax.swing.GroupLayout(exitBtn);
+        exitBtn.setLayout(exitBtnLayout);
+        exitBtnLayout.setHorizontalGroup(
+            exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exitBtnLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        exitBtnLayout.setVerticalGroup(
+            exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exitBtnLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
+        header.setLayout(headerLayout);
+        headerLayout.setHorizontalGroup(
+            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headerLayout.createSequentialGroup()
+                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 677, Short.MAX_VALUE)
+                .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        headerLayout.setVerticalGroup(
+            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headerLayout.createSequentialGroup()
+                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 760, 30));
+
+        jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Importar calificaciones");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 760, -1));
+
+        btnImportar.setBackground(new java.awt.Color(153, 255, 255));
+        btnImportar.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        btnImportar.setForeground(new java.awt.Color(0, 0, 0));
+        btnImportar.setText("Seleccionar Archivo");
+        btnImportar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnImportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnImportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
+
+        btnGuardar.setBackground(new java.awt.Color(153, 255, 153));
+        btnGuardar.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        btnGuardar.setForeground(new java.awt.Color(0, 0, 0));
+        btnGuardar.setText("Guardar en base de datos");
+        btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, -1, -1));
+
+        tablaContenidoExcel.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "nControl", "Nombre", "Grupo", "nControlAsignatura", "Asignatura", "Calificación"
+            }
+        ));
+        tablaContenidoExcel.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        tablaContenidoExcel.setSelectionBackground(new java.awt.Color(232, 57, 95));
+        tablaContenidoExcel.setShowHorizontalLines(true);
+        tablaContenidoExcel.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tablaContenidoExcel);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 680, 570));
+
+        jLabel2.setFont(new java.awt.Font("Roboto Light", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Nota: Si no aparece el nombre del alumno automaticamente, es posible que el nControl este mal, debes corregirlo y volvar a cargar el Excel");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 710, -1, -1));
+
+        btnCrearEjemplo.setBackground(new java.awt.Color(255, 255, 153));
+        btnCrearEjemplo.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        btnCrearEjemplo.setForeground(new java.awt.Color(0, 0, 0));
+        btnCrearEjemplo.setText("Descargar una pllantilla");
+        btnCrearEjemplo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearEjemploActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCrearEjemplo, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 90, 230, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 592, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 446, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 732, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void backTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backTxtMouseClicked
+        Principal principal = new Principal();
+        principal.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_backTxtMouseClicked
+
+    private void backTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backTxtMouseEntered
+        backBtn.setBackground(Color.CYAN);
+        backBtn.setForeground(Color.white);
+    }//GEN-LAST:event_backTxtMouseEntered
+
+    private void backTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backTxtMouseExited
+        backBtn.setBackground(Color.white);
+        backBtn.setForeground(Color.black);
+    }//GEN-LAST:event_backTxtMouseExited
+
+    private void exitTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_exitTxtMouseClicked
+
+    private void exitTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseEntered
+        exitBtn.setBackground(Color.red);
+        exitTxt.setForeground(Color.white);
+    }//GEN-LAST:event_exitTxtMouseEntered
+
+    private void exitTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseExited
+        exitBtn.setBackground(Color.white);
+        exitTxt.setForeground(Color.black);
+    }//GEN-LAST:event_exitTxtMouseExited
+
+    private void headerMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+
+        this.setLocation(x - xMouse, y - yMouse);
+    }//GEN-LAST:event_headerMouseDragged
+
+    private void headerMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMousePressed
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }//GEN-LAST:event_headerMousePressed
+
+    private void btnImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Seleccionar archivo Excel");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos Excel (*.xls, *.xlsx)", "xls", "xlsx");
+        fileChooser.setFileFilter(filter);
+
+        int seleccion = fileChooser.showOpenDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+
+            try ( FileInputStream fis = new FileInputStream(file);  Workbook workbook = WorkbookFactory.create(fis)) {
+
+                Sheet sheet = workbook.getSheetAt(0); // Obtener la primera hoja del libro (puedes ajustarlo según tus necesidades)
+                Iterator<Row> rowIterator = sheet.iterator();
+
+                DefaultTableModel model = (DefaultTableModel) tablaContenidoExcel.getModel();
+                model.setRowCount(0); // Limpiar la tabla antes de cargar nuevos datos
+
+                while (rowIterator.hasNext()) {
+                    Row row = rowIterator.next();
+                    Object[] rowData = new Object[6]; // Array para almacenar los datos de cada fila del archivo Excel
+
+                    // Leer los valores de las celdas y asignarlos al array rowData
+                    Cell nControlCell = row.getCell(0);
+                    nControlCell.setCellType(CellType.STRING); // Convertir la celda a formato de texto
+                    rowData[0] = nControlCell.getStringCellValue();
+
+                    Cell grupoCell = row.getCell(1);
+                    rowData[2] = grupoCell.getCellType() == CellType.STRING ? grupoCell.getStringCellValue() : "";
+
+                    Cell nControlAsignaturaCell = row.getCell(2);
+                    rowData[3] = nControlAsignaturaCell.getCellType() == CellType.STRING ? nControlAsignaturaCell.getStringCellValue() : "";
+
+                    Cell calificacionCell = row.getCell(3);
+                    rowData[5] = calificacionCell.getCellType() == CellType.NUMERIC ? calificacionCell.getNumericCellValue() : 0;
+
+                    // Obtener el nombre del alumno
+                    String nControl = rowData[0].toString();
+                    String nombreAlumno = obtenerNombreAlumno(nControl); // Aquí debes reemplazar obtenerNombreAlumno con el método adecuado para obtener el nombre del alumno según el nControl
+
+                    // Obtener el nombre de la asignatura
+                    String nControlAsignatura = rowData[3].toString();
+                    String asignatura = obtenerNombreAsignatura(nControlAsignatura); // Aquí debes reemplazar obtenerNombreAsignatura con el método adecuado para obtener el nombre de la asignatura según el nControlAsignatura
+
+                    rowData[1] = nombreAlumno;
+                    rowData[4] = asignatura;
+
+                    model.addRow(rowData); // Agregar la fila a la tabla
+                }
+            } catch (IOException | EncryptedDocumentException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al leer el archivo Excel.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnImportarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        int rowCount = tablaContenidoExcel.getRowCount();
+
+        String sqlBuscarAlumno = "SELECT * FROM dbo.alumnos WHERE ncontrol = ?";
+        String sqlActualizarCalificacion = "UPDATE dbo.calificaciones SET calificacion = ? WHERE ncontrol = ? AND grupo = ? AND nControlAsignatura = ?";
+
+        try {
+            DefaultTableModel tableModel = (DefaultTableModel) tablaContenidoExcel.getModel();
+            tableModel.fireTableDataChanged(); // Actualizar el modelo de datos antes de la iteración
+
+            PreparedStatement pstBuscarAlumno = cn.prepareStatement(sqlBuscarAlumno);
+            PreparedStatement pstActualizarCalificacion = cn.prepareStatement(sqlActualizarCalificacion);
+
+            for (int i = 0; i < rowCount; i++) {
+                String nControl = tablaContenidoExcel.getValueAt(i, 0).toString();
+                String grupo = tablaContenidoExcel.getValueAt(i, 2).toString();
+                String nControlAsignatura = tablaContenidoExcel.getValueAt(i, 3).toString();
+                double calificacion = Double.parseDouble(tablaContenidoExcel.getValueAt(i, 5).toString());
+
+                pstBuscarAlumno.setString(1, nControl);
+                ResultSet rs = pstBuscarAlumno.executeQuery();
+
+                if (rs.next()) {
+                    pstActualizarCalificacion.setDouble(1, calificacion);
+                    pstActualizarCalificacion.setString(2, nControl);
+                    pstActualizarCalificacion.setString(3, grupo);
+                    pstActualizarCalificacion.setString(4, nControlAsignatura);
+
+                    pstActualizarCalificacion.executeUpdate();
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontró el alumno con el número de control: " + nControl);
+                }
+            }
+
+            JOptionPane.showMessageDialog(null, "Registros actualizados exitosamente.");
+
+        } catch (SQLException | NumberFormatException e) {
+            System.err.println(e);
+            JOptionPane.showMessageDialog(null, "Error al actualizar los registros. Contacta al administrador.");
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCrearEjemploActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearEjemploActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar archivo Excel");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos Excel (*.xlsx)", "xlsx");
+        fileChooser.setFileFilter(filter);
+        fileChooser.setSelectedFile(new File("Plantilla de Evaluación.xlsx")); // Establecer el nombre de archivo por defecto
+
+        int seleccion = fileChooser.showSaveDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            if (!file.getName().endsWith(".xlsx")) { // Verificar la extensión del archivo seleccionado
+                file = new File(file.getAbsolutePath() + ".xlsx"); // Añadir la extensión .xlsx si no está presente
+            }
+
+            try ( Workbook workbook = new XSSFWorkbook()) {
+                Sheet sheet = workbook.createSheet("Plantilla de Evaluación");
+
+                // Crear los datos a insertar en el archivo Excel
+                Object[][] data = {
+                    {"111111", "DG015", "AM546", 10},
+                    {"222222", "DG015", "AM546", 10},
+                    {"555555", "DG015", "AM546", 10}
+                };
+
+                // Insertar los datos en el archivo Excel
+                int rowCount = 0;
+                for (Object[] row : data) {
+                    Row excelRow = sheet.createRow(rowCount++);
+                    int columnCount = 0;
+                    for (Object field : row) {
+                        Cell cell = excelRow.createCell(columnCount++);
+                        if (field instanceof String) {
+                            cell.setCellValue((String) field);
+                        } else if (field instanceof Integer) {
+                            cell.setCellValue((Integer) field);
+                        }
+                    }
+                }
+
+                // Agregar la imagen a las columnas 6 a 12
+                InputStream inputStream = new FileInputStream("Imagenes/notaExcel.png");
+                byte[] imageBytes = IOUtils.toByteArray(inputStream);
+                int pictureIndex = workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
+                inputStream.close();
+
+                CreationHelper creationHelper = workbook.getCreationHelper();
+                Drawing<?> drawing = sheet.createDrawingPatriarch();
+                ClientAnchor anchor = creationHelper.createClientAnchor();
+                anchor.setCol1(5); // Columna inicial (0-indexed) - Columna 6
+                anchor.setCol2(11); // Columna final (0-indexed) - Columna 12
+                anchor.setRow1(rowCount); // Fila inicial (0-indexed) - Última fila insertada
+                anchor.setRow2(rowCount + 2); // Fila final (0-indexed) - Última fila insertada + 2
+
+                Picture picture = drawing.createPicture(anchor, pictureIndex);
+                picture.resize(); // Ajustar el tamaño de la imagen según las dimensiones de la celda
+
+                // Guardar el archivo Excel
+                try ( FileOutputStream fos = new FileOutputStream(file)) {
+                    workbook.write(fos);
+                    JOptionPane.showMessageDialog(this, "Archivo Excel creado exitosamente.");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Error al guardar el archivo Excel.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al crear el archivo Excel.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnCrearEjemploActionPerformed
+
+    // Método para obtener el nombre del alumno según el nControl
+    private String obtenerNombreAlumno(String nControl) {
+        String nombreAlumno = "";
+        String sql = "SELECT nombre FROM dbo.alumnos WHERE ncontrol = ?";
+
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, nControl);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                nombreAlumno = rs.getString("nombre");
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+            JOptionPane.showMessageDialog(null, "Error al obtener el nombre del alumno. Contacta al administrador.");
+        }
+
+        return nombreAlumno;
+    }
+
+// Método para obtener el nombre de la asignatura según el nControlAsignatura
+    private String obtenerNombreAsignatura(String nControlAsignatura) {
+        String asignatura = "";
+        String sql = "SELECT asignatura FROM dbo.asignaturas WHERE nControlAsignatura = ?";
+
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, nControlAsignatura);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                asignatura = rs.getString("asignatura");
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+            JOptionPane.showMessageDialog(null, "Error al obtener el nombre de la asignatura. Contacta al administrador.");
+        }
+
+        return asignatura;
+    }
 
     /**
      * @param args the command line arguments
@@ -358,6 +557,23 @@ public class Importar_Gestionar extends javax.swing.JFrame {
         });
     }
 
+    Conectar con = new Conectar();
+    Connection cn = con.conexion();
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel backBtn;
+    private javax.swing.JLabel backTxt;
+    private javax.swing.JButton btnCrearEjemplo;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnImportar;
+    private javax.swing.JPanel exitBtn;
+    private javax.swing.JLabel exitTxt;
+    private javax.swing.JPanel header;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tablaContenidoExcel;
     // End of variables declaration//GEN-END:variables
 }

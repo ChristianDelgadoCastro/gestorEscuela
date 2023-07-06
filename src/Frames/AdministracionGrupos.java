@@ -153,6 +153,12 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         ));
         tablaAlumnosGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         tablaAlumnosGrupo.setGridColor(new java.awt.Color(0, 0, 0));
+        tablaAlumnosGrupo.setOpaque(false);
+        tablaAlumnosGrupo.setSelectionBackground(new java.awt.Color(232, 57, 95));
+        tablaAlumnosGrupo.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        tablaAlumnosGrupo.setShowVerticalLines(true);
+        tablaAlumnosGrupo.getTableHeader().setResizingAllowed(false);
+        tablaAlumnosGrupo.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaAlumnosGrupo);
 
         jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 117, 619, 500));
