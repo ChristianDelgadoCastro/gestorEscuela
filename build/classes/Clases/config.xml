@@ -4,10 +4,9 @@
     <config>
         <server>localhost</server>
         <port>1433</port>
-        <database>dbo</database>
+        <database>iciibaSFR</database>
         <username>usersql</username>
         <password>root2</password>
     </config>
-
 </root>
 

@@ -174,6 +174,8 @@ public class Registrar_Grupos extends javax.swing.JFrame {
         backTxt = new javax.swing.JLabel();
         exitBtn = new javax.swing.JPanel();
         exitTxt = new javax.swing.JLabel();
+        minimizeBtn2 = new javax.swing.JPanel();
+        minimizeTxt2 = new javax.swing.JLabel();
         cmb1 = new javax.swing.JComboBox<>();
         cmb2 = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
@@ -200,12 +202,10 @@ public class Registrar_Grupos extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Control de las grupos");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 790, -1));
 
-        tabla_registro_grupos.setBackground(new java.awt.Color(255, 255, 255));
         tabla_registro_grupos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -236,7 +236,6 @@ public class Registrar_Grupos extends javax.swing.JFrame {
 
         btnAdminGrupos.setBackground(new java.awt.Color(153, 255, 255));
         btnAdminGrupos.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
-        btnAdminGrupos.setForeground(new java.awt.Color(0, 0, 0));
         btnAdminGrupos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/admi.png"))); // NOI18N
         btnAdminGrupos.setText("Administrar grupo!");
         btnAdminGrupos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -304,7 +303,7 @@ public class Registrar_Grupos extends javax.swing.JFrame {
         exitBtn.setBackground(new java.awt.Color(255, 255, 255));
 
         exitTxt.setBackground(new java.awt.Color(255, 255, 255));
-        exitTxt.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        exitTxt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         exitTxt.setText("X");
         exitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -325,9 +324,7 @@ public class Registrar_Grupos extends javax.swing.JFrame {
         exitBtn.setLayout(exitBtnLayout);
         exitBtnLayout.setHorizontalGroup(
             exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(exitBtnLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(exitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+            .addComponent(exitTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         );
         exitBtnLayout.setVerticalGroup(
             exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,13 +333,52 @@ public class Registrar_Grupos extends javax.swing.JFrame {
                 .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        minimizeBtn2.setBackground(new java.awt.Color(255, 255, 255));
+
+        minimizeTxt2.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        minimizeTxt2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        minimizeTxt2.setText("—");
+        minimizeTxt2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeTxt2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                minimizeTxt2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                minimizeTxt2MouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout minimizeBtn2Layout = new javax.swing.GroupLayout(minimizeBtn2);
+        minimizeBtn2.setLayout(minimizeBtn2Layout);
+        minimizeBtn2Layout.setHorizontalGroup(
+            minimizeBtn2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 49, Short.MAX_VALUE)
+            .addGroup(minimizeBtn2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(minimizeBtn2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(minimizeTxt2, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+        minimizeBtn2Layout.setVerticalGroup(
+            minimizeBtn2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 34, Short.MAX_VALUE)
+            .addGroup(minimizeBtn2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(minimizeBtn2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(minimizeTxt2, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)))
+        );
+
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
         headerLayout.setHorizontalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
                 .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 710, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 655, Short.MAX_VALUE)
+                .addComponent(minimizeBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -351,15 +387,14 @@ public class Registrar_Grupos extends javax.swing.JFrame {
             .addGroup(headerLayout.createSequentialGroup()
                 .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(minimizeBtn2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 30));
 
-        cmb1.setBackground(new java.awt.Color(255, 255, 255));
         cmb1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        cmb1.setForeground(new java.awt.Color(0, 0, 0));
         cmb1.setMaximumRowCount(30);
         cmb1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmb1.setBorder(null);
@@ -371,9 +406,7 @@ public class Registrar_Grupos extends javax.swing.JFrame {
         });
         jPanel1.add(cmb1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 180, -1));
 
-        cmb2.setBackground(new java.awt.Color(255, 255, 255));
         cmb2.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        cmb2.setForeground(new java.awt.Color(0, 0, 0));
         cmb2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmb2.setBorder(null);
         cmb2.addActionListener(new java.awt.event.ActionListener() {
@@ -384,11 +417,9 @@ public class Registrar_Grupos extends javax.swing.JFrame {
         jPanel1.add(cmb2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 180, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Especialidad:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
 
-        txtEspecialidad.setBackground(new java.awt.Color(255, 255, 255));
         txtEspecialidad.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtEspecialidad.setBorder(null);
         txtEspecialidad.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -396,11 +427,9 @@ public class Registrar_Grupos extends javax.swing.JFrame {
         jPanel1.add(txtEspecialidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 250, 40));
 
         jLabel2.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Grupo:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
 
-        txtGrupo.setBackground(new java.awt.Color(255, 255, 255));
         txtGrupo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtGrupo.setBorder(null);
         txtGrupo.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
@@ -506,7 +535,11 @@ public class Registrar_Grupos extends javax.swing.JFrame {
     }//GEN-LAST:event_backTxtMouseExited
 
     private void exitTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseClicked
-        System.exit(0);
+        int option = JOptionPane.showConfirmDialog(null, "¿Estás seguro de cerrar el sistema?", "Confirmar salida", JOptionPane.YES_NO_OPTION);
+
+        if (option == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }//GEN-LAST:event_exitTxtMouseClicked
 
     private void exitTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseEntered
@@ -539,6 +572,20 @@ public class Registrar_Grupos extends javax.swing.JFrame {
     private void btnAdminGruposMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdminGruposMouseExited
         btnAdminGrupos.setBackground(new Color(153,255,255));
     }//GEN-LAST:event_btnAdminGruposMouseExited
+
+    private void minimizeTxt2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeTxt2MouseClicked
+        setState(Login.ICONIFIED);
+    }//GEN-LAST:event_minimizeTxt2MouseClicked
+
+    private void minimizeTxt2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeTxt2MouseEntered
+        minimizeBtn2.setBackground(Color.GRAY);
+        minimizeTxt2.setForeground(Color.white);
+    }//GEN-LAST:event_minimizeTxt2MouseEntered
+
+    private void minimizeTxt2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeTxt2MouseExited
+        minimizeBtn2.setBackground(Color.white);
+        minimizeTxt2.setForeground(Color.black);
+    }//GEN-LAST:event_minimizeTxt2MouseExited
 
 // Método para mostrar los grupos activos en la tabla
     private void mostrarGruposActivos() {
@@ -655,6 +702,8 @@ public class Registrar_Grupos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JPanel minimizeBtn2;
+    private javax.swing.JLabel minimizeTxt2;
     private javax.swing.JPopupMenu popBorrar;
     private javax.swing.JMenuItem popEliminar;
     private javax.swing.JTable tabla_registro_grupos;

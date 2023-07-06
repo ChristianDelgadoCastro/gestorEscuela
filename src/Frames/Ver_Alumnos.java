@@ -94,6 +94,8 @@ public class Ver_Alumnos extends javax.swing.JFrame {
         backTxt = new javax.swing.JLabel();
         exitBtn = new javax.swing.JPanel();
         exitTxt = new javax.swing.JLabel();
+        minimizeBtn = new javax.swing.JPanel();
+        minimizeTxt = new javax.swing.JLabel();
         txtFiltro = new javax.swing.JTextField();
         btnActualizarCalificacion = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
@@ -160,7 +162,7 @@ public class Ver_Alumnos extends javax.swing.JFrame {
         exitBtn.setBackground(new java.awt.Color(255, 255, 255));
 
         exitTxt.setBackground(new java.awt.Color(255, 255, 255));
-        exitTxt.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        exitTxt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         exitTxt.setText("X");
         exitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -181,15 +183,50 @@ public class Ver_Alumnos extends javax.swing.JFrame {
         exitBtn.setLayout(exitBtnLayout);
         exitBtnLayout.setHorizontalGroup(
             exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(exitBtnLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(exitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+            .addComponent(exitTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         );
         exitBtnLayout.setVerticalGroup(
             exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exitBtnLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 5, Short.MAX_VALUE)
                 .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        minimizeBtn.setBackground(new java.awt.Color(255, 255, 255));
+
+        minimizeTxt.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        minimizeTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        minimizeTxt.setText("—");
+        minimizeTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeTxtMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                minimizeTxtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                minimizeTxtMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout minimizeBtnLayout = new javax.swing.GroupLayout(minimizeBtn);
+        minimizeBtn.setLayout(minimizeBtnLayout);
+        minimizeBtnLayout.setHorizontalGroup(
+            minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 43, Short.MAX_VALUE)
+            .addGroup(minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(minimizeBtnLayout.createSequentialGroup()
+                    .addGap(3, 3, 3)
+                    .addComponent(minimizeTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addGap(3, 3, 3)))
+        );
+        minimizeBtnLayout.setVerticalGroup(
+            minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 34, Short.MAX_VALUE)
+            .addGroup(minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(minimizeBtnLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(minimizeTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
@@ -198,7 +235,9 @@ public class Ver_Alumnos extends javax.swing.JFrame {
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
                 .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 850, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 801, Short.MAX_VALUE)
+                .addComponent(minimizeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -207,21 +246,19 @@ public class Ver_Alumnos extends javax.swing.JFrame {
             .addGroup(headerLayout.createSequentialGroup()
                 .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(minimizeBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 30));
 
-        txtFiltro.setBackground(new java.awt.Color(255, 255, 255));
         txtFiltro.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        txtFiltro.setForeground(new java.awt.Color(0, 0, 0));
         txtFiltro.setBorder(null);
         jPanel1.add(txtFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 160, 31));
 
         btnActualizarCalificacion.setBackground(new java.awt.Color(153, 255, 153));
         btnActualizarCalificacion.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        btnActualizarCalificacion.setForeground(new java.awt.Color(0, 0, 0));
         btnActualizarCalificacion.setText("Actualizar calificaciones");
         btnActualizarCalificacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnActualizarCalificacion.addActionListener(new java.awt.event.ActionListener() {
@@ -233,7 +270,6 @@ public class Ver_Alumnos extends javax.swing.JFrame {
 
         btnActualizar.setBackground(new java.awt.Color(255, 255, 153));
         btnActualizar.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        btnActualizar.setForeground(new java.awt.Color(0, 0, 0));
         btnActualizar.setText("Actualizar Tabla");
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -242,8 +278,6 @@ public class Ver_Alumnos extends javax.swing.JFrame {
         });
         jPanel1.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 50, -1, -1));
 
-        tablaAlumnosFiltro.setBackground(new java.awt.Color(255, 255, 255));
-        tablaAlumnosFiltro.setForeground(new java.awt.Color(0, 0, 0));
         tablaAlumnosFiltro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -269,13 +303,11 @@ public class Ver_Alumnos extends javax.swing.JFrame {
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 160, 10));
 
         jLabel3.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Buscar:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, -1, -1));
 
         btnGenerarBoletaAlumno.setBackground(new java.awt.Color(153, 255, 255));
         btnGenerarBoletaAlumno.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        btnGenerarBoletaAlumno.setForeground(new java.awt.Color(0, 0, 0));
         btnGenerarBoletaAlumno.setText("Generar boleta única");
         btnGenerarBoletaAlumno.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGenerarBoletaAlumno.addActionListener(new java.awt.event.ActionListener() {
@@ -454,7 +486,11 @@ public class Ver_Alumnos extends javax.swing.JFrame {
     }//GEN-LAST:event_backTxtMouseExited
 
     private void exitTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseClicked
-        System.exit(0);
+        int option = JOptionPane.showConfirmDialog(null, "¿Estás seguro de cerrar el sistema?", "Confirmar salida", JOptionPane.YES_NO_OPTION);
+
+        if (option == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }//GEN-LAST:event_exitTxtMouseClicked
 
     private void exitTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseEntered
@@ -762,6 +798,20 @@ public class Ver_Alumnos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGenerarBoletaAlumnoActionPerformed
 
+    private void minimizeTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeTxtMouseClicked
+        setState(Login.ICONIFIED);
+    }//GEN-LAST:event_minimizeTxtMouseClicked
+
+    private void minimizeTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeTxtMouseEntered
+        minimizeBtn.setBackground(Color.GRAY);
+        minimizeTxt.setForeground(Color.white);
+    }//GEN-LAST:event_minimizeTxtMouseEntered
+
+    private void minimizeTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeTxtMouseExited
+        minimizeBtn.setBackground(Color.white);
+        minimizeTxt.setForeground(Color.black);
+    }//GEN-LAST:event_minimizeTxtMouseExited
+
     private void Actualizar() {
         // Obtener los datos de la tabla "alumnos"
         String sql = "SELECT ncontrol, grupo FROM alumnos";
@@ -879,6 +929,8 @@ public class Ver_Alumnos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPanel minimizeBtn;
+    private javax.swing.JLabel minimizeTxt;
     private javax.swing.JTable tablaAlumnosFiltro;
     private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables

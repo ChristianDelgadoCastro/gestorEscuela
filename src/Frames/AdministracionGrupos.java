@@ -129,6 +129,8 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         backTxt = new javax.swing.JLabel();
         exitBtn = new javax.swing.JPanel();
         exitTxt = new javax.swing.JLabel();
+        minimizeBtn4 = new javax.swing.JPanel();
+        minimizeTxt4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -137,9 +139,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tablaAlumnosGrupo.setBackground(new java.awt.Color(255, 255, 255));
         tablaAlumnosGrupo.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        tablaAlumnosGrupo.setForeground(new java.awt.Color(0, 0, 0));
         tablaAlumnosGrupo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -165,7 +165,6 @@ public class AdministracionGrupos extends javax.swing.JFrame {
 
         btnCambiarCalificacion.setBackground(new java.awt.Color(255, 255, 51));
         btnCambiarCalificacion.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        btnCambiarCalificacion.setForeground(new java.awt.Color(0, 0, 0));
         btnCambiarCalificacion.setText("Cambiar calificaciones");
         btnCambiarCalificacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCambiarCalificacion.addActionListener(new java.awt.event.ActionListener() {
@@ -175,15 +174,12 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         });
         jPanel4.add(btnCambiarCalificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 80, 220, -1));
 
-        txtBuscar.setBackground(new java.awt.Color(255, 255, 255));
-        txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
         txtBuscar.setToolTipText("Filtrar por nControl");
         txtBuscar.setBorder(null);
         jPanel4.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 40, 140, 30));
 
         btnGenerarBoletasTodos.setBackground(new java.awt.Color(153, 255, 255));
         btnGenerarBoletasTodos.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        btnGenerarBoletasTodos.setForeground(new java.awt.Color(0, 0, 0));
         btnGenerarBoletasTodos.setText("Generar boleta grupal");
         btnGenerarBoletasTodos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGenerarBoletasTodos.addActionListener(new java.awt.event.ActionListener() {
@@ -195,7 +191,6 @@ public class AdministracionGrupos extends javax.swing.JFrame {
 
         btnGenerarBoletaAlumno.setBackground(new java.awt.Color(153, 255, 153));
         btnGenerarBoletaAlumno.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        btnGenerarBoletaAlumno.setForeground(new java.awt.Color(0, 0, 0));
         btnGenerarBoletaAlumno.setText("Generar boleta única");
         btnGenerarBoletaAlumno.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGenerarBoletaAlumno.addActionListener(new java.awt.event.ActionListener() {
@@ -206,28 +201,23 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         jPanel4.add(btnGenerarBoletaAlumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Especialidad:");
         jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 50, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Buscar:");
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 50, -1, -1));
 
         txtEspecialidad.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txtEspecialidad.setForeground(new java.awt.Color(0, 0, 0));
         txtEspecialidad.setText("jLabel4");
         jPanel4.add(txtEspecialidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, 160, -1));
 
         txtGrupo.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        txtGrupo.setForeground(new java.awt.Color(0, 0, 0));
         txtGrupo.setText("jLabel2");
         jPanel4.add(txtGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, -1, -1));
 
         btnHabilitarAsignaturas.setBackground(new java.awt.Color(102, 255, 0));
         btnHabilitarAsignaturas.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        btnHabilitarAsignaturas.setForeground(new java.awt.Color(0, 0, 0));
         btnHabilitarAsignaturas.setText("Habilitar");
         btnHabilitarAsignaturas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnHabilitarAsignaturas.addActionListener(new java.awt.event.ActionListener() {
@@ -237,9 +227,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         });
         jPanel4.add(btnHabilitarAsignaturas, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 120, 150, -1));
 
-        ListAsignaturas.setBackground(new java.awt.Color(255, 255, 255));
         ListAsignaturas.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        ListAsignaturas.setForeground(new java.awt.Color(0, 0, 0));
         ListAsignaturas.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -252,7 +240,6 @@ public class AdministracionGrupos extends javax.swing.JFrame {
 
         btnAgregarAsignaturas.setBackground(new java.awt.Color(51, 255, 0));
         btnAgregarAsignaturas.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        btnAgregarAsignaturas.setForeground(new java.awt.Color(0, 0, 0));
         btnAgregarAsignaturas.setText("Agregar asignatura");
         btnAgregarAsignaturas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAgregarAsignaturas.addActionListener(new java.awt.event.ActionListener() {
@@ -264,7 +251,6 @@ public class AdministracionGrupos extends javax.swing.JFrame {
 
         btnEliminarAsignaturas.setBackground(new java.awt.Color(255, 0, 0));
         btnEliminarAsignaturas.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        btnEliminarAsignaturas.setForeground(new java.awt.Color(0, 0, 0));
         btnEliminarAsignaturas.setText("Eliminar asignatura");
         btnEliminarAsignaturas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminarAsignaturas.addActionListener(new java.awt.event.ActionListener() {
@@ -278,7 +264,6 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         jPanel4.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 70, 140, 10));
 
         jLabel4.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Grupo:");
         jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
 
@@ -331,7 +316,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         exitBtn.setBackground(new java.awt.Color(255, 255, 255));
 
         exitTxt.setBackground(new java.awt.Color(255, 255, 255));
-        exitTxt.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        exitTxt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         exitTxt.setText("X");
         exitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -353,8 +338,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         exitBtnLayout.setHorizontalGroup(
             exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exitBtnLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(exitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                .addComponent(exitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                 .addContainerGap())
         );
         exitBtnLayout.setVerticalGroup(
@@ -364,22 +348,59 @@ public class AdministracionGrupos extends javax.swing.JFrame {
                 .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        minimizeBtn4.setBackground(new java.awt.Color(255, 255, 255));
+        minimizeBtn4.setPreferredSize(new java.awt.Dimension(40, 30));
+
+        minimizeTxt4.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        minimizeTxt4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        minimizeTxt4.setText("—");
+        minimizeTxt4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeTxt4MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                minimizeTxt4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                minimizeTxt4MouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout minimizeBtn4Layout = new javax.swing.GroupLayout(minimizeBtn4);
+        minimizeBtn4.setLayout(minimizeBtn4Layout);
+        minimizeBtn4Layout.setHorizontalGroup(
+            minimizeBtn4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(minimizeBtn4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(minimizeTxt4, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+        );
+        minimizeBtn4Layout.setVerticalGroup(
+            minimizeBtn4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(minimizeBtn4Layout.createSequentialGroup()
+                .addComponent(minimizeTxt4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
         headerLayout.setHorizontalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
                 .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 770, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 724, Short.MAX_VALUE)
+                .addComponent(minimizeBtn4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
-                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(minimizeBtn4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1214,7 +1235,11 @@ public class AdministracionGrupos extends javax.swing.JFrame {
     }//GEN-LAST:event_backTxtMouseExited
 
     private void exitTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseClicked
-        System.exit(0);
+        int option = JOptionPane.showConfirmDialog(null, "¿Estás seguro de cerrar el sistema?", "Confirmar salida", JOptionPane.YES_NO_OPTION);
+
+        if (option == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }//GEN-LAST:event_exitTxtMouseClicked
 
     private void exitTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseEntered
@@ -1238,6 +1263,20 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         xMouse = evt.getX();
         yMouse = evt.getY();
     }//GEN-LAST:event_headerMousePressed
+
+    private void minimizeTxt4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeTxt4MouseClicked
+        setState(Login.ICONIFIED);
+    }//GEN-LAST:event_minimizeTxt4MouseClicked
+
+    private void minimizeTxt4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeTxt4MouseEntered
+        minimizeBtn4.setBackground(Color.GRAY);
+        minimizeTxt4.setForeground(Color.white);
+    }//GEN-LAST:event_minimizeTxt4MouseEntered
+
+    private void minimizeTxt4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeTxt4MouseExited
+        minimizeBtn4.setBackground(Color.white);
+        minimizeTxt4.setForeground(Color.black);
+    }//GEN-LAST:event_minimizeTxt4MouseExited
 
     private void habilitarDeshabilitar() {
         if (ListAsignaturas.isEnabled()) {
@@ -1448,6 +1487,8 @@ public class AdministracionGrupos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPanel minimizeBtn4;
+    private javax.swing.JLabel minimizeTxt4;
     private javax.swing.JTable tablaAlumnosGrupo;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JLabel txtEspecialidad;

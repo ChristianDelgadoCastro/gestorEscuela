@@ -105,6 +105,8 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         backTxt = new javax.swing.JLabel();
         exitBtn = new javax.swing.JPanel();
         exitTxt = new javax.swing.JLabel();
+        minimizeBtn = new javax.swing.JPanel();
+        minimizeTxt = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla_registro_asignaturas = new javax.swing.JTable();
         btnGuardar = new javax.swing.JButton();
@@ -216,28 +218,61 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
                 .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        minimizeBtn.setBackground(new java.awt.Color(255, 255, 255));
+
+        minimizeTxt.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        minimizeTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        minimizeTxt.setText("—");
+        minimizeTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeTxtMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                minimizeTxtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                minimizeTxtMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout minimizeBtnLayout = new javax.swing.GroupLayout(minimizeBtn);
+        minimizeBtn.setLayout(minimizeBtnLayout);
+        minimizeBtnLayout.setHorizontalGroup(
+            minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(minimizeTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+        );
+        minimizeBtnLayout.setVerticalGroup(
+            minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, minimizeBtnLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(minimizeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
         headerLayout.setHorizontalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
                 .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 710, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 667, Short.MAX_VALUE)
+                .addComponent(minimizeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
-                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(minimizeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 30));
 
-        tabla_registro_asignaturas.setBackground(new java.awt.Color(255, 255, 255));
         tabla_registro_asignaturas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -267,7 +302,6 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
 
         btnGuardar.setBackground(new java.awt.Color(102, 255, 102));
         btnGuardar.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        btnGuardar.setForeground(new java.awt.Color(0, 0, 0));
         btnGuardar.setText("Guardar");
         btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -279,7 +313,6 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
 
         btnActualizar.setBackground(new java.awt.Color(51, 204, 255));
         btnActualizar.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        btnActualizar.setForeground(new java.awt.Color(0, 0, 0));
         btnActualizar.setText("Actualizar");
         btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -291,7 +324,6 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
 
         btnElimiarAsignatura.setBackground(new java.awt.Color(255, 51, 51));
         btnElimiarAsignatura.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        btnElimiarAsignatura.setForeground(new java.awt.Color(0, 0, 0));
         btnElimiarAsignatura.setText("Eliminar");
         btnElimiarAsignatura.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnElimiarAsignatura.addActionListener(new java.awt.event.ActionListener() {
@@ -302,12 +334,10 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         jPanel2.add(btnElimiarAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 134, -1));
 
         jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Control de las asignaturas");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 790, -1));
 
-        txtAsignatura.setBackground(new java.awt.Color(255, 255, 255));
         txtAsignatura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         txtAsignatura.setBorder(null);
         txtAsignatura.addActionListener(new java.awt.event.ActionListener() {
@@ -317,9 +347,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         });
         jPanel2.add(txtAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 270, 30));
 
-        txtnControlAsignatura.setBackground(new java.awt.Color(255, 255, 255));
         txtnControlAsignatura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        txtnControlAsignatura.setForeground(new java.awt.Color(0, 0, 0));
         txtnControlAsignatura.setBorder(null);
         txtnControlAsignatura.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtnControlAsignatura.addActionListener(new java.awt.event.ActionListener() {
@@ -335,12 +363,10 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         jPanel2.add(txtnControlAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 270, 30));
 
         jLabel3.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Nombre de la asignatura:");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Número de control de asignatura:");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, 31));
 
@@ -515,7 +541,11 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
     }//GEN-LAST:event_txtnControlAsignaturaKeyTyped
 
     private void exitTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseClicked
-        System.exit(0);
+        int option = JOptionPane.showConfirmDialog(null, "¿Estás seguro de cerrar el sistema?", "Confirmar salida", JOptionPane.YES_NO_OPTION);
+
+        if (option == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }//GEN-LAST:event_exitTxtMouseClicked
 
     private void exitTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseEntered
@@ -555,6 +585,20 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         backBtn.setBackground(Color.white);
         backBtn.setForeground(Color.black);
     }//GEN-LAST:event_backTxtMouseExited
+
+    private void minimizeTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeTxtMouseClicked
+        setState(Login.ICONIFIED);
+    }//GEN-LAST:event_minimizeTxtMouseClicked
+
+    private void minimizeTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeTxtMouseEntered
+        minimizeBtn.setBackground(Color.GRAY);
+        minimizeTxt.setForeground(Color.white);
+    }//GEN-LAST:event_minimizeTxtMouseEntered
+
+    private void minimizeTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeTxtMouseExited
+        minimizeBtn.setBackground(Color.white);
+        minimizeTxt.setForeground(Color.black);
+    }//GEN-LAST:event_minimizeTxtMouseExited
 
     /**
      * @param args the command line arguments
@@ -608,6 +652,10 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JPanel minimizeBtn;
+    private javax.swing.JPanel minimizeBtn2;
+    private javax.swing.JLabel minimizeTxt;
+    private javax.swing.JLabel minimizeTxt2;
     private javax.swing.JPopupMenu popBorrar;
     private javax.swing.JMenuItem popEliminar;
     private javax.swing.JTable tabla_registro_asignaturas;

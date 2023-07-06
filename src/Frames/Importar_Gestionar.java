@@ -73,6 +73,8 @@ public class Importar_Gestionar extends javax.swing.JFrame {
         backTxt = new javax.swing.JLabel();
         exitBtn = new javax.swing.JPanel();
         exitTxt = new javax.swing.JLabel();
+        minimizeBtn = new javax.swing.JPanel();
+        minimizeTxt = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         btnImportar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
@@ -137,7 +139,7 @@ public class Importar_Gestionar extends javax.swing.JFrame {
         exitBtn.setBackground(new java.awt.Color(255, 255, 255));
 
         exitTxt.setBackground(new java.awt.Color(255, 255, 255));
-        exitTxt.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        exitTxt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         exitTxt.setText("X");
         exitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -170,35 +172,67 @@ public class Importar_Gestionar extends javax.swing.JFrame {
                 .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        minimizeBtn.setBackground(new java.awt.Color(255, 255, 255));
+
+        minimizeTxt.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        minimizeTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        minimizeTxt.setText("—");
+        minimizeTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeTxtMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                minimizeTxtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                minimizeTxtMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout minimizeBtnLayout = new javax.swing.GroupLayout(minimizeBtn);
+        minimizeBtn.setLayout(minimizeBtnLayout);
+        minimizeBtnLayout.setHorizontalGroup(
+            minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(minimizeTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+        );
+        minimizeBtnLayout.setVerticalGroup(
+            minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(minimizeBtnLayout.createSequentialGroup()
+                .addComponent(minimizeTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
         headerLayout.setHorizontalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
                 .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 677, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 631, Short.MAX_VALUE)
+                .addComponent(minimizeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
-                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(minimizeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(backBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 760, 30));
 
         jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Importar calificaciones");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 760, -1));
 
         btnImportar.setBackground(new java.awt.Color(153, 255, 255));
         btnImportar.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        btnImportar.setForeground(new java.awt.Color(0, 0, 0));
         btnImportar.setText("Seleccionar Archivo");
         btnImportar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnImportar.addActionListener(new java.awt.event.ActionListener() {
@@ -210,7 +244,6 @@ public class Importar_Gestionar extends javax.swing.JFrame {
 
         btnGuardar.setBackground(new java.awt.Color(153, 255, 153));
         btnGuardar.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        btnGuardar.setForeground(new java.awt.Color(0, 0, 0));
         btnGuardar.setText("Guardar en base de datos");
         btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -237,13 +270,11 @@ public class Importar_Gestionar extends javax.swing.JFrame {
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 680, 570));
 
         jLabel2.setFont(new java.awt.Font("Roboto Light", 0, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nota: Si no aparece el nombre del alumno automaticamente, es posible que el nControl este mal, debes corregirlo y volvar a cargar el Excel");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 710, -1, -1));
 
         btnCrearEjemplo.setBackground(new java.awt.Color(255, 255, 153));
         btnCrearEjemplo.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        btnCrearEjemplo.setForeground(new java.awt.Color(0, 0, 0));
         btnCrearEjemplo.setText("Descargar una pllantilla");
         btnCrearEjemplo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -285,7 +316,11 @@ public class Importar_Gestionar extends javax.swing.JFrame {
     }//GEN-LAST:event_backTxtMouseExited
 
     private void exitTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseClicked
-        System.exit(0);
+        int option = JOptionPane.showConfirmDialog(null, "¿Estás seguro de cerrar el sistema?", "Confirmar salida", JOptionPane.YES_NO_OPTION);
+
+        if (option == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }//GEN-LAST:event_exitTxtMouseClicked
 
     private void exitTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseEntered
@@ -479,6 +514,20 @@ public class Importar_Gestionar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCrearEjemploActionPerformed
 
+    private void minimizeTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeTxtMouseClicked
+        setState(Login.ICONIFIED);
+    }//GEN-LAST:event_minimizeTxtMouseClicked
+
+    private void minimizeTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeTxtMouseEntered
+        minimizeBtn.setBackground(Color.GRAY);
+        minimizeTxt.setForeground(Color.white);
+    }//GEN-LAST:event_minimizeTxtMouseEntered
+
+    private void minimizeTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeTxtMouseExited
+        minimizeBtn.setBackground(Color.white);
+        minimizeTxt.setForeground(Color.black);
+    }//GEN-LAST:event_minimizeTxtMouseExited
+
     // Método para obtener el nombre del alumno según el nControl
     private String obtenerNombreAlumno(String nControl) {
         String nombreAlumno = "";
@@ -574,6 +623,8 @@ public class Importar_Gestionar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel minimizeBtn;
+    private javax.swing.JLabel minimizeTxt;
     private javax.swing.JTable tablaContenidoExcel;
     // End of variables declaration//GEN-END:variables
 }

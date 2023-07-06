@@ -171,6 +171,8 @@ public class Principal extends javax.swing.JFrame {
         header = new javax.swing.JPanel();
         exitBtn = new javax.swing.JPanel();
         exitTxt = new javax.swing.JLabel();
+        minimizeBtn = new javax.swing.JPanel();
+        minimizeTxt = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblFecha = new javax.swing.JLabel();
         lblHora = new javax.swing.JLabel();
@@ -186,7 +188,6 @@ public class Principal extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblTitulo.setFont(new java.awt.Font("Roboto Black", 1, 30)); // NOI18N
-        lblTitulo.setForeground(new java.awt.Color(0, 0, 0));
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("Bienvenido a ICIIBA");
         jPanel1.add(lblTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, 750, -1));
@@ -477,18 +478,59 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(exitTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        minimizeBtn.setBackground(new java.awt.Color(255, 255, 255));
+
+        minimizeTxt.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        minimizeTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        minimizeTxt.setText("—");
+        minimizeTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                minimizeTxtMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                minimizeTxtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                minimizeTxtMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout minimizeBtnLayout = new javax.swing.GroupLayout(minimizeBtn);
+        minimizeBtn.setLayout(minimizeBtnLayout);
+        minimizeBtnLayout.setHorizontalGroup(
+            minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 49, Short.MAX_VALUE)
+            .addGroup(minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(minimizeBtnLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(minimizeTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+        minimizeBtnLayout.setVerticalGroup(
+            minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(minimizeBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(minimizeBtnLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(minimizeTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
         headerLayout.setHorizontalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
-                .addContainerGap(904, Short.MAX_VALUE)
+                .addContainerGap(849, Short.MAX_VALUE)
+                .addComponent(minimizeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(exitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(minimizeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel1.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 30));
@@ -496,11 +538,9 @@ public class Principal extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(194, 152, 66));
 
         lblFecha.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        lblFecha.setForeground(new java.awt.Color(0, 0, 0));
         lblFecha.setText("jLabel1");
 
         lblHora.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        lblHora.setForeground(new java.awt.Color(0, 0, 0));
         lblHora.setText("jLabel1");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -627,7 +667,11 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_lblTablasBtnMouseExited
 
     private void exitTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseClicked
-        System.exit(0);
+        int option = JOptionPane.showConfirmDialog(null, "¿Estás seguro de cerrar el sistema?", "Confirmar salida", JOptionPane.YES_NO_OPTION);
+
+        if (option == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }//GEN-LAST:event_exitTxtMouseClicked
 
     private void exitTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseEntered
@@ -667,6 +711,20 @@ public class Principal extends javax.swing.JFrame {
         panelCerrarSesion.setBackground(new Color(123, 22, 22));
         lblCerrarSesion.setBackground(new Color(123, 22, 22));
     }//GEN-LAST:event_lblCerrarSesionMouseExited
+
+    private void minimizeTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeTxtMouseClicked
+        setState(Login.ICONIFIED);
+    }//GEN-LAST:event_minimizeTxtMouseClicked
+
+    private void minimizeTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeTxtMouseEntered
+        minimizeBtn.setBackground(Color.GRAY);
+        minimizeTxt.setForeground(Color.white);
+    }//GEN-LAST:event_minimizeTxtMouseEntered
+
+    private void minimizeTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeTxtMouseExited
+        minimizeBtn.setBackground(Color.white);
+        minimizeTxt.setForeground(Color.black);
+    }//GEN-LAST:event_minimizeTxtMouseExited
 
     /**
      * @param args the command line arguments
@@ -725,6 +783,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel lblHora;
     private javax.swing.JLabel lblTablasBtn;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JPanel minimizeBtn;
+    private javax.swing.JLabel minimizeTxt;
     private javax.swing.JPanel panelAlumnosBtn;
     private javax.swing.JPanel panelAsignaturasBtn;
     private javax.swing.JPanel panelCarrusel;
