@@ -304,8 +304,8 @@ public class Principal extends javax.swing.JFrame {
 
         lblTablasBtn.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         lblTablasBtn.setForeground(new java.awt.Color(255, 255, 255));
-        lblTablasBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/tablas-principal-2.png"))); // NOI18N
-        lblTablasBtn.setText("Tablas");
+        lblTablasBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Excel.png"))); // NOI18N
+        lblTablasBtn.setText("Importar Excel");
         lblTablasBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblTablasBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

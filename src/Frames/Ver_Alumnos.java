@@ -281,6 +281,7 @@ public class Ver_Alumnos extends javax.swing.JFrame {
         btnActualizar.setBackground(new java.awt.Color(255, 255, 153));
         btnActualizar.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
         btnActualizar.setText("Actualizar Tabla");
+        btnActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizarActionPerformed(evt);

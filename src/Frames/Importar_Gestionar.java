@@ -286,6 +286,7 @@ public class Importar_Gestionar extends javax.swing.JFrame {
         btnCrearEjemplo.setBackground(new java.awt.Color(255, 255, 153));
         btnCrearEjemplo.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
         btnCrearEjemplo.setText("Descargar una pllantilla");
+        btnCrearEjemplo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCrearEjemplo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearEjemploActionPerformed(evt);
