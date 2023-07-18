@@ -122,7 +122,12 @@ _Español_
 
 <br>
 Este modulo es lo primero que veremos al ejecutar el proyecto
+<br>
+<br>
+
 _English_
+
+<br>
 This module is the first thing we will see when executing the project.
 
 ### Modulo principal / Main module
@@ -133,7 +138,12 @@ _Español_
 
 <br>
 En esta sección se puede definir como el menú principal, ademas de mostrar un carrusel de imágenes tenemos el acceso a los demás módulos.
+<br>
+<br>
+
 _English_
+
+<br>
 In this section can be defined as the main menu, besides showing a carousel of images we have the access to the other modules.
 
 ### Modulo de asignaturas / Courses Module
@@ -147,6 +157,7 @@ Este modulo es para la administración de las asignaturas, tiene las siguientes 
 - Crear nueva asignatura
 - Modificar la asignatura seleccionada
 - Eliminar la asignatura seleccionada
+<br>
 <br>
 
 _English_
@@ -168,6 +179,7 @@ Este modulo muestra todos los alumnos, tiene las siguientes características;
 - Filtrar o buscar por el numero de control
 - Seleccionar a un alumno y poder imprimir su boleta individual
 - Seleccionar un alumno para poder cambiar su calificación y que nos envía al modulo de calificación
+<br>
 <br>
 
 _English_
@@ -191,6 +203,7 @@ Esta ventana emergente unicamente tiene la función de actualizar la calificaci�
 - nueva calificación.
 - calificación registrada.
 <br>
+<br>
 
 _English_
 
@@ -213,6 +226,7 @@ Este modulo no tiene las opciones típicas de un CRUD, sino que unicamente tiene
 - Horario
 - Turno
 Una vez seleccionado el grupo podemos dar click al botón de administrar grupo, lo que recogerá los datos grupo y especialidad y nos enviara al siguiente modulo.
+<br>
 <br>
 
 _English_
@@ -240,6 +254,7 @@ Este modulo es el que mas funciones tiene, las cuales son:
 - Imprimir la boleta del alumno que tengamos seleccionado
 - Imprimir la boleta del grupo entero (todas las boletas)
 <br>
+<br>
 
 _English_
 
@@ -263,6 +278,7 @@ _Español_
 Este apartado permite importar un archivo de excel para un manejo mas rápido de las calificaciones, para evitar confusiones se creo un botón el cual nos descarga una plantilla de ejemplo de como deben de ir estructurados los archivos que debemos importar.
 También se ha añadido la funcionalidad de que se haga una búsqueda acorde a los números de control que importemos, si el numero de control es correcto entonces en la tabla se mostrará el nombre del alumno, de la misma manera también con el numero de control de la asignatura.
 <br>
+<br>
 
 _English_
 
@@ -278,6 +294,7 @@ _Español_
 
 <br>
 Esto es un ejemplo del archivo que se crea cuando generamos una boleta de calificaciones.
+<br>
 <br>
 
 _English_
