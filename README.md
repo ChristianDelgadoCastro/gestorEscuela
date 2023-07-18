@@ -302,6 +302,19 @@ _English_
 <br>
 This is an example of the file that is created when we generate a report card.
 
-# IMPORTANTE / IMPORTANT
+# Contribución / Contribution
 
-Si tienes alguna sugerencia, has notado un error o necesitas ayuda con la instalación por favor déjamelo saber.
+¡Gracias por tu interés en contribuir a este proyecto! Aquí hay algunas formas en las que puedes participar:
+
+- Reportar errores: Si encuentras algún error o problema, por favor crea un nuevo "issue" en el repositorio. Incluye todos los detalles relevantes y, si es posible, proporciona pasos para reproducir el error.
+- Sugerir mejoras: Si tienes alguna idea para mejorar el proyecto, también puedes crear un nuevo "issue" en el repositorio. Describe detalladamente tu sugerencia y cómo crees que podría beneficiar al proyecto.
+- Realizar contribuciones: Si deseas contribuir directamente al código, puedes hacerlo mediante "pull requests". Antes de enviar una solicitud, asegúrate de seguir estas pautas:
+
+    - Crea una rama nueva para trabajar en tu contribución.
+    - Realiza tus cambios y asegúrate de que todo funcione correctamente.
+    - Escribe pruebas unitarias adecuadas si es necesario.
+    - Envía tu solicitud de extracción (pull request) y proporciona una descripción clara de los cambios que has realizado.
+- Proporcionar retroalimentación: Si tienes comentarios o sugerencias adicionales sobre el proyecto, no dudes en compartirlas. Tu opinión es valiosa para mí y nos ayuda a mejorar.
+
+Asegúrate de seguir un código de conducta amigable y respetuoso durante todo el proceso de contribución.
+¡Espero tus contribuciones y agradezco tu interés en hacer crecer este proyecto!
