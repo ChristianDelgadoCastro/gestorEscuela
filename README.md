@@ -116,26 +116,42 @@ Follow the prompts and use the corresponding buttons and fields to manage studen
 
 ### Inicio de sesión / Login
 ![Inicio de Sesión/Login](Screenshots/login.png)
+<br>
+
 _Español_
+
+<br>
 Este modulo es lo primero que veremos al ejecutar el proyecto
 _English_
 This module is the first thing we will see when executing the project.
 
 ### Modulo principal / Main module
 ![Modulo principal / main module](Screenshots/main.png)
+<br>
+
 _Español_
+
+<br>
 En esta sección se puede definir como el menú principal, ademas de mostrar un carrusel de imágenes tenemos el acceso a los demás módulos.
 _English_
 In this section can be defined as the main menu, besides showing a carousel of images we have the access to the other modules.
 
 ### Modulo de asignaturas / Courses Module
 ![Modulo de asignaturas / Courses Module](Screenshots/courses.png)
+<br>
+
 _Español_
+
+<br>
 Este modulo es para la administración de las asignaturas, tiene las siguientes funciones:
 - Crear nueva asignatura
 - Modificar la asignatura seleccionada
 - Eliminar la asignatura seleccionada
+<br>
+
 _English_
+
+<br>
 This module is for the administration of the courses, it has the following functions:
 - Create a new course
 - Modify the selected course
@@ -143,12 +159,20 @@ This module is for the administration of the courses, it has the following funct
 
 ### Modulo de alumnos / Students module
 ![Modulo de alumnos / Students module](Screenshots/students.png)
+<br>
+
 _Español_
+
+<br>
 Este modulo muestra todos los alumnos, tiene las siguientes características;
 - Filtrar o buscar por el numero de control
 - Seleccionar a un alumno y poder imprimir su boleta individual
 - Seleccionar un alumno para poder cambiar su calificación y que nos envía al modulo de calificación
+<br>
+
 _English_
+
+<br>
 This module shows all students, it has the following features;
 - Filter or search by control number.
 - Select a student and be able to print his individual report card.
@@ -156,13 +180,21 @@ This module shows all students, it has the following features;
 
 ### Cambiando las calificaciones desde el modulo de alumnos / Changing grades from students module
 ![Cambiando las calificaciones desde el modulo de alumnos / Changing grades from students module](Screenshots/change-from-students.png)
+<br>
+
 _Español_
+
+<br>
 Esta ventana emergente unicamente tiene la función de actualizar la calificación del alumno que tenemos seleccionado desde el modulo de alumnos. Se toma en cuenta lo siguiente:
 - numero de control del alumno.
 - numero de control de la asignatura.
 - nueva calificación.
 - calificación registrada.
+<br>
+
 _English_
+
+<br>
 This pop-up window only has the function of updating the grade of the student we have selected from the student module. The following is taken into account:
 - student control number.
 - control number of the subject.
@@ -171,13 +203,21 @@ This pop-up window only has the function of updating the grade of the student we
 
 ### Modulo de grupos / Groups module
 ![Modulo de grupos / Groups module](Screenshots/groups.png)
+<br>
+
 _Español_
+
+<br>
 Este modulo no tiene las opciones típicas de un CRUD, sino que unicamente tiene dos checkbox que tienen la función de filtrar los grupos de la siguiente manera:
 - Especialidad
 - Horario
 - Turno
 Una vez seleccionado el grupo podemos dar click al botón de administrar grupo, lo que recogerá los datos grupo y especialidad y nos enviara al siguiente modulo.
+<br>
+
 _English_
+
+<br>
 This module does not have the typical options of a CRUD, but only has two checkboxes that have the function of filtering the groups in the following way:
 - Specialty
 - Schedule
@@ -186,7 +226,11 @@ Once the group is selected we can click on the manage group button, which will c
 
 ### Administración de grupos / Groups admin
 ![Administración de grupos / Groups admin](Screenshots/groups-admin.png)
+<br>
+
 _Español_
+
+<br>
 Este modulo es el que mas funciones tiene, las cuales son:
 - Mostrar todos los alumnos que estén en este grupo (si no se muestran entonces no hay una asignatura en el grupo).
 - Habilitar y deshabilitar la tabla de las asignaturas (por defecto esta desactivada).
@@ -195,7 +239,11 @@ Este modulo es el que mas funciones tiene, las cuales son:
 - Modificar las calificaciones de forma manual
 - Imprimir la boleta del alumno que tengamos seleccionado
 - Imprimir la boleta del grupo entero (todas las boletas)
+<br>
+
 _English_
+
+<br>
 This module is the one with the most functions, which are:
 - Show all the students that are in this group (if they are not shown then there is no subject in the group).
 - Enable and disable the table of subjects (by default it is disabled).
@@ -207,10 +255,18 @@ This module is the one with the most functions, which are:
 
 ### Modulo de importación / Import module
 ![Modulo de importación / Import module](Screenshots/import-grades.png)
+<br>
+
 _Español_
+
+<br>
 Este apartado permite importar un archivo de excel para un manejo mas rápido de las calificaciones, para evitar confusiones se creo un botón el cual nos descarga una plantilla de ejemplo de como deben de ir estructurados los archivos que debemos importar.
 También se ha añadido la funcionalidad de que se haga una búsqueda acorde a los números de control que importemos, si el numero de control es correcto entonces en la tabla se mostrará el nombre del alumno, de la misma manera también con el numero de control de la asignatura.
+<br>
+
 _English_
+
+<br>
 This section allows to import an excel file for a faster handling of the grades, to avoid confusion a button was created which downloads an example template of how the files that we must import should be structured.
 I've also added the functionality to make a search according to the control numbers that we import, if the control number is correct then the table will show the name of the student, in the same way also with the control number of the subject.
 
@@ -219,8 +275,14 @@ I've also added the functionality to make a search according to the control numb
 <br>
 
 _Español_
+
+<br>
 Esto es un ejemplo del archivo que se crea cuando generamos una boleta de calificaciones.
+<br>
+
 _English_
+
+<br>
 This is an example of the file that is created when we generate a report card.
 
 # IMPORTANTE / IMPORTANT
