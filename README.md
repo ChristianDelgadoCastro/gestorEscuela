@@ -216,6 +216,8 @@ I've also added the functionality to make a search according to the control numb
 
 ### Ejemplo de boleta / Report card example
 ![Ejemplo de boleta / Report card example](Screenshots/examplePDF.PNG)
+<br>
+
 _Español_
 Esto es un ejemplo del archivo que se crea cuando generamos una boleta de calificaciones.
 _English_
