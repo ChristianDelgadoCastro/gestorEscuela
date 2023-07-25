@@ -69,6 +69,11 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         mostrarTabla(grupo, especialidad);
         cargarAsignaturas();
         ListAsignaturas.setEnabled(false);
+        btnAgregarAsignaturas.setEnabled(false);
+        btnEliminarAsignaturas.setEnabled(false);
+        //Verifica si hay registros de inglés
+        boolean hayRegistrosIngles = verificarRegistrosIngles(grupo);
+        btnAdminIngles.setEnabled(hayRegistrosIngles);
 
         // Obtén el Document del campo de texto txtBuscar
         Document buscarDocument = txtBuscar.getDocument();
@@ -92,7 +97,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         });
     }
 
-    // Resto del código del formulario y otros métodos...
+    //Constructor
     private AdministracionGrupos() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -131,6 +136,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         exitTxt = new javax.swing.JLabel();
         minimizeBtn4 = new javax.swing.JPanel();
         minimizeTxt4 = new javax.swing.JLabel();
+        btnAdminIngles = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -406,6 +412,17 @@ public class AdministracionGrupos extends javax.swing.JFrame {
 
         jPanel4.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 30));
 
+        btnAdminIngles.setBackground(new java.awt.Color(153, 102, 255));
+        btnAdminIngles.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        btnAdminIngles.setText("Calificar inglés");
+        btnAdminIngles.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAdminIngles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdminInglesActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnAdminIngles, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 520, 160, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -420,12 +437,23 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public class SoundPlayer {
+    private boolean verificarRegistrosIngles(String grupo) {
+        String sql = "SELECT COUNT(*) FROM dbo.calificaciones c "
+                + "INNER JOIN dbo.asignaturas a ON c.nControlAsignatura = a.nControlAsignatura "
+                + "WHERE c.grupo = ? AND (a.asignatura LIKE '%[Ii][Nn][Gg][Ll][Ee][Ss]%' OR a.asignatura LIKE '%[Ii][Nn][Gg][Ll][Éé][Ss]%')";
+        try {
+            PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, grupo);
+            ResultSet rs = pst.executeQuery();
 
-        public static void playSystemNotificationSound() {
-            Toolkit.getDefaultToolkit().beep();
-
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
         }
+        return false;
     }
 
 
@@ -506,6 +534,11 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         // Actualizar la tabla de calificaciones con las asignaturas agregadas al grupo
         mostrarTabla(grupo, especialidad);
         habilitarDeshabilitar();
+
+        // Verificar si hay registros de la asignatura "Inglés" y habilitar/deshabilitar el botón "btnAdminIngles"
+        boolean hayRegistrosIngles = verificarRegistrosIngles(grupo);
+        btnAdminIngles.setEnabled(hayRegistrosIngles);
+
     }//GEN-LAST:event_btnAgregarAsignaturasActionPerformed
 
     private void btnEliminarAsignaturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAsignaturasActionPerformed
@@ -535,6 +568,10 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         // Actualizar la tabla de calificaciones después de eliminar las asignaturas
         mostrarTabla(grupo, especialidad);
         habilitarDeshabilitar();
+
+        // Verificar si hay registros de la asignatura "Inglés" y habilitar/deshabilitar el botón "btnAdminIngles"
+        boolean hayRegistrosIngles = verificarRegistrosIngles(grupo);
+        btnAdminIngles.setEnabled(hayRegistrosIngles);
     }//GEN-LAST:event_btnEliminarAsignaturasActionPerformed
 
     void mostrarTabla(String grupo, String especialidad) {
@@ -542,8 +579,14 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         DefaultTableModel modelo = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
-                // Permitir la edición solo en la columna de calificaciones
-                return column == 4;
+                // Obtener el valor de la asignatura de la fila
+                String asignatura = getValueAt(row, 3).toString().toLowerCase();
+
+                // Verificar si la asignatura corresponde a inglés o alguna variación de la palabra
+                boolean isIngles = asignatura.contains("ingles") || asignatura.contains("inglés");
+
+                // Permitir la edición solo en la columna de calificaciones para asignaturas que no sean inglés
+                return column == 4 && !isIngles;
             }
         };
 
@@ -555,10 +598,15 @@ public class AdministracionGrupos extends javax.swing.JFrame {
 
         tablaAlumnosGrupo.setModel(modelo);
 
-        String sql = "SELECT c.ncontrol, a.nombre, c.nControlAsignatura, asignaturas.asignatura, c.calificacion FROM dbo.calificaciones c "
+        String sql = "SELECT c.ncontrol, a.nombre, c.nControlAsignatura, asignaturas.asignatura, "
+                + "COALESCE(ci.promedioIngles, c.calificacion) AS calificacion "
+                + // Cambio aquí
+                "FROM dbo.calificaciones c "
                 + "INNER JOIN dbo.alumnos a ON c.ncontrol = a.ncontrol "
                 + "INNER JOIN dbo.asignaturas asignaturas ON c.nControlAsignatura = asignaturas.nControlAsignatura "
-                + "WHERE c.grupo = ? AND a.estatus = 'ac' ORDER BY c.ncontrol";
+                + "LEFT JOIN calificaciones_ingles ci ON c.ncontrol = ci.ncontrol AND c.grupo = ci.grupo AND c.ncontrolasignatura = ci.ncontrolasignatura "
+                + // Nueva unión a la tabla calificaciones_ingles
+                "WHERE c.grupo = ? AND a.estatus = 'ac' ORDER BY c.ncontrol";
 
         try {
             PreparedStatement statement = cn.prepareStatement(sql);
@@ -578,7 +626,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
                 String asignatura = rs.getString("asignatura");
                 String calificacion = rs.getString("calificacion");
 
-                modelo.addRow(new Object[]{nControl, nombre, nControlAsignatura, asignatura, calificacion});
+                modelo.addRow(new Object[]{nControl, nombre, nControlAsignatura, asignatura, calificacion, especialidad});
             }
         } catch (SQLException e) {
             System.err.println(e);
@@ -1278,14 +1326,40 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         minimizeTxt4.setForeground(Color.black);
     }//GEN-LAST:event_minimizeTxt4MouseExited
 
+    private void btnAdminInglesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminInglesActionPerformed
+        // Obtener el grupo y especialidad del JLabel txtGrupo y txtEspecialidad
+        String grupo = txtGrupo.getText();
+        String especialidad = txtEspecialidad.getText();
+
+        // Obtener el nControlAsignatura de la fila seleccionada en la tabla de asignaturas
+        int filaSeleccionada = tablaAlumnosGrupo.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            // Si no hay ninguna fila seleccionada, mostrar un mensaje de error y salir del método
+            JOptionPane.showMessageDialog(null, "Selecciona una asignatura de inglés.");
+            return;
+        }
+        String nControlIngles = tablaAlumnosGrupo.getValueAt(filaSeleccionada, 2).toString();
+
+        // Crear una instancia de AdministracionIngles y pasarle los datos como parámetros al constructor
+        AdministracionIngles adminIngles = new AdministracionIngles(grupo, especialidad, nControlIngles);
+
+        // Mostrar la nueva ventana AdministracionIngles "Inglés"
+        adminIngles.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnAdminInglesActionPerformed
+
     private void habilitarDeshabilitar() {
         if (ListAsignaturas.isEnabled()) {
             ListAsignaturas.setEnabled(false);
             btnHabilitarAsignaturas.setText("Habilitar");
+            btnAgregarAsignaturas.setEnabled(false);
+            btnEliminarAsignaturas.setEnabled(false);
             btnHabilitarAsignaturas.setBackground(new Color(102, 255, 0));
         } else {
             ListAsignaturas.setEnabled(true);
             btnHabilitarAsignaturas.setText("Deshabilitar");
+            btnAgregarAsignaturas.setEnabled(true);
+            btnEliminarAsignaturas.setEnabled(true);
             btnHabilitarAsignaturas.setBackground(new Color(255, 0, 0));
         }
     }
@@ -1453,7 +1527,6 @@ public class AdministracionGrupos extends javax.swing.JFrame {
     }
 
     public void confirmarSalida() {
-        SoundPlayer.playSystemNotificationSound();
         int valor = JOptionPane.showConfirmDialog(this, "¿Deseas cerrar la aplicacion?", "Advertencia", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (valor == JOptionPane.YES_OPTION) {
 
@@ -1471,6 +1544,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
     private javax.swing.JList<String> ListAsignaturas;
     private javax.swing.JPanel backBtn;
     private javax.swing.JLabel backTxt;
+    private javax.swing.JButton btnAdminIngles;
     private javax.swing.JButton btnAgregarAsignaturas;
     private javax.swing.JButton btnCambiarCalificacion;
     private javax.swing.JButton btnEliminarAsignaturas;

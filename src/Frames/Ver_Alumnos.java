@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -347,7 +348,7 @@ public class Ver_Alumnos extends javax.swing.JFrame {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 if (columnIndex == 6) { // Índice de la columna "Calificación"
-                    return Integer.class; // Cambia a la clase adecuada para los valores de calificación
+                    return Float.class; // Cambia a la clase adecuada para los valores de calificación
                 }
                 return super.getColumnClass(columnIndex);
             }
@@ -363,12 +364,16 @@ public class Ver_Alumnos extends javax.swing.JFrame {
 
         tablaAlumnosFiltro.setModel(modelo);
 
-        String sql = "SELECT c.ncontrol, a.nombre, c.grupo, g.especialidad, asignaturas.asignatura, c.nControlAsignatura, c.calificacion "
-                + "FROM dbo.calificaciones c "
+        String sql = "SELECT c.ncontrol, a.nombre, c.grupo, g.especialidad, asignaturas.asignatura, c.nControlAsignatura, "
+                + "COALESCE(ci.promedioIngles, c.calificacion) AS calificacion "
+                + // Cambio aquí
+                "FROM dbo.calificaciones c "
                 + "INNER JOIN dbo.alumnos a ON c.ncontrol = a.ncontrol "
                 + "INNER JOIN dbo.asignaturas asignaturas ON c.nControlAsignatura = asignaturas.nControlAsignatura "
                 + "INNER JOIN dbo.grupos g ON c.grupo = g.grupo "
-                + "WHERE a.estatus = 'ac' ORDER BY c.ncontrol";
+                + "LEFT JOIN calificaciones_ingles ci ON c.ncontrol = ci.ncontrol AND c.grupo = ci.grupo AND c.ncontrolasignatura = ci.ncontrolasignatura "
+                + // Nueva unión a la tabla calificaciones_ingles
+                "WHERE a.estatus = 'ac' ORDER BY c.ncontrol";
 
         try {
             Statement st = cn.createStatement();
@@ -381,9 +386,9 @@ public class Ver_Alumnos extends javax.swing.JFrame {
                 String especialidad = rs.getString("especialidad");
                 String asignatura = rs.getString("asignatura");
                 String nControlAsignatura = rs.getString("nControlAsignatura");
-                int calificacion = rs.getInt("calificacion");
+                Float calificacion = rs.getFloat("calificacion"); // Cambio aquí
 
-                modelo.addRow(new Object[]{nControl, nombre, grupo, especialidad, asignatura, nControlAsignatura, calificacion});
+                modelo.addRow(new Object[]{nControl, nombre, grupo, especialidad, asignatura, nControlAsignatura, calificacion}); // Cambio aquí
             }
         } catch (SQLException e) {
             System.err.println(e);
@@ -439,6 +444,15 @@ public class Ver_Alumnos extends javax.swing.JFrame {
             String asignatura = tablaAlumnosFiltro.getValueAt(selectedRow, 4).toString();
             String calificacion = tablaAlumnosFiltro.getValueAt(selectedRow, 6).toString();
 
+            // Verificar si es una asignatura de inglés (ignorando acentos)
+            if (containsIgnoreCaseWithAccents(asignatura, "ingles")) {
+                JOptionPane.showMessageDialog(null,"La calificación de una asignatura de Inglés no se puede cambiar \n"
+                        + "desde este módulo.\n"
+                        + "Esta calificación se cambia automaticamente desde el modulo:\n"
+                        + "                Grupo -> Administrar Grupo -> Calificar Inglés");
+                return;
+            }
+
             CalificacionAlumno ventanaCalificacion = new CalificacionAlumno();
             ventanaCalificacion.setNControl(nControl);
             ventanaCalificacion.setNControlAsignatura(nControlAsignatura);
@@ -451,6 +465,15 @@ public class Ver_Alumnos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Seleccione una fila antes de continuar.");
         }
     }//GEN-LAST:event_btnActualizarCalificacionActionPerformed
+
+    private boolean containsIgnoreCaseWithAccents(String str, String searchStr) {
+        // Normalizar los strings para eliminar acentos y comparar en minúsculas
+        String normalizedStr = Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("\\p{M}", "").toLowerCase();
+        String normalizedSearchStr = Normalizer.normalize(searchStr, Normalizer.Form.NFD).replaceAll("\\p{M}", "").toLowerCase();
+
+        // Utilizar expresión regular para buscar la palabra ignorando acentos
+        return normalizedStr.contains(normalizedSearchStr);
+    }
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // Obtener los datos de la tabla "alumnos"

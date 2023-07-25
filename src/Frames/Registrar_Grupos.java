@@ -471,7 +471,7 @@ public class Registrar_Grupos extends javax.swing.JFrame {
 
         int filaSeleccionada = tabla_registro_grupos.getSelectedRow();
         if (filaSeleccionada == -1) {
-            AdministracionGrupos.SoundPlayer.playSystemNotificationSound();
+            //AdministracionGrupos.SoundPlayer.playSystemNotificationSound();
             JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún grupo. Por favor, seleccione uno.");
         } else {
             String grupo = (String) tabla_registro_grupos.getValueAt(filaSeleccionada, 0);
