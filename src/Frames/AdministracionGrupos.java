@@ -72,7 +72,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         btnAgregarAsignaturas.setEnabled(false);
         btnEliminarAsignaturas.setEnabled(false);
         //Verifica si hay registros de inglés
-        boolean hayRegistrosIngles = verificarRegistrosIngles(grupo);
+        boolean hayRegistrosIngles = verificarEspecialidadIngles(especialidad);
         btnAdminIngles.setEnabled(hayRegistrosIngles);
 
         // Obtén el Document del campo de texto txtBuscar
@@ -323,7 +323,6 @@ public class AdministracionGrupos extends javax.swing.JFrame {
 
         exitTxt.setBackground(new java.awt.Color(255, 255, 255));
         exitTxt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        exitTxt.setForeground(new java.awt.Color(0, 0, 0));
         exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         exitTxt.setText("X");
         exitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -357,7 +356,6 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         minimizeBtn4.setPreferredSize(new java.awt.Dimension(40, 30));
 
         minimizeTxt4.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
-        minimizeTxt4.setForeground(new java.awt.Color(0, 0, 0));
         minimizeTxt4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         minimizeTxt4.setText("—");
         minimizeTxt4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -427,33 +425,28 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 845, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 850, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 642, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 642, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private boolean verificarRegistrosIngles(String grupo) {
-        String sql = "SELECT COUNT(*) FROM dbo.calificaciones c "
-                + "INNER JOIN dbo.asignaturas a ON c.nControlAsignatura = a.nControlAsignatura "
-                + "WHERE c.grupo = ? AND (a.asignatura LIKE '%[Ii][Nn][Gg][Ll][Ee][Ss]%' OR a.asignatura LIKE '%[Ii][Nn][Gg][Ll][Éé][Ss]%')";
-        try {
-            PreparedStatement pst = cn.prepareStatement(sql);
-            pst.setString(1, grupo);
-            ResultSet rs = pst.executeQuery();
-
-            if (rs.next()) {
-                int count = rs.getInt(1);
-                return count > 0;
-            }
-        } catch (SQLException e) {
-            System.err.println(e);
-        }
-        return false;
+    private boolean verificarEspecialidadIngles(String especialidad) {
+        return especialidad.matches(".*[Ii][Nn][Gg][Ll][Ee][Ss].*|[Ii][Nn][Gg][Ll][Éé][Ss].*");
     }
 
 
@@ -536,8 +529,8 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         habilitarDeshabilitar();
 
         // Verificar si hay registros de la asignatura "Inglés" y habilitar/deshabilitar el botón "btnAdminIngles"
-        boolean hayRegistrosIngles = verificarRegistrosIngles(grupo);
-        btnAdminIngles.setEnabled(hayRegistrosIngles);
+        boolean hayEspecialidadIngles = verificarEspecialidadIngles(especialidad);
+        btnAdminIngles.setEnabled(hayEspecialidadIngles);
 
     }//GEN-LAST:event_btnAgregarAsignaturasActionPerformed
 
@@ -570,8 +563,8 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         habilitarDeshabilitar();
 
         // Verificar si hay registros de la asignatura "Inglés" y habilitar/deshabilitar el botón "btnAdminIngles"
-        boolean hayRegistrosIngles = verificarRegistrosIngles(grupo);
-        btnAdminIngles.setEnabled(hayRegistrosIngles);
+        boolean hayEspecialidadIngles = verificarEspecialidadIngles(especialidad);
+        btnAdminIngles.setEnabled(hayEspecialidadIngles);
     }//GEN-LAST:event_btnEliminarAsignaturasActionPerformed
 
     void mostrarTabla(String grupo, String especialidad) {
@@ -585,8 +578,11 @@ public class AdministracionGrupos extends javax.swing.JFrame {
                 // Verificar si la asignatura corresponde a inglés o alguna variación de la palabra
                 boolean isIngles = asignatura.contains("ingles") || asignatura.contains("inglés");
 
-                // Permitir la edición solo en la columna de calificaciones para asignaturas que no sean inglés
-                return column == 4 && !isIngles;
+                // Verificar si la especialidad es "Inglés"
+                boolean isEspecialidadIngles = especialidad.equalsIgnoreCase("Ingles") || especialidad.equalsIgnoreCase("Inglés");
+
+                // Permitir la edición solo en la columna de calificaciones para asignaturas que no sean inglés y no sean de especialidad "Inglés"
+                return column == 4 && !isIngles && !isEspecialidadIngles;
             }
         };
 
@@ -666,281 +662,40 @@ public class AdministracionGrupos extends javax.swing.JFrame {
             // Obtener los datos del alumno seleccionado
             String nombreAlumno = tablaAlumnosGrupo.getValueAt(filaSeleccionada, 1).toString();
 
-            // Generar el nombre del archivo de la boleta
-            String nombreArchivo = nombreAlumno + ".pdf";
+            // Obtener la especialidad del grupo
+            String especialidadGrupo = txtEspecialidad.getText().trim();
 
-            // Construir la ruta completa para la carpeta del grupo y la boleta del alumno
-            String nombreGrupo = txtGrupo.getText().trim(); // Obtener el nombre del grupo seleccionado
-            String nombreUsuario = System.getProperty("user.name");
-            String rutaDocumentos = "C:/Users/" + nombreUsuario + "/Documents";
-            String rutaCarpetaBoletas = rutaDocumentos + "/IciibaBoletas/" + nombreGrupo;
-            String rutaBoletaAlumno = rutaCarpetaBoletas + "/" + nombreArchivo;
-
-            // Verificar si la carpeta del grupo existe, si no, crearla
-            File carpetaGrupo = new File(rutaCarpetaBoletas);
-            if (!carpetaGrupo.exists()) {
-                carpetaGrupo.mkdirs();
+            if (especialidadGrupo.equalsIgnoreCase("Ingles") || especialidadGrupo.equalsIgnoreCase("Inglés")) {
+                // Generar el documento PDF específico para la especialidad "Ingles" o "Inglés"
+                generarBoletaEspecialidadIngles(nombreAlumno, especialidadGrupo);
+            } else {
+                // Generar el documento PDF utilizando el código existente
+                generarBoletaNormal(nombreAlumno);
             }
-
-            // Generar la boleta de calificaciones del alumno
-            try ( PDDocument documento = new PDDocument()) {
-                PDRectangle pageSize = PDRectangle.LETTER; //Asignamos el tamaño de la hoja
-                PDPage pagina = new PDPage(pageSize);
-                documento.addPage(pagina);
-
-                // Obtener el contenido de la página
-                PDPageContentStream contenido = new PDPageContentStream(documento, pagina);
-//ENCABEZADO
-                // Cargar la imagen del logo
-                PDImageXObject imagenLogo = PDImageXObject.createFromFile("Imagenes/logoiciibapdf.png", documento);
-
-                // Definir la posición y tamaño de la imagen del logo
-                float posicionX = 50;
-                float posicionY = 680;
-                float anchoLogo = 86;
-                float altoLogo = 112;
-
-                // Insertar la imagen del logo en la página
-                contenido.drawImage(imagenLogo, posicionX, posicionY, anchoLogo, altoLogo);
-
-                // Definir la posición y estilo del texto
-                float textPosX = 200; // Posición X del texto
-                float textPosY = 750; // Posición Y del texto
-                float fontSize = 18; // Tamaño de fuente del texto
-
-                // Escribir el primer renglón del texto
-                contenido.setFont(PDType1Font.HELVETICA_BOLD, fontSize);
-                contenido.beginText();
-                contenido.newLineAtOffset(textPosX, textPosY);
-                contenido.showText("Instituto de Ciencias de la Información");
-                contenido.endText();
-
-                // Escribir el segundo renglón del texto
-                contenido.setFont(PDType1Font.HELVETICA_BOLD, fontSize);
-                contenido.beginText();
-                contenido.newLineAtOffset(300, textPosY - fontSize); // Mover un poco hacia abajo
-                contenido.showText("e Ingles del Bajío");
-                contenido.endText();
-
-                // Definir la posición y tamaño del texto "REPORTE DE EVALUACIÓN"
-                float posicionTexto2X = 250; // Ajusta la posición X 
-                float posicionTexto2Y = 700; // Ajusta la posición Y 
-                float tamanoTexto2 = 16; // Ajusta el tamaño de la fuente 
-
-                // Escribir el texto "REPORTE DE EVALUACIÓN" en mayúsculas sostenidas
-                contenido.beginText();
-                contenido.setFont(PDType1Font.HELVETICA_BOLD, tamanoTexto2);
-                contenido.newLineAtOffset(posicionTexto2X, posicionTexto2Y);
-                contenido.showText("REPORTE DE EVALUACIÓN");
-                contenido.endText();
-
-                // Obtener la fecha actual
-                Date fechaActual = new Date();
-                SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
-                String fecha = formatoFecha.format(fechaActual);
-
-// Definir la posición y tamaño de la sección de fecha
-                float fechaPosX = 450; // Ajusta la posición X
-                float fechaPosY = 670; // Ajusta la posición Y
-                float tamanoFecha = 12; // Ajusta el tamaño de la fuente
-
-// Escribir la fecha
-                contenido.beginText();
-                contenido.setFont(PDType1Font.HELVETICA, tamanoFecha);
-                contenido.newLineAtOffset(fechaPosX, fechaPosY);
-                contenido.showText("Fecha: " + fecha);
-                contenido.endText();
-
-//FIN DE ENCABEZADO
-//INICIO DE DATOS DEL ALUMNO
-                //INICIO DE RECTANGULO CON BORDER REDONDOS
-// Definir las dimensiones del cuadro
-                float cuadroPosX = 50; // Posición X del cuadro
-                float cuadroPosY = 550; // Posición Y del cuadro
-                float cuadroWidth = 500; // Ancho del cuadro
-                float cuadroHeight = 100; // Alto del cuadro
-                //float borderRadius = 10; // Radio de los bordes redondeados
-                // Dibujar el cuadro con bordes redondeados
-                float borderRadius = 10; // Radio de los bordes redondeados
-                float x = cuadroPosX;
-                float y = cuadroPosY;
-                float width = cuadroWidth;
-                float height = cuadroHeight;
-
-                contenido.setStrokingColor(Color.BLACK); // Color de borde
-                contenido.setLineWidth(1); // Ancho de borde
-
-                // Dibujar línea superior
-                contenido.moveTo(x + borderRadius, y + height);
-                contenido.curveTo(x + borderRadius, y + height, x, y + height, x, y + height - borderRadius);
-                contenido.lineTo(x, y + borderRadius);
-                contenido.curveTo(x, y + borderRadius, x, y, x + borderRadius, y);
-
-                // Dibujar línea derecha
-                contenido.lineTo(x + width - borderRadius, y);
-                contenido.curveTo(x + width - borderRadius, y, x + width, y, x + width, y + borderRadius);
-                contenido.lineTo(x + width, y + height - borderRadius);
-
-                // Dibujar línea inferior
-                contenido.curveTo(x + width, y + height - borderRadius, x + width, y + height, x + width - borderRadius, y + height);
-                contenido.lineTo(x + borderRadius, y + height);
-
-                // Dibujar línea izquierda
-                contenido.lineTo(x + borderRadius, y);
-
-                contenido.closePath();
-                contenido.stroke();
-                //FIN DE RECTANGULO CON BORDER REDONDOS
-                // Definir la posición y estilo del título "Datos del alumno"
-                float tituloPosX = 55 + 10; // Posición X del título dentro del cuadro
-                float tituloPosY = 540 + 100 - 10; // Posición Y del título dentro del cuadro
-                float tituloFontSize = 16; // Tamaño de fuente del título
-
-                // Escribir el título "Datos del alumno"
-                contenido.setFont(PDType1Font.HELVETICA_BOLD, tituloFontSize);
-                contenido.beginText();
-                contenido.newLineAtOffset(tituloPosX, tituloPosY);
-                contenido.showText("Datos del alumno:");
-                contenido.endText();
-
-                // Definir la posición y estilo de los datos del alumno
-                float datosPosX = 150; // Posición X de los datos
-                float datosPosY = tituloPosY - tituloFontSize - 10; // Posición Y de los datos
-                float datosFontSize = 12; // Tamaño de fuente de los datos
-
-                // Escribir el nombre del alumno
-                contenido.setFont(PDType1Font.HELVETICA_BOLD, datosFontSize); // Establecer fuente negrita
-                contenido.beginText();
-                contenido.newLineAtOffset(datosPosX, datosPosY);
-                contenido.showText("Nombre:");
-                contenido.setFont(PDType1Font.HELVETICA, datosFontSize); // Establecer fuente normal
-                contenido.showText(" " + nombreAlumno);
-                contenido.endText();
-
-                // Escribir el grupo
-                String grupo = txtGrupo.getText(); // Aquí debes obtener el grupo del alumno
-                contenido.setFont(PDType1Font.HELVETICA_BOLD, datosFontSize); // Establecer fuente negrita
-                contenido.beginText();
-                contenido.newLineAtOffset(datosPosX, datosPosY - datosFontSize - 5);
-                contenido.showText("Grupo:");
-                contenido.setFont(PDType1Font.HELVETICA, datosFontSize); // Establecer fuente normal
-                contenido.showText(" " + grupo);
-                contenido.endText();
-
-                String nControlAlumno = tablaAlumnosGrupo.getValueAt(filaSeleccionada, 0).toString();
-                float datosPosX2 = 250; // Nueva posición X para el número de control
-                contenido.setFont(PDType1Font.HELVETICA_BOLD, datosFontSize); // Establecer fuente negrita
-                contenido.beginText();
-                contenido.newLineAtOffset(datosPosX2, datosPosY - datosFontSize - 5);
-                contenido.showText("Numero de control:");
-                contenido.setFont(PDType1Font.HELVETICA, datosFontSize); // Establecer fuente normal
-                contenido.showText(" " + nControlAlumno);
-                contenido.endText();
-                // Escribir la especialidad del grupo
-                String especialidad = txtEspecialidad.getText(); // Aquí debes obtener la especialidad del grupo
-                contenido.setFont(PDType1Font.HELVETICA_BOLD, datosFontSize); // Establecer fuente negrita
-                contenido.beginText();
-                contenido.newLineAtOffset(datosPosX, datosPosY - (datosFontSize * 2) - 10);
-                contenido.showText("Especialidad del grupo:");
-                contenido.setFont(PDType1Font.HELVETICA, datosFontSize); // Establecer fuente normal
-                contenido.showText(" " + especialidad);
-                contenido.endText();
-
-//FIN DE DATOS DEL ALUMNO
-//INICIO DE TABLA DE ASIGNATURAS Y CALIFICACIONES
-                // Definir la posición y tamaño de la sección de asignaturas y calificaciones
-                float sectionPosX = 50;  // Posición X de la sección
-                float sectionPosY = 500; // Posición Y de la sección
-                float sectionWidth = 300; // Ancho de la sección
-                String nControl = tablaAlumnosGrupo.getValueAt(filaSeleccionada, 0).toString();
-
-                // Obtener los datos de las asignaturas y calificaciones desde la base de datos
-                List<String> asignaturas = new ArrayList<>();
-                List<String> calificaciones = new ArrayList<>();
-
-                for (int i = 0; i < tablaAlumnosGrupo.getRowCount(); i++) {
-                    String nControlFila = tablaAlumnosGrupo.getValueAt(i, 0).toString();
-                    if (nControlFila.equals(nControl)) {
-                        String asignatura = tablaAlumnosGrupo.getValueAt(i, 3).toString();
-                        String calificacion = tablaAlumnosGrupo.getValueAt(i, 4) != null ? tablaAlumnosGrupo.getValueAt(i, 4).toString() : "";
-                        asignaturas.add(asignatura);
-                        calificaciones.add(calificacion);
-                    }
-                }
-
-                // Definir la posición inicial de la sección
-                float currentY = sectionPosY;
-
-                // Establecer el color del texto de la sección
-                contenido.setStrokingColor(Color.BLACK);
-
-                // Verificar si hay calificaciones faltantes
-                boolean calificacionesFaltantes = calificaciones.contains("");
-
-                // Escribir las asignaturas y calificaciones en el PDF
-                if (!calificacionesFaltantes) {
-                    // Escribir los encabezados de la tabla
-                    contenido.beginText();
-                    contenido.setFont(PDType1Font.HELVETICA_BOLD, 12);
-                    contenido.newLineAtOffset(sectionPosX, currentY);
-                    contenido.showText("Asignatura");
-                    contenido.newLineAtOffset(sectionWidth * 0.5f, 0);
-                    contenido.showText("Calificación");
-                    contenido.endText();
-
-                    currentY -= 20; // Espacio adicional después de los encabezados
-
-                    // Escribir los datos de las asignaturas y calificaciones
-                    for (int i = 0; i < asignaturas.size(); i++) {
-                        String asignatura = asignaturas.get(i);
-                        String calificacion = calificaciones.get(i);
-
-                        // Calcular las coordenadas de la línea actual
-                        float xSection = sectionPosX;
-                        float ySection = currentY;
-
-                        // Escribir la asignatura
-                        contenido.beginText();
-                        contenido.setFont(PDType1Font.HELVETICA, 12);
-                        contenido.newLineAtOffset(xSection, ySection);
-                        contenido.showText(asignatura);
-                        contenido.endText();
-
-                        // Escribir la calificación
-                        contenido.beginText();
-                        contenido.setFont(PDType1Font.HELVETICA, 12);
-                        contenido.newLineAtOffset(sectionWidth * 0.7f, ySection);
-                        contenido.showText(calificacion);
-                        contenido.endText();
-
-                        // Calcular las coordenadas de la siguiente línea
-                        currentY -= 20;
-                    }
-                } else {
-                    // Mostrar una alerta o mensaje al usuario
-                    JOptionPane.showMessageDialog(null, "No se puede generar la boleta. Asigne una calificación al alumno seleccionado.", "Calificaciones faltantes", JOptionPane.WARNING_MESSAGE);
-                }
-
-                // Actualizar la posición Y actual
-                currentY -= 20; // Espacio adicional después de la sección de
-//FIN DE TABLA DE ASIGNATURAS Y CALIFICACIONES
-
-                // Cerrar el contenido de la página y guardar el documento
-                contenido.close();
-                // Guardar el documento como archivo PDF
-                documento.save(rutaBoletaAlumno);
-//                documento.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error al generar la boleta de calificaciones del alumno");
-            }
-
-            JOptionPane.showMessageDialog(null, "Boleta de calificaciones generada: " + rutaBoletaAlumno);
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un alumno");
         }
+    }
+
+// Método para generar el documento PDF específico para la especialidad "Ingles" o "Inglés"
+    private void generarBoletaEspecialidadIngles(String nombreAlumno, String especialidadGrupo) {
+        // TODO: Coloca aquí el código específico para la generación del PDF en la especialidad "Ingles" o "Inglés"
+        // Puedes utilizar el mismo código que proporcionaste anteriormente para generar la boleta
+        // Asegúrate de modificar y ajustar el contenido del PDF según tus necesidades para esta especialidad
+        // Por ejemplo, modificar el encabezado, el formato de las calificaciones, etc.
+    }
+
+// Método para generar el documento PDF utilizando el código existente
+    private void generarBoletaNormal(String nombreAlumno) {
+        // TODO: Coloca aquí el código existente para la generación del PDF como lo has mostrado en tu mensaje anterior
+        // Puedes reutilizar el mismo código sin cambios, ya que no hay diferencias en la generación de la boleta para esta especialidad
+
     }//GEN-LAST:event_btnGenerarBoletaAlumnoActionPerformed
 
+    
+    
+    
+    
     private void btnGenerarBoletasTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarBoletasTodosActionPerformed
         // Verificar si hay alumnos seleccionados en la tabla
         if (tablaAlumnosGrupo.getRowCount() > 0) {
@@ -1230,6 +985,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         // Iterar sobre todas las filas de la tabla
         for (int i = 0; i < rowCount; i++) {
             String nControl = tablaAlumnosGrupo.getValueAt(i, 0).toString(); // Obtener el nControl de la fila
+            String nControlAsignatura = tablaAlumnosGrupo.getValueAt(i, 2).toString(); // Obtener el nControlAsignatura de la fila
             Object calificacionObj = tablaAlumnosGrupo.getValueAt(i, 4); // Obtener la calificación modificada de la fila como Object
 
             // Verificar si el valor de calificacionObj es null o vacío
@@ -1244,12 +1000,13 @@ public class AdministracionGrupos extends javax.swing.JFrame {
             // Realizar la actualización en la base de datos solo si hay cambios
             if (calificacion != null) {
                 cambiosRealizados = true;
-                String sql = "UPDATE dbo.calificaciones SET calificacion = ? WHERE ncontrol = ?";
+                String sql = "UPDATE dbo.calificaciones SET calificacion = ? WHERE ncontrol = ? AND nControlAsignatura = ?";
 
                 try {
                     PreparedStatement statement = cn.prepareStatement(sql);
                     statement.setString(1, calificacion);
                     statement.setString(2, nControl);
+                    statement.setString(3, nControlAsignatura);
                     statement.executeUpdate();
                 } catch (SQLException ex) {
                     System.err.println(ex);
@@ -1485,8 +1242,17 @@ public class AdministracionGrupos extends javax.swing.JFrame {
     }
 
     public void cargarAsignaturas() {
-        // Obtener los datos de la tabla asignaturas
-        String sql = "SELECT asignatura FROM dbo.asignaturas";
+        // Obtener la especialidad del grupo desde el campo txtEspecialidad
+        String especialidadGrupo = txtEspecialidad.getText();
+
+        // Definir la consulta SQL con la condición de filtro según la especialidad
+        String sql;
+        if (especialidadGrupo.equalsIgnoreCase("Ingles") || especialidadGrupo.equalsIgnoreCase("Inglés")) {
+            sql = "SELECT asignatura FROM dbo.asignaturas WHERE especialidad = 'eng'";
+        } else {
+            sql = "SELECT asignatura FROM dbo.asignaturas WHERE especialidad <> 'eng' OR especialidad IS NULL";
+        }
+
         try {
             PreparedStatement statement = cn.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();

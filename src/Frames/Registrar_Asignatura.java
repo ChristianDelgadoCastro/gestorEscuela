@@ -28,43 +28,38 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
     /**
      * Creates new form Registrar_curso
      */
-    
     int xMouse, yMouse;
-    
+
     public Registrar_Asignatura() {
         initComponents();
 
 //        TextPrompt idAsignatura = new TextPrompt("Escribe el número de control", txtnControlAsignatura);
 //        TextPrompt nombreAsignatura = new TextPrompt("Escribe el nombre de la asignatura", txtAsignatura);
-
         this.setLocationRelativeTo(null);
         mostrarTabla();
-     }
+    }
 
-    
-    
     void limpiar() {
 
         txtnControlAsignatura.setText("");
         txtAsignatura.setText("");
+        txtEspecialidad_Asignatura.setText("");
     }
 
     void mostrarTabla() {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Numero de asignatura");
         modelo.addColumn("Nombre");
-        
+        modelo.addColumn("Especialidad");
 
         tabla_registro_asignaturas.setModel(modelo);
         tabla_registro_asignaturas.getTableHeader().setFont(new Font("Roboto", Font.BOLD, 15));
         tabla_registro_asignaturas.getTableHeader().setOpaque(false);
         tabla_registro_asignaturas.getTableHeader().setBackground(new Color(32, 136, 203));
-//        tabla_registro_asignaturas.getTableHeader().setForeground(new Color(255, 255, 255));
-//        tabla_registro_asignaturas.setRowHeight(WIDTH);
-        
+
         String sql = "SELECT * FROM dbo.asignaturas";
 
-        String datos[] = new String[2];
+        String datos[] = new String[3];
 
         try {
             Statement st = cn.createStatement();
@@ -73,6 +68,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
             while (rs.next()) {
                 datos[0] = rs.getString(1);
                 datos[1] = rs.getString(2);
+                datos[2] = rs.getString(3);
 
                 modelo.addRow(datos);
             }
@@ -119,6 +115,9 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
+        jLabel4 = new javax.swing.JLabel();
+        txtEspecialidad_Asignatura = new javax.swing.JTextField();
+        jSeparator3 = new javax.swing.JSeparator();
 
         popEliminar.setText("Borrar");
         popEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -186,7 +185,6 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
 
         exitTxt.setBackground(new java.awt.Color(255, 255, 255));
         exitTxt.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        exitTxt.setForeground(new java.awt.Color(0, 0, 0));
         exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         exitTxt.setText("X");
         exitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -219,7 +217,6 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         minimizeBtn.setBackground(new java.awt.Color(255, 255, 255));
 
         minimizeTxt.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
-        minimizeTxt.setForeground(new java.awt.Color(0, 0, 0));
         minimizeTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         minimizeTxt.setText("—");
         minimizeTxt.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -308,7 +305,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
+        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, -1, -1));
 
         btnActualizar.setBackground(new java.awt.Color(51, 204, 255));
         btnActualizar.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
@@ -319,7 +316,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
                 btnActualizarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, -1, -1));
+        jPanel2.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, -1, -1));
 
         btnElimiarAsignatura.setBackground(new java.awt.Color(255, 51, 51));
         btnElimiarAsignatura.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
@@ -330,7 +327,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
                 btnElimiarAsignaturaActionPerformed(evt);
             }
         });
-        jPanel2.add(btnElimiarAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 134, -1));
+        jPanel2.add(btnElimiarAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 350, 134, -1));
 
         jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -362,8 +359,8 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         jPanel2.add(txtnControlAsignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 270, 30));
 
         jLabel3.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
-        jLabel3.setText("Nombre de la asignatura:");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
+        jLabel3.setText("Especialidad:");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
         jLabel2.setText("Número de control de asignatura:");
@@ -373,7 +370,23 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 270, -1));
 
         jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
-        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 270, 10));
+        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 270, 10));
+
+        jLabel4.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        jLabel4.setText("Nombre de la asignatura:");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
+
+        txtEspecialidad_Asignatura.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtEspecialidad_Asignatura.setBorder(null);
+        txtEspecialidad_Asignatura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEspecialidad_AsignaturaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txtEspecialidad_Asignatura, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 270, 30));
+
+        jSeparator3.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 270, 10));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -401,9 +414,10 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         String asignatura = txtAsignatura.getText();
+        String especialidad = txtEspecialidad_Asignatura.getText();  // Nuevo campo
 
-        // Validar que el campo no esté vacío
-        if (asignatura.isEmpty()) {
+        // Validar que los campos no estén vacíos
+        if (asignatura.isEmpty() || especialidad.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos antes de guardar.");
             return;
         }
@@ -417,11 +431,12 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         }
 
         // Guardar los datos en la base de datos
-        String sql = "INSERT INTO dbo.asignaturas (nControlAsignatura, asignatura) VALUES (?, ?)";
+        String sql = "INSERT INTO dbo.asignaturas (nControlAsignatura, asignatura, especialidad) VALUES (?, ?, ?)";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, nControlAsignatura);
             pst.setString(2, asignatura);
+            pst.setString(3, especialidad);
 
             int resultado = pst.executeUpdate();
             if (resultado > 0) {
@@ -447,12 +462,18 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         }
 
         // Obtener los valores actuales de la asignatura seleccionada
-        String nControlAsignaturaActual = tabla_registro_asignaturas.getValueAt(filaSeleccionada, 0).toString();
-        String asignaturaActual = tabla_registro_asignaturas.getValueAt(filaSeleccionada, 1).toString();
+        String nControlAsignaturaActual = tabla_registro_asignaturas.getValueAt(filaSeleccionada, 0) != null
+                ? tabla_registro_asignaturas.getValueAt(filaSeleccionada, 0).toString()
+                : "";
+
+        String asignaturaActual = tabla_registro_asignaturas.getValueAt(filaSeleccionada, 1) != null
+                ? tabla_registro_asignaturas.getValueAt(filaSeleccionada, 1).toString()
+                : "";
 
         // Obtener los nuevos valores de asignatura desde los campos de texto
         String nuevaAsignatura = txtAsignatura.getText();
         String nuevoNControlAsignatura = txtnControlAsignatura.getText();
+        String nuevaEspecialidad = txtEspecialidad_Asignatura.getText();  // Nuevo campo
 
         // Validar que los campos no estén vacíos
         if (nuevaAsignatura.isEmpty() || nuevoNControlAsignatura.isEmpty()) {
@@ -461,12 +482,13 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         }
 
         // Realizar la actualización de la asignatura en la base de datos
-        String sql = "UPDATE dbo.asignaturas SET nControlAsignatura = ?, asignatura = ? WHERE nControlAsignatura = ?";
+        String sql = "UPDATE dbo.asignaturas SET nControlAsignatura = ?, asignatura = ?, especialidad = ? WHERE nControlAsignatura = ?";
         try {
             PreparedStatement pst = cn.prepareStatement(sql);
             pst.setString(1, nuevoNControlAsignatura);
             pst.setString(2, nuevaAsignatura);
-            pst.setString(3, nControlAsignaturaActual);
+            pst.setString(3, nuevaEspecialidad);  // Nuevo campo
+            pst.setString(4, nControlAsignaturaActual);
 
             int resultado = pst.executeUpdate();
             if (resultado > 0) {
@@ -488,6 +510,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
 
         this.txtnControlAsignatura.setText(this.tabla_registro_asignaturas.getValueAt(fila, 0).toString());
         this.txtAsignatura.setText(this.tabla_registro_asignaturas.getValueAt(fila, 1).toString());
+        this.txtEspecialidad_Asignatura.setText(this.tabla_registro_asignaturas.getValueAt(fila, 2).toString());
     }//GEN-LAST:event_tabla_registro_asignaturasMouseClicked
 
     private void popEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popEliminarActionPerformed
@@ -533,8 +556,7 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
     }//GEN-LAST:event_btnElimiarAsignaturaActionPerformed
 
     private void txtnControlAsignaturaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnControlAsignaturaKeyTyped
-        if(txtnControlAsignatura.getText().length() >= 5)
-        {
+        if (txtnControlAsignatura.getText().length() >= 5) {
             evt.consume();
         }
     }//GEN-LAST:event_txtnControlAsignaturaKeyTyped
@@ -599,6 +621,10 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
         minimizeTxt.setForeground(Color.black);
     }//GEN-LAST:event_minimizeTxtMouseExited
 
+    private void txtEspecialidad_AsignaturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEspecialidad_AsignaturaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEspecialidad_AsignaturaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -647,16 +673,19 @@ public class Registrar_Asignatura extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPanel minimizeBtn;
     private javax.swing.JLabel minimizeTxt;
     private javax.swing.JPopupMenu popBorrar;
     private javax.swing.JMenuItem popEliminar;
     private javax.swing.JTable tabla_registro_asignaturas;
     private javax.swing.JTextField txtAsignatura;
+    private javax.swing.JTextField txtEspecialidad_Asignatura;
     private javax.swing.JTextField txtnControlAsignatura;
     // End of variables declaration//GEN-END:variables
 
