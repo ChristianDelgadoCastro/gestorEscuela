@@ -761,7 +761,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
             contenido.beginText();
             contenido.setFont(PDType1Font.HELVETICA_BOLD, tamanoTexto2);
             contenido.newLineAtOffset(posicionTexto2X, posicionTexto2Y);
-            contenido.showText("REPORTE DE EVALUACIÓN");
+            contenido.showText("EVALUATION REPORT");
             contenido.endText();
 
             // Obtener la fecha actual
@@ -778,7 +778,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
             contenido.beginText();
             contenido.setFont(PDType1Font.HELVETICA, tamanoFecha);
             contenido.newLineAtOffset(fechaPosX, fechaPosY);
-            contenido.showText("Fecha: " + fecha);
+            contenido.showText("Date: " + fecha);
             contenido.endText();
 
 //FIN DE ENCABEZADO
@@ -830,7 +830,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
             contenido.setFont(PDType1Font.HELVETICA_BOLD, tituloFontSize);
             contenido.beginText();
             contenido.newLineAtOffset(tituloPosX, tituloPosY);
-            contenido.showText("Datos del alumno:");
+            contenido.showText("Student data:");
             contenido.endText();
 
             // Definir la posición y estilo de los datos del alumno
@@ -842,7 +842,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
             contenido.setFont(PDType1Font.HELVETICA_BOLD, datosFontSize); // Establecer fuente negrita
             contenido.beginText();
             contenido.newLineAtOffset(datosPosX, datosPosY);
-            contenido.showText("Nombre:");
+            contenido.showText("Name:");
             contenido.setFont(PDType1Font.HELVETICA, datosFontSize); // Establecer fuente normal
             contenido.showText(" " + nombreAlumno);
             contenido.endText();
@@ -852,7 +852,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
             contenido.setFont(PDType1Font.HELVETICA_BOLD, datosFontSize); // Establecer fuente negrita
             contenido.beginText();
             contenido.newLineAtOffset(datosPosX, datosPosY - datosFontSize - 5);
-            contenido.showText("Grupo:");
+            contenido.showText("Group:");
             contenido.setFont(PDType1Font.HELVETICA, datosFontSize); // Establecer fuente normal
             contenido.showText(" " + grupo);
             contenido.endText();
@@ -862,7 +862,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
             contenido.setFont(PDType1Font.HELVETICA_BOLD, datosFontSize); // Establecer fuente negrita
             contenido.beginText();
             contenido.newLineAtOffset(datosPosX2, datosPosY - datosFontSize - 5);
-            contenido.showText("Numero de control:");
+            contenido.showText("Control number:");
             contenido.setFont(PDType1Font.HELVETICA, datosFontSize); // Establecer fuente normal
             contenido.showText(" " + nControlAlumno);
             contenido.endText();
@@ -871,7 +871,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
             contenido.setFont(PDType1Font.HELVETICA_BOLD, datosFontSize); // Establecer fuente negrita
             contenido.beginText();
             contenido.newLineAtOffset(datosPosX, datosPosY - (datosFontSize * 2) - 10);
-            contenido.showText("Especialidad del grupo:");
+            contenido.showText("Group specialty:");
             contenido.setFont(PDType1Font.HELVETICA, datosFontSize); // Establecer fuente normal
             contenido.showText(" " + especialidad);
             contenido.endText();
@@ -951,7 +951,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
                 contenido.beginText();
                 contenido.setFont(PDType1Font.HELVETICA, 12);
                 contenido.newLineAtOffset(xSection, currentY);
-                contenido.showText("Asignatura: " + asignatura);
+                contenido.showText("Subject: " + asignatura);
                 contenido.endText();
 
                 // Ajustar coordenada Y para las líneas de calificación
@@ -1033,12 +1033,12 @@ public class AdministracionGrupos extends javax.swing.JFrame {
     private JFreeChart createBarChart(CalificacionesIngles calificacion) {
         // Crear un dataset para el gráfico
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.addValue(Double.parseDouble(calificacion.getSpeaking()), "Calificaciones", "Speaking");
-        dataset.addValue(Double.parseDouble(calificacion.getReading()), "Calificaciones", "Reading");
-        dataset.addValue(Double.parseDouble(calificacion.getListening()), "Calificaciones", "Listening");
-        dataset.addValue(Double.parseDouble(calificacion.getWriting()), "Calificaciones", "Writing");
-        dataset.addValue(Double.parseDouble(calificacion.getUseOfEnglish()), "Calificaciones", "Use of English");
-        dataset.addValue(Double.parseDouble(calificacion.getPromedioIngles()), "Calificaciones", "Promedio Inglés");
+        dataset.addValue(Double.parseDouble(calificacion.getSpeaking()), "Speaking", "Speaking");
+        dataset.addValue(Double.parseDouble(calificacion.getReading()), "Reading", "Reading");
+        dataset.addValue(Double.parseDouble(calificacion.getListening()), "Listening", "Listening");
+        dataset.addValue(Double.parseDouble(calificacion.getWriting()), "Writing", "Writing");
+        dataset.addValue(Double.parseDouble(calificacion.getUseOfEnglish()), "Use of English", "Use of English");
+        dataset.addValue(Double.parseDouble(calificacion.getPromedioIngles()), "English Average", "English Average");
 
         // Crear el gráfico de barras
         JFreeChart barChart = ChartFactory.createBarChart(
@@ -1059,11 +1059,11 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         barRenderer.setBarPainter(new StandardBarPainter());
 
         // Personalizar los colores de las barras
-        barRenderer.setSeriesPaint(0, new Color(156, 22, 31));
-        barRenderer.setSeriesPaint(1, Color.green);
-        barRenderer.setSeriesPaint(2, Color.red);
-        barRenderer.setSeriesPaint(3, Color.orange);
-        barRenderer.setSeriesPaint(4, Color.pink);
+        barRenderer.setSeriesPaint(0, new Color(83, 148, 252));
+//        barRenderer.setSeriesPaint(1, Color.green);
+//        barRenderer.setSeriesPaint(2, Color.red);
+//        barRenderer.setSeriesPaint(3, Color.orange);
+//        barRenderer.setSeriesPaint(4, Color.pink);
 
         // Mostrar los valores encima de las barras
         barRenderer.setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator());
@@ -1354,6 +1354,30 @@ public class AdministracionGrupos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGenerarBoletaAlumnoActionPerformed
 
     private void btnGenerarBoletasTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarBoletasTodosActionPerformed
+        // Obtener el alumno seleccionado
+        int filaSeleccionada = tablaAlumnosGrupo.getSelectedRow();
+
+        if (filaSeleccionada != -1) {
+            // Obtener los datos del alumno seleccionado
+            String nombreAlumno = tablaAlumnosGrupo.getValueAt(filaSeleccionada, 1).toString();
+
+            // Obtener la especialidad del grupo
+            String especialidadGrupo = txtEspecialidad.getText().trim();
+
+            if (especialidadGrupo.equalsIgnoreCase("Ingles") || especialidadGrupo.equalsIgnoreCase("Inglés")) {
+                JOptionPane.showMessageDialog(null, "En las asignaturas de Inglés se recomienda generar las boletas una por una, \n"
+                        + "debido a que la memoria no alcanza a cubir el espacio requerido para generar todas las boletas. \n"
+                        + "Gracias.");
+            } else {
+                // Generar el documento PDF utilizando el código existente
+                generarBoletaNormalTodos(nombreAlumno);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un alumno");
+        }
+    }//GEN-LAST:event_btnGenerarBoletasTodosActionPerformed
+    
+    private void generarBoletaNormalTodos(String nombreAlumno){
         // Verificar si hay alumnos seleccionados en la tabla
         if (tablaAlumnosGrupo.getRowCount() > 0) {
             // Construir la ruta completa para la carpeta del grupo
@@ -1372,7 +1396,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
             // Generar la boleta de calificaciones para cada alumno
             for (filaSeleccionada = 0; filaSeleccionada < tablaAlumnosGrupo.getRowCount(); filaSeleccionada++) {
                 // Obtener los datos del alumno actual
-                String nombreAlumno = tablaAlumnosGrupo.getValueAt(filaSeleccionada, 1).toString();
+                nombreAlumno = tablaAlumnosGrupo.getValueAt(filaSeleccionada, 1).toString();
                 String nombreArchivo = nombreAlumno + ".pdf";
                 String rutaBoletaAlumno = rutaCarpetaBoletas + "/" + nombreArchivo;
 
@@ -1633,9 +1657,8 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "No hay alumnos en la lista");
         }
-    }//GEN-LAST:event_btnGenerarBoletasTodosActionPerformed
-
-
+    }
+    
     private void btnCambiarCalificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarCalificacionActionPerformed
         int rowCount = tablaAlumnosGrupo.getRowCount();
         boolean cambiosRealizados = false; // Variable para verificar si se realizaron cambios en las calificaciones
