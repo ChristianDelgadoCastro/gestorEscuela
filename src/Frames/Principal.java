@@ -100,7 +100,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void actualizarImagen() {
         String imagenActual = imagenes[indiceImagenActual];
-        ImageIcon icono = new ImageIcon(getClass().getClassLoader().getResource("imagenes/carrusel/" + imagenActual));
+        ImageIcon icono = new ImageIcon(getClass().getClassLoader().getResource("Imagenes/carrusel/" + imagenActual));
 
         // Obtener el ancho y alto del panel
         int anchoPanel = panelCarrusel.getWidth();
