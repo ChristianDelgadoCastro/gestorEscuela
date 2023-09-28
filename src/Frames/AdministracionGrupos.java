@@ -176,7 +176,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         tablaAlumnosGrupo.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaAlumnosGrupo);
 
-        jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 117, 619, 490));
+        jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 117, 800, 490));
 
         btnCambiarCalificacion.setBackground(new java.awt.Color(255, 255, 51));
         btnCambiarCalificacion.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
@@ -191,7 +191,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
 
         txtBuscar.setToolTipText("Filtrar por nControl");
         txtBuscar.setBorder(null);
-        jPanel4.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 40, 140, 30));
+        jPanel4.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 40, 310, 30));
 
         btnGenerarBoletasTodos.setBackground(new java.awt.Color(153, 255, 255));
         btnGenerarBoletasTodos.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
@@ -240,7 +240,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
                 btnHabilitarAsignaturasActionPerformed(evt);
             }
         });
-        jPanel4.add(btnHabilitarAsignaturas, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 120, 150, -1));
+        jPanel4.add(btnHabilitarAsignaturas, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 120, 150, -1));
 
         ListAsignaturas.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         ListAsignaturas.setModel(new javax.swing.AbstractListModel<String>() {
@@ -251,7 +251,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         ListAsignaturas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jScrollPane2.setViewportView(ListAsignaturas);
 
-        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 160, 155, 200));
+        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 160, 155, 200));
 
         btnAgregarAsignaturas.setBackground(new java.awt.Color(51, 255, 0));
         btnAgregarAsignaturas.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
@@ -262,7 +262,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
                 btnAgregarAsignaturasActionPerformed(evt);
             }
         });
-        jPanel4.add(btnAgregarAsignaturas, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 370, 155, -1));
+        jPanel4.add(btnAgregarAsignaturas, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 370, 155, -1));
 
         btnEliminarAsignaturas.setBackground(new java.awt.Color(255, 0, 0));
         btnEliminarAsignaturas.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
@@ -273,7 +273,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
                 btnEliminarAsignaturasActionPerformed(evt);
             }
         });
-        jPanel4.add(btnEliminarAsignaturas, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 400, 156, -1));
+        jPanel4.add(btnEliminarAsignaturas, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 400, 156, -1));
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel4.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 70, 140, 10));
@@ -352,7 +352,10 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         exitBtn.setLayout(exitBtnLayout);
         exitBtnLayout.setHorizontalGroup(
             exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(exitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+            .addGroup(exitBtnLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(exitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addContainerGap())
         );
         exitBtnLayout.setVerticalGroup(
             exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -400,7 +403,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
                 .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 724, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 892, Short.MAX_VALUE)
                 .addComponent(minimizeBtn4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -417,7 +420,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 30));
+        jPanel4.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, 30));
 
         btnAdminIngles.setBackground(new java.awt.Color(153, 102, 255));
         btnAdminIngles.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
@@ -428,15 +431,13 @@ public class AdministracionGrupos extends javax.swing.JFrame {
                 btnAdminInglesActionPerformed(evt);
             }
         });
-        jPanel4.add(btnAdminIngles, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 520, 160, -1));
+        jPanel4.add(btnAdminIngles, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 520, 160, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -568,9 +569,52 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         btnAdminIngles.setEnabled(hayEspecialidadIngles);
     }//GEN-LAST:event_btnEliminarAsignaturasActionPerformed
 
+    public class MiTableModel extends DefaultTableModel {
+
+        public MiTableModel(Object[] columnNames, int rowCount) {
+            super(columnNames, rowCount);
+        }
+
+        @Override
+        public void setValueAt(Object aValue, int row, int column) {
+            super.setValueAt(aValue, row, column);
+
+            if (column == 4 || column == 5 || column == 6) {
+                // Calcular el promedio y actualizar la columna "Promedio"
+                calcularPromedio(row);
+                // Actualizar el valor en la base de datos
+                actualizarCalificacionEnDB(row, column);
+            }
+        }
+
+        private void calcularPromedio(int row) {
+            Object calificacion = getValueAt(row, 4);
+            Object vidaEscolar = getValueAt(row, 5);
+            Object practicas = getValueAt(row, 6);
+
+            double calificacionValue = (calificacion != null) ? Double.parseDouble(calificacion.toString()) : 0.0;
+            double vidaEscolarValue = (vidaEscolar != null) ? Double.parseDouble(vidaEscolar.toString()) : 0.0;
+            double practicasValue = (practicas != null) ? Double.parseDouble(practicas.toString()) : 0.0;
+
+            // Realizar el cálculo del promedio según los porcentajes dados (70% calificación + 30% prácticas)
+            double promedio = (calificacionValue * 0.7 + practicasValue * 0.3) + vidaEscolarValue * 0.2;
+
+            // Actualizar el valor del promedio en la columna "Promedio"
+            setValueAt(promedio, row, 7);
+        }
+
+        private void actualizarCalificacionEnDB(int row, int column) {
+            // Aquí debes implementar la lógica para actualizar los valores en la base de datos.
+            // Esto dependerá de cómo estés manejando las actualizaciones en tu aplicación.
+        }
+    }
+
     void mostrarTabla(String grupo, String especialidad) {
         // Crear un DefaultTableModel personalizado
-        DefaultTableModel modelo = new DefaultTableModel() {
+        MiTableModel modelo = new MiTableModel(
+                new Object[]{"nControl", "Nombre", "nControlAsignatura", "Asignatura", "Calificación", "Vida Escolar", "Practicas", "Promedio"},
+                0 // El segundo argumento (rowCount) se establece en 0 para que no haya filas inicialmente
+        ) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 // Obtener el valor de la asignatura de la fila
@@ -582,28 +626,31 @@ public class AdministracionGrupos extends javax.swing.JFrame {
                 // Verificar si la especialidad es "Inglés"
                 boolean isEspecialidadIngles = especialidad.equalsIgnoreCase("Ingles") || especialidad.equalsIgnoreCase("Inglés");
 
-                // Permitir la edición solo en la columna de calificaciones para asignaturas que no sean inglés y no sean de especialidad "Inglés"
-                return column == 4 && !isIngles && !isEspecialidadIngles;
+                // Permitir la edición en la columna de calificaciones (columna 4) para asignaturas que no sean inglés y no sean de especialidad "Inglés"
+                if (column == 4) {
+                    return !isIngles && !isEspecialidadIngles;
+                }
+
+                // Permitir la edición en la columna de Vida Escolar (columna 5) siempre
+                if (column == 5) {
+                    return true;
+                }
+
+                // Permitir la edición en la columna de Prácticas (columna 6) solo si no es una asignatura de inglés
+                return column == 6 && !isIngles && !isEspecialidadIngles;
             }
         };
-
-        modelo.addColumn("nControl");
-        modelo.addColumn("Nombre");
-        modelo.addColumn("nControlAsignatura");
-        modelo.addColumn("Asignatura");
-        modelo.addColumn("Calificación");
 
         tablaAlumnosGrupo.setModel(modelo);
 
         String sql = "SELECT c.ncontrol, a.nombre, c.nControlAsignatura, asignaturas.asignatura, "
-                + "COALESCE(ci.promedioIngles, c.calificacion) AS calificacion "
-                + // Cambio aquí
-                "FROM dbo.calificaciones c "
+                + "COALESCE(ci.promedioIngles, c.calificacion) AS calificacion, " // Cambio aquí
+                + "c.vidaEscolar, c.practicas, c.promedio " // Nuevas columnas
+                + "FROM dbo.calificaciones c "
                 + "INNER JOIN dbo.alumnos a ON c.ncontrol = a.ncontrol "
                 + "INNER JOIN dbo.asignaturas asignaturas ON c.nControlAsignatura = asignaturas.nControlAsignatura "
                 + "LEFT JOIN calificaciones_ingles ci ON c.ncontrol = ci.ncontrol AND c.grupo = ci.grupo AND c.ncontrolasignatura = ci.ncontrolasignatura "
-                + // Nueva unión a la tabla calificaciones_ingles
-                "WHERE c.grupo = ? AND a.estatus = 'ac' ORDER BY c.ncontrol";
+                + "WHERE c.grupo = ? AND a.estatus = 'ac' ORDER BY c.ncontrol";
 
         try {
             PreparedStatement statement = cn.prepareStatement(sql);
@@ -622,8 +669,11 @@ public class AdministracionGrupos extends javax.swing.JFrame {
                 String nControlAsignatura = rs.getString("nControlAsignatura");
                 String asignatura = rs.getString("asignatura");
                 String calificacion = rs.getString("calificacion");
+                String vidaEscolar = rs.getString("vidaEscolar"); // Nueva columna
+                String practicas = rs.getString("practicas"); // Nueva columna
+                String promedio = calcularPromedio(calificacion, vidaEscolar, practicas);
 
-                modelo.addRow(new Object[]{nControl, nombre, nControlAsignatura, asignatura, calificacion, especialidad});
+                modelo.addRow(new Object[]{nControl, nombre, nControlAsignatura, asignatura, calificacion, vidaEscolar, practicas, promedio, especialidad});
             }
         } catch (SQLException e) {
             System.err.println(e);
@@ -636,14 +686,44 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         tablaAlumnosGrupo.getColumnModel().getColumn(1).setPreferredWidth(250);
         tablaAlumnosGrupo.getColumnModel().getColumn(2).setPreferredWidth(200);
         tablaAlumnosGrupo.getColumnModel().getColumn(3).setPreferredWidth(220);
-        tablaAlumnosGrupo.getColumnModel().getColumn(4).setPreferredWidth(150);
+        tablaAlumnosGrupo.getColumnModel().getColumn(4).setPreferredWidth(120);
+        tablaAlumnosGrupo.getColumnModel().getColumn(5).setPreferredWidth(120); // Ancho para "Vida Escolar"
+        tablaAlumnosGrupo.getColumnModel().getColumn(6).setPreferredWidth(120); // Ancho para "Promedio"
+        tablaAlumnosGrupo.getColumnModel().getColumn(7).setPreferredWidth(120); // Ancho para "Promedio"
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         tablaAlumnosGrupo.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
     }
 
-    // Método para aplicar el filtro
+    private String calcularPromedio(String calificacionStr, String practicasStr, String vidaEscolarStr) {
+    try {
+        // Parsear los valores a números (puedes manejar excepciones si es necesario)
+        double calificacion = Double.parseDouble(calificacionStr);
+        double practicas = (practicasStr != null && !practicasStr.isEmpty()) ? Double.parseDouble(practicasStr) : 0.0;
+        double vidaEscolar = (vidaEscolarStr != null && !vidaEscolarStr.isEmpty()) ? Double.parseDouble(vidaEscolarStr) : 0.0;
+
+        // Calcular el promedio según los criterios dados
+        double promedio;
+
+        if (practicas > 0.0) {
+            // Si practicas tiene un valor mayor que 0, utilizar el cálculo original (70% calificación + 30% prácticas)
+            promedio = ((calificacion * 0.7 + practicas * 0.3)*0.8) + vidaEscolar * 0.2;
+        } else {
+            // Si practicas es nulo o cero, utilizar el 80% de calificacion
+            promedio = calificacion * 0.8 + vidaEscolar * 0.2;
+        }
+
+        // Devolver el promedio formateado como String
+        return String.format("%.2f", promedio);
+    } catch (NumberFormatException e) {
+        // Manejar posibles errores de formato en los datos numéricos
+        return "N/A"; // O algún valor predeterminado si no se puede calcular el promedio
+    }
+}
+
+
+// Método para aplicar el filtro
     public void aplicarFiltro() {
         String filtro = txtBuscar.getText().trim().toLowerCase();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) tablaAlumnosGrupo.getModel());
