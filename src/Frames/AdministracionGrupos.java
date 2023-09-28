@@ -982,7 +982,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
             for (CalificacionesIngles calificacion : calificacionesList) {
                 JFreeChart barChart = createBarChart(calificacion);
                 int chartWidth = 500;
-                int chartHeight =400;
+                int chartHeight = 400;
 
                 // Generar un nombre único para el archivo PNG usando el número de control de la asignatura
                 String chartImageFileName = "chart_image_" + calificacion.getAsignatura() + ".png";
@@ -1376,8 +1376,8 @@ public class AdministracionGrupos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Seleccione un alumno");
         }
     }//GEN-LAST:event_btnGenerarBoletasTodosActionPerformed
-    
-    private void generarBoletaNormalTodos(String nombreAlumno){
+
+    private void generarBoletaNormalTodos(String nombreAlumno) {
         // Verificar si hay alumnos seleccionados en la tabla
         if (tablaAlumnosGrupo.getRowCount() > 0) {
             // Construir la ruta completa para la carpeta del grupo
@@ -1658,7 +1658,7 @@ public class AdministracionGrupos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No hay alumnos en la lista");
         }
     }
-    
+
     private void btnCambiarCalificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarCalificacionActionPerformed
         int rowCount = tablaAlumnosGrupo.getRowCount();
         boolean cambiosRealizados = false; // Variable para verificar si se realizaron cambios en las calificaciones
@@ -1930,8 +1930,10 @@ public class AdministracionGrupos extends javax.swing.JFrame {
         String sql;
         if (especialidadGrupo.equalsIgnoreCase("Ingles") || especialidadGrupo.equalsIgnoreCase("Inglés")) {
             sql = "SELECT asignatura FROM dbo.asignaturas WHERE especialidad = 'eng'";
+        } else if (especialidadGrupo.equalsIgnoreCase("Curso Infantil")) {
+            sql = "SELECT asignatura FROM dbo.asignaturas WHERE especialidad = 'CIN'";
         } else {
-            sql = "SELECT asignatura FROM dbo.asignaturas WHERE especialidad <> 'eng' OR especialidad IS NULL";
+            sql = "SELECT asignatura FROM dbo.asignaturas WHERE especialidad NOT IN ('eng', 'CIN') OR especialidad IS NULL";
         }
 
         try {
