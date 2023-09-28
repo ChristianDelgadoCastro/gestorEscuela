@@ -6,14 +6,12 @@ package Frames;
 
 import Clases.Conectar;
 import java.awt.Color;
-import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
@@ -36,8 +34,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.jfree.chart.ChartFactory;
@@ -451,9 +447,9 @@ public class AdministracionGrupos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private boolean verificarEspecialidadIngles(String especialidad) {
-        return especialidad.matches(".*[Ii][Nn][Gg][Ll][Ee][Ss].*|[Ii][Nn][Gg][Ll][Éé][Ss].*");
+        // Verificar si la especialidad contiene "Inglés" (sin importar mayúsculas o acentos) o "Infantil" (sin importar mayúsculas o acentos)
+        return especialidad.matches(".*[Ii][Nn][Gg][Ll][Ee][Ss].*|[Ii][Nn][Gg][Ll][Éé][Ss].*|.*[Ii][Nn][Ff][Aa][Nn][Tt][Ii][Ll].*|[Ii][Nn][Ff][Aa][Nn][Tt][Ii][Ll].*");
     }
-
 
     private void btnAgregarAsignaturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAsignaturasActionPerformed
         // Obtener el grupo y especialidad del JLabel txtGrupo y txtEspecialidad
