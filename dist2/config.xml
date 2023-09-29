@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+    <config>
+        <server>localhost</server>
+        <port>1433</port>
+        <database>dbo</database>
+        <username>usersql</username>
+        <password>root2</password>
+    </config>
+
+</root>
+

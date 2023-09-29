@@ -16,16 +16,18 @@ public class CalificacionesIngles {
     private String listening;
     private String writing;
     private String useOfEnglish;
+    private String vidaEscolar;
     private String promedioIngles;
     private String asignatura;
 
-    public CalificacionesIngles(String ncontrolasignatura, String speaking, String reading, String listening, String writing, String useOfEnglish, String promedioIngles, String asignatura) {
+    public CalificacionesIngles(String ncontrolasignatura, String speaking, String reading, String listening, String writing, String useOfEnglish, String vidaEscolar, String promedioIngles, String asignatura) {
         this.ncontrolasignatura = ncontrolasignatura;
         this.speaking = speaking;
         this.reading = reading;
         this.listening = listening;
         this.writing = writing;
         this.useOfEnglish = useOfEnglish;
+        this.vidaEscolar = vidaEscolar;
         this.promedioIngles = promedioIngles;
         this.asignatura = asignatura;
     }
@@ -78,6 +80,13 @@ public class CalificacionesIngles {
         this.useOfEnglish = useOfEnglish;
     }
 
+    public String getVidaEscolar() {
+        return vidaEscolar;
+    }
+
+    public void setVidaEscolar(String vidaEscolar) {
+        this.vidaEscolar = vidaEscolar;
+    }
     public String getPromedioIngles() {
         return promedioIngles;
     }

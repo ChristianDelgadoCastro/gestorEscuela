@@ -6,18 +6,40 @@ package Frames;
 
 import Clases.Conectar;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableRowSorter;
+import javax.swing.text.Document;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 //.*;
 
 /**
@@ -122,7 +144,7 @@ public class AdministracionIngles extends javax.swing.JFrame {
 
         txtnControlIngles.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         txtnControlIngles.setText("jLabel4");
-        jPanel4.add(txtnControlIngles, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 50, 160, -1));
+        jPanel4.add(txtnControlIngles, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 50, 140, -1));
 
         txtGrupo.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         txtGrupo.setText("jLabel2");
@@ -269,7 +291,7 @@ public class AdministracionIngles extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 30));
+        jPanel4.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 30));
 
         jLabel2.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         jLabel2.setText("Especialidad:");
@@ -292,13 +314,13 @@ public class AdministracionIngles extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 821, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -309,14 +331,14 @@ public class AdministracionIngles extends javax.swing.JFrame {
         @Override
         public boolean isCellEditable(int row, int column) {
             // Permitir editar las celdas de las columnas de calificaciones
-            return column >= 2 && column <= 6;
+            return column >= 2 && column <= 7;
         }
 
         @Override
         public void setValueAt(Object aValue, int row, int column) {
             super.setValueAt(aValue, row, column);
 
-            if (column >= 2 && column <= 6) {
+            if (column >= 2 && column <= 7) {
                 // Calcular el promedio y actualizar la columna "Promedio"
                 calcularPromedio(row);
                 // Actualizar el valor en la base de datos
@@ -336,9 +358,17 @@ public class AdministracionIngles extends javax.swing.JFrame {
                 }
             }
 
-            float promedio = sumatoria / cantidadCalificaciones;
+            float promedioCalificaciones = (sumatoria / cantidadCalificaciones);
 
-            setValueAt(promedio, row, 7);
+            // Obtener el valor de schoolLife de la columna 7
+            Object schoolLifeObj = getValueAt(row, 7);
+            float schoolLife = (schoolLifeObj != null) ? Float.parseFloat(schoolLifeObj.toString()) : 0.0f;
+
+            // Calcular el promedio total según la fórmula que proporcionaste
+            float promedioTotal = (promedioCalificaciones * 0.8f) + (schoolLife * 0.2f);
+
+            // Actualizar el valor del promedio total en la columna 8
+            setValueAt(promedioTotal, row, 8);
         }
 
         private void actualizarCalificacionEnDB(int row, int column) {
@@ -368,11 +398,12 @@ public class AdministracionIngles extends javax.swing.JFrame {
         modelo.addColumn("Listening");
         modelo.addColumn("Writing");
         modelo.addColumn("UseOfEnglish");
+        modelo.addColumn("School Life ");
         modelo.addColumn("Promedio");
 
         tablaAlumnosGrupoIngles.setModel(modelo);
 
-        String sql = "SELECT ci.ncontrol, a.nombre, ci.speaking, ci.reading, ci.listening, ci.writing, ci.use_of_english, ci.promedioIngles "
+        String sql = "SELECT ci.ncontrol, a.nombre, ci.speaking, ci.reading, ci.listening, ci.writing, ci.use_of_english, ci.vidaEscolar ,ci.promedioIngles "
                 + "FROM calificaciones_ingles ci "
                 + "INNER JOIN alumnos a ON ci.ncontrol = a.ncontrol "
                 + "WHERE ci.grupo = ? AND ci.ncontrolasignatura = ?";
@@ -391,9 +422,10 @@ public class AdministracionIngles extends javax.swing.JFrame {
                 Float listening = rs.getFloat("listening");
                 Float writing = rs.getFloat("writing");
                 Float use_of_english = rs.getFloat("use_of_english");
+                Float vidaEscolar = rs.getFloat("vidaEscolar");
                 Float promedioIngles = rs.getFloat("promedioIngles");
 
-                modelo.addRow(new Object[]{nControl, nombre, speaking, reading, listening, writing, use_of_english, promedioIngles});
+                modelo.addRow(new Object[]{nControl, nombre, speaking, reading, listening, writing, use_of_english, vidaEscolar, promedioIngles});
             }
         } catch (SQLException e) {
             System.err.println(e);
@@ -410,6 +442,7 @@ public class AdministracionIngles extends javax.swing.JFrame {
         tablaAlumnosGrupoIngles.getColumnModel().getColumn(5).setPreferredWidth(80);
         tablaAlumnosGrupoIngles.getColumnModel().getColumn(6).setPreferredWidth(100);
         tablaAlumnosGrupoIngles.getColumnModel().getColumn(7).setPreferredWidth(100);
+        tablaAlumnosGrupoIngles.getColumnModel().getColumn(8).setPreferredWidth(100);
     }
 
     private void insertarAlumnos() {
@@ -438,7 +471,7 @@ public class AdministracionIngles extends javax.swing.JFrame {
 
         // Insertar los registros en la tabla calificaciones_ingles si no existen
         int registrosInsertados = 0;
-        String insertSql = "INSERT INTO dbo.calificaciones_ingles (ncontrol, grupo, ncontrolasignatura, speaking, reading, listening, writing, use_of_english, promedioIngles) VALUES (?, ?, ?, NULL, NULL, NULL, NULL, NULL, NULL)";
+        String insertSql = "INSERT INTO dbo.calificaciones_ingles (ncontrol, grupo, ncontrolasignatura, speaking, reading, listening, writing, use_of_english, vidaEscolar, promedioIngles) VALUES (?, ?, ?, NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
         try {
             PreparedStatement insertPst = cn.prepareStatement(insertSql);
 
@@ -555,7 +588,7 @@ public class AdministracionIngles extends javax.swing.JFrame {
 
     private void btnCambiarCalificacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarCalificacionesActionPerformed
         String sql = "UPDATE calificaciones_ingles "
-                + "SET speaking = ?, reading = ?, listening = ?, writing = ?, use_of_english = ?, promedioIngles = ? "
+                + "SET speaking = ?, reading = ?, listening = ?, writing = ?, use_of_english = ?, vidaEscolar = ?, promedioIngles = ? "
                 + "WHERE ncontrol = ? AND grupo = ? AND ncontrolasignatura = ?";
 
         try {
@@ -568,7 +601,8 @@ public class AdministracionIngles extends javax.swing.JFrame {
                 Float listening = Float.parseFloat(tablaAlumnosGrupoIngles.getValueAt(row, 4).toString());
                 Float writing = Float.parseFloat(tablaAlumnosGrupoIngles.getValueAt(row, 5).toString());
                 Float useOfEnglish = Float.parseFloat(tablaAlumnosGrupoIngles.getValueAt(row, 6).toString());
-                Float promedioIngles = (speaking + reading + listening + writing + useOfEnglish) / 5;
+                Float vidaEscolar = Float.parseFloat(tablaAlumnosGrupoIngles.getValueAt(row, 7).toString());
+                Float promedioIngles = (((speaking + reading + listening + writing + useOfEnglish) / 5) * 0.8f) + (vidaEscolar * 0.2f);
                 promedioIngles = redondear(promedioIngles, 2); // Redondear el promedio a 2 decimales
 
                 pst.setFloat(1, speaking);
@@ -576,10 +610,11 @@ public class AdministracionIngles extends javax.swing.JFrame {
                 pst.setFloat(3, listening);
                 pst.setFloat(4, writing);
                 pst.setFloat(5, useOfEnglish);
-                pst.setFloat(6, promedioIngles);
-                pst.setString(7, nControl);
-                pst.setString(8, txtGrupo.getText());
-                pst.setString(9, txtnControlIngles.getText());
+                pst.setFloat(6, vidaEscolar);
+                pst.setFloat(7, promedioIngles);
+                pst.setString(8, nControl);
+                pst.setString(9, txtGrupo.getText());
+                pst.setString(10, txtnControlIngles.getText());
 
                 pst.executeUpdate();
             }
